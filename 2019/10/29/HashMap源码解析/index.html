@@ -57,7 +57,7 @@
 <meta property="og:site_name" content="张潮州">
 <meta property="og:description" content="1、类注释Hash table based implementation of the Map interface. This implementation provides all of the optional map operations, and permits null values and the null key.  The HashMap class is roughly equi">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-10-28T22:44:48.663Z">
+<meta property="og:updated_time" content="2019-10-29T03:34:10.088Z">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="https://chaozhouzhang.github.io/2019/10/29/HashMap%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/">
@@ -214,7 +214,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2019-10-29 06:41:22 / Modified: 06:44:48" itemprop="dateCreated datePublished" datetime="2019-10-29T06:41:22+08:00">2019-10-29</time>
+              <time title="Created: 2019-10-29 06:41:22 / Modified: 11:34:10" itemprop="dateCreated datePublished" datetime="2019-10-29T06:41:22+08:00">2019-10-29</time>
             </span>
 
           
@@ -267,6 +267,14 @@
 <p>普通vs树模式之间的使用和转换由于LinkedHashMap子类的存在而变得复杂。请参阅下面定义的钩子方法，这些方法将在插入、删除和访问时调用，否则LinkedHashMap内部将独立于这些机制。(这还要求将映射实例传递给一些可能创建新节点的实用程序方法。)</p>
 <p>The concurrent-programming-like SSA-based coding style helps avoid aliasing errors amid all of the twisty pointer operations.</p>
 <p>类似于并行编程的基于ssa的编码风格有助于避免所有扭曲指针操作中的别名错误。</p>
+<h2 id="3、实现"><a href="#3、实现" class="headerlink" title="3、实现"></a>3、实现</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">static final int hash(Object key) &#123;</span><br><span class="line">    int h;</span><br><span class="line">    return (key == null) ? 0 : (h = key.hashCode()) ^ (h &gt;&gt;&gt; 16);</span><br><span class="line">&#125;</span><br><span class="line">1、如果key为空，则哈希值为0；</span><br><span class="line">2、如果key不为空，则取key.hashCode()和key.hashCode()无符号右移16位的位异或运算结果。</span><br></pre></td></tr></table></figure>
+<p>Computes key.hashCode() and spreads (XORs) higher bits of hash to lower.  Because the table uses power-of-two masking, sets of hashes that vary only in bits above the current mask will always collide. (Among known examples are sets of Float keys holding consecutive whole numbers in small tables.)  So we apply a transform that spreads the impact of higher bits downward. There is a tradeoff between speed, utility, and quality of bit-spreading. Because many common sets of hashes are already reasonably distributed (so don’t benefit from spreading), and because we use trees to handle large sets of collisions in bins, we just XOR some shifted bits in the cheapest possible way to reduce systematic lossage, as well as to incorporate impact of the highest bits that would otherwise never be used in index calculations because of table bounds.</p>
+<p>计算key.hashCode()并将(XORs)哈希值从高到低。由于该表使用了power-of-two掩码，因此仅在当前掩码之上的位上变化的散列集总是会发生冲突。(已知的例子包括一组在小表中保存连续整数的浮点键。)因此，我们应用了一个转换，将更高位的影响向下传播。在速度、效用和比特传播的质量之间存在权衡。因为许多常见的散列集已经合理分布(所以不要受益于传播),因为我们用树来处理大型的碰撞在垃圾箱,我们只是XOR一些改变以最便宜的方式来减少系统lossage,以及将最高位的影响,否则永远不会因为指数计算中使用的表。</p>
+<p>通过key获取key的hash值：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hash(key)</span><br></pre></td></tr></table></figure>
+<p>通过hash值获取索引：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(table.length - 1) &amp; hash</span><br><span class="line">取表长度-1与哈希值进行位与运算的结果。</span><br></pre></td></tr></table></figure>
+
 
     </div>
 
@@ -288,6 +296,9 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
+                <a href="/2019/10/29/hashCode%E8%A7%A3%E6%9E%90/" rel="prev" title="hashCode解析">
+                  hashCode解析 <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
       </footer>
@@ -326,7 +337,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、类注释"><span class="nav-number">1.</span> <span class="nav-text">1、类注释</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、实现注意事项"><span class="nav-number">2.</span> <span class="nav-text">2、实现注意事项</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、类注释"><span class="nav-number">1.</span> <span class="nav-text">1、类注释</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、实现注意事项"><span class="nav-number">2.</span> <span class="nav-text">2、实现注意事项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、实现"><span class="nav-number">3.</span> <span class="nav-text">3、实现</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -342,7 +353,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-count">6</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
