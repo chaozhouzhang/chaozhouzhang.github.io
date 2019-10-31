@@ -57,7 +57,7 @@
 <meta property="og:site_name" content="张潮州">
 <meta property="og:description" content="1、类注释Hash table based implementation of the Map interface. This implementation provides all of the optional map operations, and permits null values and the null key.  The HashMap class is roughly equi">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-10-29T03:34:10.088Z">
+<meta property="og:updated_time" content="2019-10-30T03:04:05.570Z">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="https://chaozhouzhang.github.io/2019/10/29/HashMap%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/">
@@ -212,10 +212,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2019-10-29 06:41:22 / Modified: 11:34:10" itemprop="dateCreated datePublished" datetime="2019-10-29T06:41:22+08:00">2019-10-29</time>
+              <time title="Created: 2019-10-29 06:41:22" itemprop="dateCreated datePublished" datetime="2019-10-29T06:41:22+08:00">2019-10-29</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-10-30 11:04:05" itemprop="dateModified" datetime="2019-10-30T11:04:05+08:00">2019-10-30</time>
+              </span>
 
           
 
@@ -275,6 +281,9 @@
 <p>通过hash值获取索引：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(table.length - 1) &amp; hash</span><br><span class="line">取表长度-1与哈希值进行位与运算的结果。</span><br></pre></td></tr></table></figure>
 
+
+
+<p>负载因子：0.75 超过table大小的0.75就会触发扩容。<br>tableSizeFor<br>返回一个大于等于且最接近 cap 的2的幂次方整数</p>
 
     </div>
 
@@ -353,7 +362,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-count">9</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

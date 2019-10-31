@@ -187,6 +187,204 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2019/10/30/HashMap%E8%A7%A3%E6%9E%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="张潮州">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="张潮州">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/10/30/HashMap%E8%A7%A3%E6%9E%90/" class="post-title-link" itemprop="url">HashMap解析</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2019-10-30 11:30:16 / Modified: 19:09:17" itemprop="dateCreated datePublished" datetime="2019-10-30T11:30:16+08:00">2019-10-30</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h1><h2 id="1、无参构造函数"><a href="#1、无参构造函数" class="headerlink" title="1、无参构造函数"></a>1、无参构造函数</h2><p>赋值负载因子为默认负载因子0.75。</p>
+<h2 id="2、带初始化容量的构造函数"><a href="#2、带初始化容量的构造函数" class="headerlink" title="2、带初始化容量的构造函数"></a>2、带初始化容量的构造函数</h2><p>调用带初始化容量和负载因子的构造函数，其中负载因子为默认负载因子0.75。</p>
+<h2 id="3、带初始化容量和负载因子的构造函数"><a href="#3、带初始化容量和负载因子的构造函数" class="headerlink" title="3、带初始化容量和负载因子的构造函数"></a>3、带初始化容量和负载因子的构造函数</h2><p>初始化容量小于0，抛出异常。<br>初始化容量大于默认最大容量，即2的30次幂，则初始化容量赋值为默认最大容量。<br>负载因子小于等于0或为非数值，则抛出异常。<br>赋值负载因子为：所传负载因子。<br>赋值阈值为：大于或等于所传容量，且为2的整数次幂的数值（此处阈值只是初始化时候的初始阈值，在后续的扩容阶段会被负载因子影响成为真正的阈值：容量*负载因子）。<br>所以如果传入初始化容量：<br>则容量为2的整数次幂，且大于或等于初始化容量的值；<br>则阈值为容量乘以负载因子。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Returns a power of two size for the given target capacity.</span><br><span class="line"> */</span><br><span class="line">static final int tableSizeFor(int cap) &#123;</span><br><span class="line">    int n = cap - 1;</span><br><span class="line">    n |= n &gt;&gt;&gt; 1;</span><br><span class="line">    n |= n &gt;&gt;&gt; 2;</span><br><span class="line">    n |= n &gt;&gt;&gt; 4;</span><br><span class="line">    n |= n &gt;&gt;&gt; 8;</span><br><span class="line">    n |= n &gt;&gt;&gt; 16;</span><br><span class="line">    return (n &lt; 0) ? 1 : (n &gt;= MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="4、带映射的构造函数"><a href="#4、带映射的构造函数" class="headerlink" title="4、带映射的构造函数"></a>4、带映射的构造函数</h2><p>赋值负载因子为默认负载因子0.75。<br>1、如果所传的映射大小大于0，则进行插入操作。<br>2、如果当前哈希表为空（用于初始化时插入多个键值，evict为false），则<br>浮点容量:取所传的映射大小除以负载因子+1.0F<br>整型容量:取浮点容量与默认最大容量间的较小值<br>2.1、如果整型容量大于当前阈值，则赋值阈值：取大于或等于整型容量，且为2的整数次幂的值。<br>3、如果当前哈希表不为空（用于添加时插入多个键值，evict为true），则：<br>3.1、如果映射大小大于当前阈值，则进行扩容操作。<br>4、遍历所传的映射，取出键和值，插入当前映射中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Implements Map.putAll and Map constructor</span><br><span class="line"> *</span><br><span class="line"> * @param m the map</span><br><span class="line"> * @param evict false when initially constructing this map, else</span><br><span class="line"> * true (relayed to method afterNodeInsertion).</span><br><span class="line"> */</span><br><span class="line">final void putMapEntries(Map&lt;? extends K, ? extends V&gt; m, boolean evict) &#123;</span><br><span class="line">    int s = m.size();</span><br><span class="line">    ////如果所传的映射大小大于0，则进行插入操作。</span><br><span class="line">    if (s &gt; 0) &#123;</span><br><span class="line">    		//如果当前哈希表为空</span><br><span class="line">        if (table == null) &#123; // pre-size</span><br><span class="line">            //浮点容量:取所传的映射大小除以负载因子+1.0F</span><br><span class="line">            float ft = ((float)s / loadFactor) + 1.0F;</span><br><span class="line">            //整型容量:取浮点容量与默认最大容量间的较小值</span><br><span class="line">            int t = ((ft &lt; (float)MAXIMUM_CAPACITY) ?</span><br><span class="line">                     (int)ft : MAXIMUM_CAPACITY);</span><br><span class="line">            //如果整型容量大于当前阈值，则赋值阈值：取大于或等于整型容量，且为2的整数次幂的值。</span><br><span class="line">            if (t &gt; threshold)</span><br><span class="line">                threshold = tableSizeFor(t);</span><br><span class="line">        &#125;</span><br><span class="line">        //如果当前哈希表不为空，且如果映射大小大于当前阈值，则进行扩容操作。</span><br><span class="line">        else if (s &gt; threshold)</span><br><span class="line">            resize();</span><br><span class="line">        //遍历所传的映射，取出键和值，插入当前映射中。</span><br><span class="line">        for (Map.Entry&lt;? extends K, ? extends V&gt; e : m.entrySet()) &#123;</span><br><span class="line">            K key = e.getKey();</span><br><span class="line">            V value = e.getValue();</span><br><span class="line">            //插入键值，见插入数据操作解析</span><br><span class="line">            putVal(hash(key), key, value, false, evict);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="插入键值数据"><a href="#插入键值数据" class="headerlink" title="插入键值数据"></a>插入键值数据</h1><p>1、取键的哈希值。<br>2、如果当前哈希表是空的，则进行初始化扩容resize。<br>3、通过键的哈希值和哈希表大小-1的位与运算，获取待插入的哈希表的索引。<br>4、如果该索引不存在数据，则新建一个数据节点newNode直接插入。<br>5、如果该索引存在数据Node，则需要判断是替换值，还是重新插入键值到链表或红黑树。<br>5.1、如果该索引数据的哈希值等于所传的哈希值，并且该索引数据的键等所传的键，则获取该索引数据节点，说明需要替换值（在数组上）。<br>5.2、如果该索引数据是树节点数据TreeNode，则获取putTreeVal的结果。<br>5.3、如果该索引数据既不与所传的哈希值和键相等，也不是树节点数据，则该索引数据是链表节点数据，需遍历该链表。<br>5.3.1、获取所遍历到的链表节点所指向的下一个节点。<br>5.3.2、如果该节点为空，则新建一个链表节点newNode，并将所遍历到的链表节点指向它。<br>5.3.2.1、如果遍历次数binCount大于或等于树化阈值-1，则对链表进行树化treeifyBin，也就是将链表转化为红黑树。<br>5.3.2.2、退出遍历。<br>5.3.3、如果该节点的哈希值和键与所传的哈希值和键相等，则退出遍历，说明需要替换值（在链表上）。<br>5.4、如果所获取的节点存在。<br>5.4.1、获取该节点的值。<br>5.4.2、如果该节点的值为空，或者onlyIfAbsent为false，则修改该节点的值为所传的值。<br>5.4.3、节点访问之后的动作，允许LinkedHashMap发布动作的回调：afterNodeAccess(e)<br>5.4.4、返回该节点原来的值。<br>6、自增修改次数modCount。<br>7、自增键值对大小size。<br>8、如果键值对大小大于阈值threshold，则进行扩容resize。<br>9、节点插入之后的动作，允许LinkedHashMap发布动作的回调：afterNodeInsertion(evict)<br>10、返回空（新增键值）。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Implements Map.put and related methods</span><br><span class="line"> *</span><br><span class="line"> * @param hash hash for key</span><br><span class="line"> * @param key the key</span><br><span class="line"> * @param value the value to put</span><br><span class="line"> * @param onlyIfAbsent if true, don&apos;t change existing value</span><br><span class="line"> * @param evict if false, the table is in creation mode.</span><br><span class="line"> * @return previous value, or null if none</span><br><span class="line"> */</span><br><span class="line">final V putVal(int hash, K key, V value, boolean onlyIfAbsent,</span><br><span class="line">               boolean evict) &#123;</span><br><span class="line">    Node&lt;K,V&gt;[] tab; Node&lt;K,V&gt; p; int n, i;</span><br><span class="line">    if ((tab = table) == null || (n = tab.length) == 0)</span><br><span class="line">        n = (tab = resize()).length;</span><br><span class="line">    if ((p = tab[i = (n - 1) &amp; hash]) == null)</span><br><span class="line">        tab[i] = newNode(hash, key, value, null);</span><br><span class="line">    else &#123;</span><br><span class="line">        Node&lt;K,V&gt; e; K k;</span><br><span class="line">        if (p.hash == hash &amp;&amp;</span><br><span class="line">            ((k = p.key) == key || (key != null &amp;&amp; key.equals(k))))</span><br><span class="line">            e = p;</span><br><span class="line">        else if (p instanceof TreeNode)</span><br><span class="line">            e = ((TreeNode&lt;K,V&gt;)p).putTreeVal(this, tab, hash, key, value);</span><br><span class="line">        else &#123;</span><br><span class="line">            for (int binCount = 0; ; ++binCount) &#123;</span><br><span class="line">                if ((e = p.next) == null) &#123;</span><br><span class="line">                    p.next = newNode(hash, key, value, null);</span><br><span class="line">                    if (binCount &gt;= TREEIFY_THRESHOLD - 1) // -1 for 1st</span><br><span class="line">                        treeifyBin(tab, hash);</span><br><span class="line">                    break;</span><br><span class="line">                &#125;</span><br><span class="line">                if (e.hash == hash &amp;&amp;</span><br><span class="line">                    ((k = e.key) == key || (key != null &amp;&amp; key.equals(k))))</span><br><span class="line">                    break;</span><br><span class="line">                p = e;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        if (e != null) &#123; // existing mapping for key</span><br><span class="line">            V oldValue = e.value;</span><br><span class="line">            if (!onlyIfAbsent || oldValue == null)</span><br><span class="line">                e.value = value;</span><br><span class="line">            afterNodeAccess(e);</span><br><span class="line">            return oldValue;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ++modCount;</span><br><span class="line">    if (++size &gt; threshold)</span><br><span class="line">        resize();</span><br><span class="line">    afterNodeInsertion(evict);</span><br><span class="line">    return null;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="扩容"><a href="#扩容" class="headerlink" title="扩容"></a>扩容</h1><p>1、旧哈希表<br>2、旧容量，即旧哈希表长度<br>3、旧阈值<br>4、如果旧容量大于0（已有插入键值数据的情况）。<br>4.1、如果旧容量大于等于默认最大容量，则赋值全局阈值threshold为整数型最大值，并返回旧哈希表<br>4.2、否则，新容量赋值为旧容量左移1位，也就是新容量为旧容量的2倍。<br>4.3、如果新容量小于默认最大容量值，并且旧容量大于等于默认初始化容量值16，则新阈值赋值为旧阈值左移1位，也就是新阈值为旧阈值的2倍。<br>5、如果旧容量不大于0，且旧阈值大于0，则新容量赋值为旧阈值（使用带初始化容量的构造参数新建对象，但还未进行插入键值数据的情况）。<br>6、如果旧容量不大于0，且旧阈值不大于0，则新容量为默认初始化容量16，新阈值为默认负载因子乘以默认初始化容量，也就是0.75x16=12（使用无参构造参数新建对象，但还未进行插入键值数据的情况）。<br>7、如果新阈值等于0，浮点阈值赋值为新容量乘以负载因子（默认负载因子为0.75），如果新容量小于最大默认容量且浮点阈值小于最大默认容量，则赋值新阈值为浮点阈值，否则赋值为最大默认容量（使用带初始化容量的构造参数新建对象，但还未进行插入键值数据的情况）（此处将会修改初始化的时候赋值的阈值，真正的阈值：容量*负载因子）。<br>8、赋值全局阈值为新阈值。<br>9、使用新容量新建新哈希表。<br>10、赋值全局哈希表为新哈希表。<br>11、如果旧哈希表为空，则返回新哈希表。<br>12、如果旧哈希表不为空，则遍历旧哈希表，大小为旧容量。<br>13、获取索引的节点，如果该索节点不空，则将索引对应数据置空。<br>13.1、如果所获取的节点所指向的下一个节点为空，则将所获取节点的哈希值和新容量-1的位与运算作为索引<br>13.1.1、将所获取的节点放入新哈希表中该索引位置（在数组中）。<br>13.2、如果所获取节点是树节点类型，则执行TreeNode.split(this, newTab, j, oldCap)操作（在红黑树中）。<br>13.3、遍历链表，获取当前节点指向的下一个节点。<br>13.3.1、如果当前节点的哈希值和旧容量的位与运算结果等于0，如果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Initializes or doubles table size.  If null, allocates in</span><br><span class="line"> * accord with initial capacity target held in field threshold.</span><br><span class="line"> * Otherwise, because we are using power-of-two expansion, the</span><br><span class="line"> * elements from each bin must either stay at same index, or move</span><br><span class="line"> * with a power of two offset in the new table.</span><br><span class="line"> *</span><br><span class="line"> * @return the table</span><br><span class="line"> */</span><br><span class="line">final Node&lt;K,V&gt;[] resize() &#123;</span><br><span class="line">    Node&lt;K,V&gt;[] oldTab = table;</span><br><span class="line">    int oldCap = (oldTab == null) ? 0 : oldTab.length;</span><br><span class="line">    int oldThr = threshold;</span><br><span class="line">    int newCap, newThr = 0;</span><br><span class="line">    if (oldCap &gt; 0) &#123;</span><br><span class="line">        if (oldCap &gt;= MAXIMUM_CAPACITY) &#123;</span><br><span class="line">            threshold = Integer.MAX_VALUE;</span><br><span class="line">            return oldTab;</span><br><span class="line">        &#125;</span><br><span class="line">        else if ((newCap = oldCap &lt;&lt; 1) &lt; MAXIMUM_CAPACITY &amp;&amp;</span><br><span class="line">                 oldCap &gt;= DEFAULT_INITIAL_CAPACITY)</span><br><span class="line">            newThr = oldThr &lt;&lt; 1; // double threshold</span><br><span class="line">    &#125;</span><br><span class="line">    else if (oldThr &gt; 0) // initial capacity was placed in threshold</span><br><span class="line">        newCap = oldThr;</span><br><span class="line">    else &#123;               // zero initial threshold signifies using defaults</span><br><span class="line">        newCap = DEFAULT_INITIAL_CAPACITY;</span><br><span class="line">        newThr = (int)(DEFAULT_LOAD_FACTOR * DEFAULT_INITIAL_CAPACITY);</span><br><span class="line">    &#125;</span><br><span class="line">    if (newThr == 0) &#123;</span><br><span class="line">        float ft = (float)newCap * loadFactor;</span><br><span class="line">        newThr = (newCap &lt; MAXIMUM_CAPACITY &amp;&amp; ft &lt; (float)MAXIMUM_CAPACITY ?</span><br><span class="line">                  (int)ft : Integer.MAX_VALUE);</span><br><span class="line">    &#125;</span><br><span class="line">    threshold = newThr;</span><br><span class="line">    @SuppressWarnings(&#123;&quot;rawtypes&quot;,&quot;unchecked&quot;&#125;)</span><br><span class="line">        Node&lt;K,V&gt;[] newTab = (Node&lt;K,V&gt;[])new Node[newCap];</span><br><span class="line">    table = newTab;</span><br><span class="line">    if (oldTab != null) &#123;</span><br><span class="line">        for (int j = 0; j &lt; oldCap; ++j) &#123;</span><br><span class="line">            Node&lt;K,V&gt; e;</span><br><span class="line">            if ((e = oldTab[j]) != null) &#123;</span><br><span class="line">                oldTab[j] = null;</span><br><span class="line">                if (e.next == null)</span><br><span class="line">                    newTab[e.hash &amp; (newCap - 1)] = e;</span><br><span class="line">                else if (e instanceof TreeNode)</span><br><span class="line">                    ((TreeNode&lt;K,V&gt;)e).split(this, newTab, j, oldCap);</span><br><span class="line">                else &#123; // preserve order</span><br><span class="line">                    Node&lt;K,V&gt; loHead = null, loTail = null;</span><br><span class="line">                    Node&lt;K,V&gt; hiHead = null, hiTail = null;</span><br><span class="line">                    Node&lt;K,V&gt; next;</span><br><span class="line">                    do &#123;</span><br><span class="line">                        next = e.next;</span><br><span class="line">                        if ((e.hash &amp; oldCap) == 0) &#123;</span><br><span class="line">                            if (loTail == null)</span><br><span class="line">                                loHead = e;</span><br><span class="line">                            else</span><br><span class="line">                                loTail.next = e;</span><br><span class="line">                            loTail = e;</span><br><span class="line">                        &#125;</span><br><span class="line">                        else &#123;</span><br><span class="line">                            if (hiTail == null)</span><br><span class="line">                                hiHead = e;</span><br><span class="line">                            else</span><br><span class="line">                                hiTail.next = e;</span><br><span class="line">                            hiTail = e;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125; while ((e = next) != null);</span><br><span class="line">                    if (loTail != null) &#123;</span><br><span class="line">                        loTail.next = null;</span><br><span class="line">                        newTab[j] = loHead;</span><br><span class="line">                    &#125;</span><br><span class="line">                    if (hiTail != null) &#123;</span><br><span class="line">                        hiTail.next = null;</span><br><span class="line">                        newTab[j + oldCap] = hiHead;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return newTab;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="2、关键函数"><a href="#2、关键函数" class="headerlink" title="2、关键函数"></a>2、关键函数</h2><p>1、获取键的哈希值：hash(key)<br>2、扩容：resize()<br>3、新建节点：newNode(hash, key, value, null)<br>4、插入（或替换）红黑树节点：TreeNode.putTreeVal(this, tab, hash, key, value)<br>5、将链表转化为红黑树：treeifyBin(tab, hash)<br>6、节点访问之后的动作，允许LinkedHashMap发布动作的回调：afterNodeAccess(e)<br>7、节点插入之后的动作，允许LinkedHashMap发布动作的回调：afterNodeInsertion(evict)</p>
+<h2 id="关键参数"><a href="#关键参数" class="headerlink" title="关键参数"></a>关键参数</h2><p>1、boolean onlyIfAbsent:当使用putIfAbsent方法插入的时候，onlyIfAbsent为true，其他方法插入的时候为false，也就是直插入不替换。当所传的键和键的哈希值存在，并且onlyIfAbsent为false或旧值为空的时候，替换旧值。<br>2、boolean evict:possibly remove eldest，可能移除最老的节点。</p>
+<h2 id="主要变量"><a href="#主要变量" class="headerlink" title="主要变量"></a>主要变量</h2><p>1、哈希表：table<br>2、哈希表大小：table.length<br>1、负载因子：loadFactor，默认0.75f<br>2、阈值：threshold，实际容量x负载因子，哈希表大小，实际容量：capacity，2的n次幂（0&lt;=n&lt;=30），大于或等于初始化容量。<br>3、键值对大小：size<br>4、初始化容量：initialCapacity，默认16<br>5、<br>5.1、table.length<br>5.2、threshold<br>5.2、<br>6、修改次数：modCount</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2019/10/29/%E4%BD%BF%E7%94%A8XCode%E5%BC%80%E5%8F%91iOS%E9%A1%B9%E7%9B%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="张潮州">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="张潮州">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/10/29/%E4%BD%BF%E7%94%A8XCode%E5%BC%80%E5%8F%91iOS%E9%A1%B9%E7%9B%AE/" class="post-title-link" itemprop="url">使用XCode开发iOS项目</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2019-10-29 23:17:34 / Modified: 23:26:17" itemprop="dateCreated datePublished" datetime="2019-10-29T23:17:34+08:00">2019-10-29</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="使用XCode开发iOS项目"><a href="#使用XCode开发iOS项目" class="headerlink" title="使用XCode开发iOS项目"></a>使用XCode开发iOS项目</h1><h2 id="1、新建iOS项目"><a href="#1、新建iOS项目" class="headerlink" title="1、新建iOS项目"></a>1、新建iOS项目</h2><p> 点击:<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">File -&gt; New -&gt; Project -&gt; iOS -&gt; Single View App</span><br></pre></td></tr></table></figure><br> 填写:<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ProductName:XCode-Project</span><br><span class="line">Organization Name:TeochewZhang</span><br><span class="line">Organization Identifier:com.codestate</span><br><span class="line">Bundle Identifier:com.codestate.XCode-Project</span><br><span class="line">Language:Object-C</span><br></pre></td></tr></table></figure></p>
+<h2 id="2、ViewController"><a href="#2、ViewController" class="headerlink" title="2、ViewController"></a>2、ViewController</h2><p>视图控制器</p>
+<h2 id="3、Main-storyboard"><a href="#3、Main-storyboard" class="headerlink" title="3、Main.storyboard"></a>3、Main.storyboard</h2><p>故事版</p>
+<h2 id="4、AppDelegate"><a href="#4、AppDelegate" class="headerlink" title="4、AppDelegate"></a>4、AppDelegate</h2><p>应用委托</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2019/10/29/HashMap%E3%80%81HashTable%E3%80%81ConcurrentHashMap/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="张潮州">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="张潮州">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/10/29/HashMap%E3%80%81HashTable%E3%80%81ConcurrentHashMap/" class="post-title-link" itemprop="url">HashMap、HashTable、ConcurrentHashMap</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2019-10-29 22:29:11 / Modified: 22:37:44" itemprop="dateCreated datePublished" datetime="2019-10-29T22:29:11+08:00">2019-10-29</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="HashMap、HashTable、ConcurrentHashMap"><a href="#HashMap、HashTable、ConcurrentHashMap" class="headerlink" title="HashMap、HashTable、ConcurrentHashMap"></a>HashMap、HashTable、ConcurrentHashMap</h1><p>线程不安全<br>线程安全<br>并发</p>
+<p>线程安全问题：多线程的情况下和单线程操作的情况数据不一致<br>采用无锁化的机制保证数组数据化的</p>
+<p>CAS：乐观锁的机制，保证线程安全的机制<br>compare and swap </p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
     <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2019/10/29/Object%E7%B1%BB%E8%A7%A3%E6%9E%90/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -210,10 +408,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2019-10-29 16:33:39 / Modified: 19:20:26" itemprop="dateCreated datePublished" datetime="2019-10-29T16:33:39+08:00">2019-10-29</time>
+              <time title="Created: 2019-10-29 16:33:39" itemprop="dateCreated datePublished" datetime="2019-10-29T16:33:39+08:00">2019-10-29</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-10-31 14:44:29" itemprop="dateModified" datetime="2019-10-31T14:44:29+08:00">2019-10-31</time>
+              </span>
 
           
 
@@ -226,18 +430,77 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="1、类注释"><a href="#1、类注释" class="headerlink" title="1、类注释"></a>1、类注释</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Class Object is the root of the class hierarchy.Every class has Object as a superclass. All objects, including arrays, implement the methods of this class.</span><br><span class="line">Object类是类层次结构的根。每个类都以Object作为他的一个超类。所有对象，包括数组，都实现这个类的方法。</span><br></pre></td></tr></table></figure>
+          <h2 id="1、类注释"><a href="#1、类注释" class="headerlink" title="1、类注释"></a>1、类注释</h2><p>Class Object is the root of the class hierarchy.Every class has Object as a superclass. All objects, including arrays, implement the methods of this class.<br>Object类是类层次结构的根。每个类都以Object作为他的一个超类。所有对象，包括数组，都实现这个类的方法。</p>
 <h2 id="2、注册原生相关"><a href="#2、注册原生相关" class="headerlink" title="2、注册原生相关"></a>2、注册原生相关</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">private static native void registerNatives();</span><br><span class="line">static &#123;</span><br><span class="line">    registerNatives();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="3、getClass"><a href="#3、getClass" class="headerlink" title="3、getClass"></a>3、getClass</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Returns the runtime class of this Object. The returned Class object is the object that is locked by static synchronized methods of the represented class.</span><br><span class="line"> *</span><br><span class="line"> * 返回此对象的运行时类。返回的类对象是被所表示类的静态同步方法锁定的对象。</span><br><span class="line"> *</span><br><span class="line"> * The actual result type is Class&lt;? extends |X|&gt; where |X| is the erasure of the static type of the expression on which  getClass is called.For example, no cast is required in this code fragment:</span><br><span class="line"> * Number n = 0;</span><br><span class="line"> * &#123;@code Class&lt;? extends Number&gt; c = n.getClass();</span><br><span class="line"> *</span><br><span class="line"> * 实际的结果类型是Class&lt;? extends |X|&gt;，其中|X|是对调用getClass的表达式的静态类型的擦除。例如，在这段代码中不需要强制转换:</span><br><span class="line"> * Number n = 0;</span><br><span class="line"> * &#123;@code Class&lt;? extends Number&gt; c = n.getClass();</span><br><span class="line"> *</span><br><span class="line"> * The Class object that represents the runtime  class of this object.</span><br><span class="line"> * 表示此对象的运行时类的类对象。</span><br><span class="line"> */</span><br><span class="line">public final native Class&lt;?&gt; getClass();</span><br></pre></td></tr></table></figure>
-<h2 id="3、hashCode"><a href="#3、hashCode" class="headerlink" title="3、hashCode"></a>3、hashCode</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Returns a hash code value for the object. This method is supported for the benefit of hash tables such as those provided by  java.util.HashMap.</span><br><span class="line"> *</span><br><span class="line"> * 返回对象的哈希码值。支持此方法的好处是可以使用散列表，比如java.util.HashMap提供的散列表。</span><br><span class="line"> *</span><br><span class="line"> * The general contract of hashCode is:</span><br><span class="line"> * 1、Whenever it is invoked on the same object more than once during an execution of a Java application, the  hashCode method must consistently return the same integer, provided no information  used in  equals comparisons on the object is modified. This integer need not remain consistent from one execution of an application to another execution of the same application.</span><br><span class="line"> * 2、If two objects are equal according to the  equals(Object) method, then calling the  hashCode method on each of the two objects must produce the same integer result.</span><br><span class="line"> * 3、It is not required that if two objects are unequal according to the java.lang.Object#equals(java.lang.Object) method, then calling the hashCode method on each of the two objects must produce distinct integer results.  However, the programmer should be aware that producing distinct integer results for unequal objects may improve the performance of hash tables.</span><br><span class="line"> *</span><br><span class="line"> * 关于hashCode的所有约定是：</span><br><span class="line"> * 1、在Java应用程序的执行过程中，无论何时在同一个对象上多次调用它，hashCode方法都必须一致地返回相同的整数，前提是不对对象上的equals比较中使用的信息进行修改。此整数不需要在应用程序的一次执行与同一应用程序的另一次执行之间保持一致。</span><br><span class="line"> * 2、如果根据equals(Object)方法，两个对象是相等的，那么在每个对象上调用hashCode方法必须产生相同的整数结果。</span><br><span class="line"> * 3、如果两个对象根据java.lang.Object#equals(java.lang.Object)方法不相等，那么在每个对象上调用hashCode方法必须产生不同的整数结果，这是不需要的。但是，程序员应该意识到，为不相等的对象生成不同的整数结果可能会提高哈希表的性能。</span><br><span class="line"> *</span><br><span class="line"> * As much as is reasonably practical, the hashCode method defined by class  Object does return distinct integers for distinct objects. (This is typically implemented by converting the internal address of the object into an integer, but this implementation technique is not required by the Java&amp;trade; programming language.）</span><br><span class="line"> *</span><br><span class="line"> * 在相当实际的情况下，类对象定义的hashCode方法确实会为不同的对象返回不同的整数。(这通常是通过将对象的内部地址转换为整数来实现的，但是Java™并不需要这种实现技术编程语言)。</span><br><span class="line"> *</span><br><span class="line"> * a hash code value for this object.</span><br><span class="line"> * 此对象的哈希码值。</span><br><span class="line"> */</span><br><span class="line">public native int hashCode();</span><br></pre></td></tr></table></figure>
+<h2 id="3、getClass"><a href="#3、getClass" class="headerlink" title="3、getClass"></a>3、getClass</h2><p>Returns the runtime class of this Object. The returned Class object is the object that is locked by static synchronized methods of the represented class.</p>
+<p>返回此对象的运行时类。返回的类对象是被所表示类的静态同步方法锁定的对象。</p>
+<p>The actual result type is Class&lt;? extends |X|&gt; where |X| is the erasure of the static type of the expression on which  getClass is called.For example, no cast is required in this code fragment:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Number n = 0;</span><br><span class="line">Class&lt;? extends Number&gt; c = n.getClass();</span><br></pre></td></tr></table></figure>
+<p>实际的结果类型是Class&lt;? extends |X|&gt;，其中|X|是对调用getClass的表达式的静态类型的擦除。例如，在这段代码中不需要强制转换:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Number n = 0;</span><br><span class="line">Class&lt;? extends Number&gt; c = n.getClass();</span><br></pre></td></tr></table></figure>
+<p>The Class object that represents the runtime  class of this object.<br>表示此对象的运行时类的类对象。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public final native Class&lt;?&gt; getClass();</span><br></pre></td></tr></table></figure>
+<h2 id="3、hashCode"><a href="#3、hashCode" class="headerlink" title="3、hashCode"></a>3、hashCode</h2><p>Returns a hash code value for the object. This method is supported for the benefit of hash tables such as those provided by  java.util.HashMap.</p>
+<p>返回对象的哈希码值。支持此方法的好处是可以使用散列表，比如java.util.HashMap提供的散列表。</p>
+<p>The general contract of hashCode is:<br>1、Whenever it is invoked on the same object more than once during an execution of a Java application, the  hashCode method must consistently return the same integer, provided no information  used in  equals comparisons on the object is modified. This integer need not remain consistent from one execution of an application to another execution of the same application.<br>2、If two objects are equal according to the  equals(Object) method, then calling the  hashCode method on each of the two objects must produce the same integer result.<br>3、It is not required that if two objects are unequal according to the java.lang.Object#equals(java.lang.Object) method, then calling the hashCode method on each of the two objects must produce distinct integer results.  However, the programmer should be aware that producing distinct integer results for unequal objects may improve the performance of hash tables.</p>
+<p>关于hashCode的所有约定是：<br>1、在Java应用程序的执行过程中，无论何时在同一个对象上多次调用它，hashCode方法都必须一致地返回相同的整数，前提是不对对象上的equals比较中使用的信息进行修改。此整数不需要在应用程序的一次执行与同一应用程序的另一次执行之间保持一致。<br>2、如果根据equals(Object)方法，两个对象是相等的，那么在每个对象上调用hashCode方法必须产生相同的整数结果。<br>3、如果两个对象根据java.lang.Object#equals(java.lang.Object)方法不相等，那么在每个对象上调用hashCode方法必须产生不同的整数结果，这是不需要的。但是，程序员应该意识到，为不相等的对象生成不同的整数结果可能会提高哈希表的性能。</p>
+<p>As much as is reasonably practical, the hashCode method defined by class  Object does return distinct integers for distinct objects. (This is typically implemented by converting the internal address of the object into an integer, but this implementation technique is not required by the Java&trade; programming language.）</p>
+<p>在相当实际的情况下，类对象定义的hashCode方法确实会为不同的对象返回不同的整数。(这通常是通过将对象的内部地址转换为整数来实现的，但是Java™并不需要这种实现技术编程语言)。</p>
+<p>a hash code value for this object.<br>此对象的哈希码值。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public native int hashCode();</span><br></pre></td></tr></table></figure>
 
 
-<h2 id="4、equals"><a href="#4、equals" class="headerlink" title="4、equals"></a>4、equals</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Indicates whether some other object is &quot;equal to&quot; this one.</span><br><span class="line"> * 指示某个其他对象是否“等于”这个对象。</span><br><span class="line"> *</span><br><span class="line"> * The equals method implements an equivalence relation on non-null object references:</span><br><span class="line"> * equals方法实现了非空对象引用的等价关系:</span><br><span class="line"> *</span><br><span class="line"> * It is reflexive: for any non-null reference value x, x.equals(x)  should return true.</span><br><span class="line"> * 它是自反的:对于任何非空的参考值x，x.equals(x)应该返回true。</span><br><span class="line"> *</span><br><span class="line"> * It is symmetric: for any non-null reference values x and  y, x.equals(y) should return  true if and only if y.equals(x) returns  true.</span><br><span class="line"> * 它是对称的:对于任何非空的参考值x和y，当且仅当y.equals(x)返回true时，x.equals(y)返回true。</span><br><span class="line"> *</span><br><span class="line"> * It is  transitive: for any non-null reference values x, y, and  z, if x.equals(y) returns true and y.equals(z) returns  true, then x.equals(z) should return true.</span><br><span class="line"> * 它是可传递的:对于任何非空的参考值x、y和z，如果x.equals(y)返回true，而y.equals(z)返回true，那么x.equals(z)应该返回true。</span><br><span class="line"> *</span><br><span class="line"> * It is consistent: for any non-null reference values x and  y, multiple invocations of x.equals(y) consistently return  true or consistently return false, provided no  information used in  equals comparisons on the objects is modified.</span><br><span class="line"> *</span><br><span class="line"> * 它是一致的:对于任何非空的参考值x和y，对x.equals(y)的多次调用一致返回真或一致返回假，前提是对对象的equals比较中使用的信息不进行修改。</span><br><span class="line"> *</span><br><span class="line"> * For any non-null reference value  x, x.equals(null)&#125;should return false.</span><br><span class="line"> * 对于任何非空的参考值x, x.equals(null)&#125;应该返回false。</span><br><span class="line"> *</span><br><span class="line"> * The equals method for class  Object implements the most discriminating possible equivalence relation on objects; that is, for any non-null reference values  x and  y, this method returns  true if and only if  x and y refer to the same object ( x == y has the value  true).</span><br><span class="line"> *</span><br><span class="line"> * 类对象的equals方法实现了对对象尽可能区别的等价关系;也就是说，对于任何非空的参考值x和y，当且仅当x和y指向同一个对象时，该方法返回true (x == y的值为true)。</span><br><span class="line"> *</span><br><span class="line"> * Note that it is generally necessary to override the  hashCode method whenever this method is overridden, so as to maintain the general contract for the  hashCode method, which states that equal objects must have equal hash codes.</span><br><span class="line"> *</span><br><span class="line"> * 注意，通常需要在重写hashCode方法时重写该方法，以便维护hashCode方法的常规契约，该契约规定相等的对象必须具有相等的散列代码。</span><br><span class="line"> *</span><br><span class="line"> * the reference object with which to compare.</span><br><span class="line"> * 要与之进行比较的引用对象。</span><br><span class="line"> */</span><br><span class="line">public boolean equals(Object obj) &#123;</span><br><span class="line">    return (this == obj);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="4、equals"><a href="#4、equals" class="headerlink" title="4、equals"></a>4、equals</h2><p>Indicates whether some other object is “equal to” this one.<br>指示某个其他对象是否“等于”这个对象。</p>
+<p>The equals method implements an equivalence relation on non-null object references:<br>equals方法实现了非空对象引用的等价关系:</p>
+<p>It is reflexive: for any non-null reference value x, x.equals(x)  should return true.<br>它是自反的:对于任何非空的参考值x，x.equals(x)应该返回true。</p>
+<p>It is symmetric: for any non-null reference values x and  y, x.equals(y) should return  true if and only if y.equals(x) returns  true.<br>它是对称的:对于任何非空的参考值x和y，当且仅当y.equals(x)返回true时，x.equals(y)返回true。</p>
+<p>It is  transitive: for any non-null reference values x, y, and  z, if x.equals(y) returns true and y.equals(z) returns  true, then x.equals(z) should return true.<br>它是可传递的:对于任何非空的参考值x、y和z，如果x.equals(y)返回true，而y.equals(z)返回true，那么x.equals(z)应该返回true。</p>
+<p>It is consistent: for any non-null reference values x and  y, multiple invocations of x.equals(y) consistently return  true or consistently return false, provided no  information used in  equals comparisons on the objects is modified.</p>
+<p>它是一致的:对于任何非空的参考值x和y，对x.equals(y)的多次调用一致返回真或一致返回假，前提是对对象的equals比较中使用的信息不进行修改。</p>
+<p>For any non-null reference value  x, x.equals(null)}should return false.<br>对于任何非空的参考值x, x.equals(null)}应该返回false。</p>
+<p>The equals method for class  Object implements the most discriminating possible equivalence relation on objects; that is, for any non-null reference values  x and  y, this method returns  true if and only if  x and y refer to the same object ( x == y has the value  true).</p>
+<p>类对象的equals方法实现了对对象尽可能区别的等价关系;也就是说，对于任何非空的参考值x和y，当且仅当x和y指向同一个对象时，该方法返回true (x == y的值为true)。</p>
+<p>Note that it is generally necessary to override the  hashCode method whenever this method is overridden, so as to maintain the general contract for the  hashCode method, which states that equal objects must have equal hash codes.</p>
+<p>注意，通常需要在重写hashCode方法时重写该方法，以便维护hashCode方法的常规契约，该契约规定相等的对象必须具有相等的散列代码。</p>
+<p>the reference object with which to compare.<br>要与之进行比较的引用对象。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public boolean equals(Object obj) &#123;</span><br><span class="line">    return (this == obj);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
-<h2 id="5、clone"><a href="#5、clone" class="headerlink" title="5、clone"></a>5、clone</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Creates and returns a copy of this object.  The precise meaning of &quot;copy&quot; may depend on the class of the object. The general intent is that, for any object  x, the expression:</span><br><span class="line"> * x.clone() != x</span><br><span class="line"> * will be true, and that the expression:</span><br><span class="line"> * x.clone().getClass() == x.getClass()</span><br><span class="line"> * will be true, but these are not absolute requirements.</span><br><span class="line"> * While it is typically the case that:</span><br><span class="line"> * x.clone().equals(x)</span><br><span class="line"> * will be true, this is not an absolute requirement.</span><br><span class="line"> *</span><br><span class="line"> * 创建并返回此对象的副本。“copy”的确切含义可能取决于对象的类。一般的意图是，对于任何对象x，表达式:</span><br><span class="line"> * x.clone() != x</span><br><span class="line"> * 将是真的，表达式:</span><br><span class="line"> * x.clone(). getClass () == x. getClass()</span><br><span class="line"> * 将是真的，但这些不是绝对的要求。</span><br><span class="line"> * 而通常的情况是:</span><br><span class="line"> * x.clone().equals(x)</span><br><span class="line"> * 将是真的，这不是一个绝对的要求。</span><br><span class="line"> *</span><br><span class="line"> *</span><br><span class="line"> * By convention, the returned object should be obtained by calling  super.clone.  If a class and all of its superclasses (except Object) obey this convention, it will be the case that  x.clone().getClass() == x.getClass().</span><br><span class="line"> * 按照惯例，应该通过调用super.clone来获取返回的对象。如果一个类及其所有超类(对象除外)都遵守这个约定，那么x.c ondon (). getclass () == x.g getclass()。</span><br><span class="line"> *</span><br><span class="line"> * By convention, the object returned by this method should be independent of this object (which is being cloned).  To achieve this independence, it may be necessary to modify one or more fields of the object returned by  super.clone before returning it.  Typically, this means copying any mutable objects that comprise the internal &quot;deep structure&quot; of the object being cloned and replacing the references to these objects with references to the copies.  If a class contains only primitive fields or references to immutable objects, then it is usually the case that no fields in the object returned by  super.clone need to be modified.</span><br><span class="line"> *</span><br><span class="line"> * 按照惯例，这个方法返回的对象应该独立于这个对象(它正在被克隆)。为了实现这种独立性，可能需要修改super返回的对象的一个或多个字段。在返回之前进行克隆。通常，这意味着复制任何包含被克隆对象的内部“深层结构”的可变对象，并将对这些对象的引用替换为对副本的引用。如果一个类只包含基元字段或对不可变对象的引用，那么通常情况下super返回的对象中没有字段。克隆需要修改。</span><br><span class="line"> *</span><br><span class="line"> * The method clone for class  Object performs a specific cloning operation. First, if the class of this object does not implement the interface Cloneable, then a CloneNotSupportedException is thrown. Note that all arrays are considered to implement the interface Cloneable and that the return type of the  clone method of an array type  T[] is  T[] where T is any reference or primitive type. Otherwise, this method creates a new instance of the class of this object and initializes all its fields with exactly the contents of the corresponding fields of this object, as if by assignment; the contents of the fields are not themselves cloned. Thus, this method performs a &quot;shallow copy&quot; of this object, not a &quot;deep copy&quot; operation.</span><br><span class="line"> *</span><br><span class="line"> *</span><br><span class="line"> * 类对象的方法克隆执行特定的克隆操作。首先，如果这个对象的类没有实现Cloneable接口，那么抛出CloneNotSupportedException。注意，所有数组都被认为实现了可克隆接口，数组类型T[]的克隆方法的返回类型是T[]，其中T是任何引用或基本类型。否则，此方法创建此对象的类的一个新实例，并使用该对象相应字段的内容精确地初始化其所有字段，就像通过赋值一样;字段的内容本身不是克隆的。因此，此方法执行此对象的“浅拷贝”，而不是“深拷贝”操作。</span><br><span class="line"> *</span><br><span class="line"> * The class Object does not itself implement the interface Cloneable, so calling the clone method on an object whose class is Object will result in throwing an exception at run time.</span><br><span class="line"> *</span><br><span class="line"> * 类对象本身并不实现接口可克隆性，因此调用其类为Object的对象的克隆方法将导致在运行时抛出异常。</span><br><span class="line"> *</span><br><span class="line"> * a clone of this instance.</span><br><span class="line"> * 此实例的克隆。</span><br><span class="line"> *</span><br><span class="line"> * if the object&apos;s class does not support the Cloneable interface. Subclasses that override the clone method can also throw this exception to indicate that an instance cannot be cloned.</span><br><span class="line"> *</span><br><span class="line"> * 如果对象的类不支持可克隆接口。重写克隆方法的子类也可以抛出此异常，以指示无法克隆实例。</span><br><span class="line"> */</span><br><span class="line">protected native Object clone() throws CloneNotSupportedException;</span><br></pre></td></tr></table></figure>
+<h2 id="5、clone"><a href="#5、clone" class="headerlink" title="5、clone"></a>5、clone</h2><p>Creates and returns a copy of this object.  The precise meaning of “copy” may depend on the class of the object. The general intent is that, for any object  x, the expression:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x.clone() != x</span><br></pre></td></tr></table></figure>
+<p>will be true, and that the expression:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x.clone().getClass() == x.getClass()</span><br></pre></td></tr></table></figure>
+<p>will be true, but these are not absolute requirements.<br>While it is typically the case that:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x.clone().equals(x)</span><br></pre></td></tr></table></figure>
+<p>will be true, this is not an absolute requirement.</p>
+<p>创建并返回此对象的副本。“copy”的确切含义可能取决于对象的类。一般的意图是，对于任何对象x，表达式:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x.clone() != x</span><br></pre></td></tr></table></figure>
+<p>将是真的，表达式:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x.clone(). getClass () == x. getClass()</span><br></pre></td></tr></table></figure>
+<p>将是真的，但这些不是绝对的要求。<br>而通常的情况是:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x.clone().equals(x)</span><br></pre></td></tr></table></figure>
+<p>将是真的，这不是一个绝对的要求。</p>
+<p>By convention, the returned object should be obtained by calling  super.clone.  If a class and all of its superclasses (except Object) obey this convention, it will be the case that  x.clone().getClass() == x.getClass().<br>按照惯例，应该通过调用super.clone来获取返回的对象。如果一个类及其所有超类(对象除外)都遵守这个约定，那么x.c ondon (). getclass () == x.g getclass()。</p>
+<p>By convention, the object returned by this method should be independent of this object (which is being cloned).  To achieve this independence, it may be necessary to modify one or more fields of the object returned by  super.clone before returning it.  Typically, this means copying any mutable objects that comprise the internal “deep structure” of the object being cloned and replacing the references to these objects with references to the copies.  If a class contains only primitive fields or references to immutable objects, then it is usually the case that no fields in the object returned by  super.clone need to be modified.</p>
+<p>按照惯例，这个方法返回的对象应该独立于这个对象(它正在被克隆)。为了实现这种独立性，可能需要修改super返回的对象的一个或多个字段。在返回之前进行克隆。通常，这意味着复制任何包含被克隆对象的内部“深层结构”的可变对象，并将对这些对象的引用替换为对副本的引用。如果一个类只包含基元字段或对不可变对象的引用，那么通常情况下super返回的对象中没有字段。克隆需要修改。</p>
+<p>The method clone for class  Object performs a specific cloning operation. First, if the class of this object does not implement the interface Cloneable, then a CloneNotSupportedException is thrown. Note that all arrays are considered to implement the interface Cloneable and that the return type of the  clone method of an array type  T[] is  T[] where T is any reference or primitive type. Otherwise, this method creates a new instance of the class of this object and initializes all its fields with exactly the contents of the corresponding fields of this object, as if by assignment; the contents of the fields are not themselves cloned. Thus, this method performs a “shallow copy” of this object, not a “deep copy” operation.</p>
+<p>类对象的方法克隆执行特定的克隆操作。首先，如果这个对象的类没有实现Cloneable接口，那么抛出CloneNotSupportedException。注意，所有数组都被认为实现了可克隆接口，数组类型T[]的克隆方法的返回类型是T[]，其中T是任何引用或基本类型。否则，此方法创建此对象的类的一个新实例，并使用该对象相应字段的内容精确地初始化其所有字段，就像通过赋值一样;字段的内容本身不是克隆的。因此，此方法执行此对象的“浅拷贝”，而不是“深拷贝”操作。</p>
+<p>The class Object does not itself implement the interface Cloneable, so calling the clone method on an object whose class is Object will result in throwing an exception at run time.</p>
+<p>类对象本身并不实现接口可克隆性，因此调用其类为Object的对象的克隆方法将导致在运行时抛出异常。</p>
+<p>a clone of this instance.<br>此实例的克隆。</p>
+<p>if the object’s class does not support the Cloneable interface. Subclasses that override the clone method can also throw this exception to indicate that an instance cannot be cloned.</p>
+<p>如果对象的类不支持可克隆接口。重写克隆方法的子类也可以抛出此异常，以指示无法克隆实例。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">protected native Object clone() throws CloneNotSupportedException;</span><br></pre></td></tr></table></figure>
 
-<h2 id="6、toString"><a href="#6、toString" class="headerlink" title="6、toString"></a>6、toString</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Returns a string representation of the object. In general, the toString method returns a string that &quot;textually represents&quot; this object. The result should be a concise but informative representation that is easy for a person to read. It is recommended that all subclasses override this method.</span><br><span class="line"> *</span><br><span class="line"> * 返回对象的字符串表示形式。通常，toString方法返回一个字符串，该字符串“以文本形式表示”该对象。结果应该是简洁但信息丰富的表示，便于阅读。建议所有子类都重写此方法。</span><br><span class="line"> *</span><br><span class="line"> * The toString method for class Object returns a string consisting of the name of the class of which the object is an instance, the at-sign character ‘@’, and the unsigned hexadecimal representation of the hash code of the object. In other words, this method returns a string equal to the value of:</span><br><span class="line"> * getClass().getName() + &apos;@&apos; + Integer.toHexString(hashCode())</span><br><span class="line"> *</span><br><span class="line"> *</span><br><span class="line"> * Object类的toString方法返回一个字符串，该字符串由对象是其实例的类的名称、at符号字符“@”和对象的哈希码的无符号十六进制表示形式组成。换句话说，这个方法返回一个字符串等于:</span><br><span class="line"> * getClass().getName() + &apos;@&apos; + Integer.toHexString(hashCode())</span><br><span class="line"> *</span><br><span class="line"> * a string representation of the object.</span><br><span class="line"> * 对象的字符串表示形式。</span><br><span class="line"> */</span><br><span class="line">public String toString() &#123;</span><br><span class="line">    return getClass().getName() + &quot;@&quot; + Integer.toHexString(hashCode());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="6、toString"><a href="#6、toString" class="headerlink" title="6、toString"></a>6、toString</h2><p>Returns a string representation of the object. In general, the toString method returns a string that “textually represents” this object. The result should be a concise but informative representation that is easy for a person to read. It is recommended that all subclasses override this method.</p>
+<p>返回对象的字符串表示形式。通常，toString方法返回一个字符串，该字符串“以文本形式表示”该对象。结果应该是简洁但信息丰富的表示，便于阅读。建议所有子类都重写此方法。</p>
+<p>The toString method for class Object returns a string consisting of the name of the class of which the object is an instance, the at-sign character ‘@’, and the unsigned hexadecimal representation of the hash code of the object. In other words, this method returns a string equal to the value of:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">getClass().getName() + &apos;@&apos; + Integer.toHexString(hashCode())</span><br></pre></td></tr></table></figure>
+
+<p>Object类的toString方法返回一个字符串，该字符串由对象是其实例的类的名称、at符号字符“@”和对象的哈希码的无符号十六进制表示形式组成。换句话说，这个方法返回一个字符串等于:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">getClass().getName() + &apos;@&apos; + Integer.toHexString(hashCode())</span><br></pre></td></tr></table></figure>
+<p>a string representation of the object.<br>对象的字符串表示形式。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public String toString() &#123;</span><br><span class="line">    return getClass().getName() + &quot;@&quot; + Integer.toHexString(hashCode());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 <h2 id="7、notify"><a href="#7、notify" class="headerlink" title="7、notify"></a>7、notify</h2><h3 id="7-1、notify"><a href="#7-1、notify" class="headerlink" title="7.1、notify"></a>7.1、notify</h3><h3 id="7-2、notifyAll"><a href="#7-2、notifyAll" class="headerlink" title="7.2、notifyAll"></a>7.2、notifyAll</h3><h2 id="8、wait"><a href="#8、wait" class="headerlink" title="8、wait"></a>8、wait</h2><h3 id="8-1、wait"><a href="#8-1、wait" class="headerlink" title="8.1、wait()"></a>8.1、wait()</h3><h3 id="8-2、wait-long-timeout"><a href="#8-2、wait-long-timeout" class="headerlink" title="8.2、wait(long timeout)"></a>8.2、wait(long timeout)</h3><h3 id="8-3、wait-long-timeout-int-nanos"><a href="#8-3、wait-long-timeout-int-nanos" class="headerlink" title="8.3、wait(long timeout, int nanos)"></a>8.3、wait(long timeout, int nanos)</h3><h2 id="9、finalize"><a href="#9、finalize" class="headerlink" title="9、finalize"></a>9、finalize</h2>
@@ -284,7 +547,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2019-10-29 16:06:33 / Modified: 16:08:40" itemprop="dateCreated datePublished" datetime="2019-10-29T16:06:33+08:00">2019-10-29</time>
+              <time title="Created: 2019-10-29 16:06:33 / Modified: 22:14:57" itemprop="dateCreated datePublished" datetime="2019-10-29T16:06:33+08:00">2019-10-29</time>
             </span>
 
           
@@ -341,10 +604,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2019-10-29 06:41:22 / Modified: 11:34:10" itemprop="dateCreated datePublished" datetime="2019-10-29T06:41:22+08:00">2019-10-29</time>
+              <time title="Created: 2019-10-29 06:41:22" itemprop="dateCreated datePublished" datetime="2019-10-29T06:41:22+08:00">2019-10-29</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-10-30 11:04:05" itemprop="dateModified" datetime="2019-10-30T11:04:05+08:00">2019-10-30</time>
+              </span>
 
           
 
@@ -404,6 +673,9 @@
 <p>通过hash值获取索引：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(table.length - 1) &amp; hash</span><br><span class="line">取表长度-1与哈希值进行位与运算的结果。</span><br></pre></td></tr></table></figure>
 
+
+
+<p>负载因子：0.75 超过table大小的0.75就会触发扩容。<br>tableSizeFor<br>返回一个大于等于且最接近 cap 的2的幂次方整数</p>
 
       
     </div>
@@ -692,7 +964,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-count">9</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
