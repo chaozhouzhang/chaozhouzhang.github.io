@@ -50,16 +50,17 @@
   };
 </script>
 
-  <meta name="keywords" content="Java,Java多线程">
+  <meta name="description" content="#">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java多线程">
-<meta property="og:url" content="https:&#x2F;&#x2F;chaozhouzhang.github.io&#x2F;2019&#x2F;10&#x2F;24&#x2F;Java%E5%A4%9A%E7%BA%BF%E7%A8%8B&#x2F;index.html">
+<meta property="og:title" content="setContentView源码解析">
+<meta property="og:url" content="https:&#x2F;&#x2F;chaozhouzhang.github.io&#x2F;2019&#x2F;11&#x2F;07&#x2F;setContentView%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90&#x2F;index.html">
 <meta property="og:site_name" content="张潮州">
+<meta property="og:description" content="#">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-10-24T14:05:44.611Z">
+<meta property="og:updated_time" content="2019-11-07T08:28:02.273Z">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://chaozhouzhang.github.io/2019/10/24/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/">
+<link rel="canonical" href="https://chaozhouzhang.github.io/2019/11/07/setContentView%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/">
 
 
 <script id="page-configurations">
@@ -73,7 +74,7 @@
   };
 </script>
 
-  <title>Java多线程 | 张潮州</title>
+  <title>setContentView源码解析 | 张潮州</title>
   
 
 
@@ -189,7 +190,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
-    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2019/10/24/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/">
+    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2019/11/07/setContentView%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/header.jpeg">
@@ -202,7 +203,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Java多线程
+          setContentView源码解析
         </h1>
 
         <div class="post-meta">
@@ -213,18 +214,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2019-10-24 21:56:27 / Modified: 22:05:44" itemprop="dateCreated datePublished" datetime="2019-10-24T21:56:27+08:00">2019-10-24</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
+              <time title="Created: 2019-11-07 16:27:58 / Modified: 16:28:02" itemprop="dateCreated datePublished" datetime="2019-11-07T16:27:58+08:00">2019-11-07</time>
             </span>
 
           
@@ -238,7 +228,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        
+        <p>#</p>
+
     </div>
 
     
@@ -246,25 +237,21 @@
     
 
       <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/Java/" rel="tag"># Java</a>
-              <a href="/tags/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/" rel="tag"># Java多线程</a>
-          </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
-                <a href="/2019/10/24/Android%E5%90%AF%E5%8A%A8/" rel="next" title="Android启动">
-                  <i class="fa fa-chevron-left"></i> Android启动
+                <a href="/2019/11/02/Runnable%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" rel="next" title="Runnable源码解析">
+                  <i class="fa fa-chevron-left"></i> Runnable源码解析
                 </a>
             </div>
 
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-                <a href="/2019/10/29/HashMap%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" rel="prev" title="HashMap源码解析">
-                  HashMap源码解析 <i class="fa fa-chevron-right"></i>
+                <a href="/2019/11/08/%E6%8A%BD%E8%B1%A1%E7%B1%BBContext%E7%9A%84%E6%8A%BD%E8%B1%A1%E6%96%B9%E6%B3%95/" rel="prev" title="抽象类Context的抽象方法">
+                  抽象类Context的抽象方法 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>

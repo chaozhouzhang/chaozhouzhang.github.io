@@ -50,16 +50,17 @@
   };
 </script>
 
-  <meta name="keywords" content="Java,Java多线程">
+  <meta name="description" content="Runnable源码解析The Runnable interface should be implemented by any class whose instances are intended to be executed by a thread. The class must define a method of no arguments called run.Runnable接口应该由任何">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java多线程">
-<meta property="og:url" content="https:&#x2F;&#x2F;chaozhouzhang.github.io&#x2F;2019&#x2F;10&#x2F;24&#x2F;Java%E5%A4%9A%E7%BA%BF%E7%A8%8B&#x2F;index.html">
+<meta property="og:title" content="Runnable源码解析">
+<meta property="og:url" content="https:&#x2F;&#x2F;chaozhouzhang.github.io&#x2F;2019&#x2F;11&#x2F;02&#x2F;Runnable%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90&#x2F;index.html">
 <meta property="og:site_name" content="张潮州">
+<meta property="og:description" content="Runnable源码解析The Runnable interface should be implemented by any class whose instances are intended to be executed by a thread. The class must define a method of no arguments called run.Runnable接口应该由任何">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-10-24T14:05:44.611Z">
+<meta property="og:updated_time" content="2019-11-02T09:22:15.870Z">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://chaozhouzhang.github.io/2019/10/24/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/">
+<link rel="canonical" href="https://chaozhouzhang.github.io/2019/11/02/Runnable%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/">
 
 
 <script id="page-configurations">
@@ -73,7 +74,7 @@
   };
 </script>
 
-  <title>Java多线程 | 张潮州</title>
+  <title>Runnable源码解析 | 张潮州</title>
   
 
 
@@ -189,7 +190,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
-    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2019/10/24/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/">
+    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2019/11/02/Runnable%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/header.jpeg">
@@ -202,7 +203,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Java多线程
+          Runnable源码解析
         </h1>
 
         <div class="post-meta">
@@ -213,18 +214,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2019-10-24 21:56:27 / Modified: 22:05:44" itemprop="dateCreated datePublished" datetime="2019-10-24T21:56:27+08:00">2019-10-24</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
+              <time title="Created: 2019-11-02 17:07:29 / Modified: 17:22:15" itemprop="dateCreated datePublished" datetime="2019-11-02T17:07:29+08:00">2019-11-02</time>
             </span>
 
           
@@ -238,7 +228,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        
+        <h1 id="Runnable源码解析"><a href="#Runnable源码解析" class="headerlink" title="Runnable源码解析"></a>Runnable源码解析</h1><p>The Runnable interface should be implemented by any class whose instances are intended to be executed by a thread. The class must define a method of no arguments called run.<br>Runnable接口应该由任何类实现，该类实例将被线程所执行。该类必须定义一个名为run的无参数方法。</p>
+<p>This interface is designed to provide a common protocol for objects that wish to execute code while they are active. For example,Runnable is implemented by class Thread. Being active simply means that a thread has been started and has not yet been stopped.<br>此接口旨在为希望在活动状态下执行代码的对象提供公共协议。例如，Runnable是由class Thread实现的。激活仅仅意味着线程已经启动，还没有被停止。</p>
+<p>In addition, Runnable provides the means for a class to be active while not subclassing Thread. A class that implements Runnable can run without subclassing Thread by instantiating a Thread instance and passing itself in as the target.  In most cases, the Runnable interface should  be used if you are only planning to override the run() method and no other Thread methods. This is important because classes should not be subclassed unless the programmer intends on modifying or enhancing the fundamental behavior of the class.<br>另外，Runnable提供了在不子类化Thread的情况下使类处于活动状态的方法。实现Runnable的类可以通过实例化Thread实例并将自身作为目标传递来运行，而无需子类化Thread。在大多数情况下，如果只打算覆盖run()方法而不打算覆盖其他线程方法，那么应该使用Runnable接口。这很重要，因为除非程序员打算修改或增强类的基本行为，否则不应该子类化类。</p>
+<p>When an object implementing interface Runnable is used to create a thread, starting the thread causes the object’s run method to be called in that separately executing thread.<br>当使用实现接口Runnable的对象创建线程时，启动线程将导致在单独执行的线程中调用对象的run方法。</p>
+<p>The general contract of the method run is that it may take any action whatsoever.<br>方法run的一般约定是它可以采取任何操作。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * @see     java.lang.Thread</span><br><span class="line"> * @see     java.util.concurrent.Callable</span><br><span class="line"> * @since   JDK1.0</span><br><span class="line"> */</span><br><span class="line">@FunctionalInterface</span><br><span class="line">public interface Runnable &#123;</span><br><span class="line">    /**</span><br><span class="line">     * @see     java.lang.Thread#run()</span><br><span class="line">     */</span><br><span class="line">    public abstract void run();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
     </div>
 
     
@@ -246,25 +243,21 @@
     
 
       <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/Java/" rel="tag"># Java</a>
-              <a href="/tags/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/" rel="tag"># Java多线程</a>
-          </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
-                <a href="/2019/10/24/Android%E5%90%AF%E5%8A%A8/" rel="next" title="Android启动">
-                  <i class="fa fa-chevron-left"></i> Android启动
+                <a href="/2019/11/02/Thread%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" rel="next" title="Thread源码解析">
+                  <i class="fa fa-chevron-left"></i> Thread源码解析
                 </a>
             </div>
 
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-                <a href="/2019/10/29/HashMap%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" rel="prev" title="HashMap源码解析">
-                  HashMap源码解析 <i class="fa fa-chevron-right"></i>
+                <a href="/2019/11/07/setContentView%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" rel="prev" title="setContentView源码解析">
+                  setContentView源码解析 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>
@@ -304,6 +297,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Runnable源码解析"><span class="nav-number">1.</span> <span class="nav-text">Runnable源码解析</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

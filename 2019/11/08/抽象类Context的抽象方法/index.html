@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.4.2',
+    exturl: false,
+    sidebar: {"position":"left","display":"always","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="Context   方法 解释    AssetManager getAssets() 获取资源管理器   Resources getResources() 获取资源   PackageManager getPackageManager() 获取包管理器   ContentResolver getContentResolver() 获取内容解析器   Looper getMainLooper()">
+<meta property="og:type" content="article">
+<meta property="og:title" content="抽象类Context的抽象方法">
+<meta property="og:url" content="https:&#x2F;&#x2F;chaozhouzhang.github.io&#x2F;2019&#x2F;11&#x2F;08&#x2F;%E6%8A%BD%E8%B1%A1%E7%B1%BBContext%E7%9A%84%E6%8A%BD%E8%B1%A1%E6%96%B9%E6%B3%95&#x2F;index.html">
+<meta property="og:site_name" content="张潮州">
+<meta property="og:description" content="Context   方法 解释    AssetManager getAssets() 获取资源管理器   Resources getResources() 获取资源   PackageManager getPackageManager() 获取包管理器   ContentResolver getContentResolver() 获取内容解析器   Looper getMainLooper()">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-11-08T09:32:39.274Z">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://chaozhouzhang.github.io/2019/11/08/%E6%8A%BD%E8%B1%A1%E7%B1%BBContext%E7%9A%84%E6%8A%BD%E8%B1%A1%E6%96%B9%E6%B3%95/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>抽象类Context的抽象方法 | 张潮州</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">张潮州</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2019/11/08/%E6%8A%BD%E8%B1%A1%E7%B1%BBContext%E7%9A%84%E6%8A%BD%E8%B1%A1%E6%96%B9%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/header.jpeg">
+      <meta itemprop="name" content="张潮州">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="张潮州">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          抽象类Context的抽象方法
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2019-11-08 13:58:46 / Modified: 17:32:39" itemprop="dateCreated datePublished" datetime="2019-11-08T13:58:46+08:00">2019-11-08</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Context"><a href="#Context" class="headerlink" title="Context"></a>Context</h1><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>AssetManager getAssets()</td>
+<td>获取资源管理器</td>
+</tr>
+<tr>
+<td>Resources getResources()</td>
+<td>获取资源</td>
+</tr>
+<tr>
+<td>PackageManager getPackageManager()</td>
+<td>获取包管理器</td>
+</tr>
+<tr>
+<td>ContentResolver getContentResolver()</td>
+<td>获取内容解析器</td>
+</tr>
+<tr>
+<td>Looper getMainLooper()</td>
+<td>获取主线程循环器</td>
+</tr>
+<tr>
+<td>Context getApplicationContext()</td>
+<td>获取应用上下文</td>
+</tr>
+<tr>
+<td>void setTheme(int resid)</td>
+<td>根据资源ID设置主题</td>
+</tr>
+<tr>
+<td>Resources.Theme getTheme()</td>
+<td>获取资源主题</td>
+</tr>
+<tr>
+<td>ClassLoader getClassLoader()</td>
+<td>获取类加载器</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>String getPackageName()</td>
+<td>获取包名</td>
+</tr>
+<tr>
+<td>ApplicationInfo getApplicationInfo()</td>
+<td>获取应用信息</td>
+</tr>
+<tr>
+<td>String getPackageResourcePath()</td>
+<td>获取包资源路径</td>
+</tr>
+<tr>
+<td>String getPackageCodePath()</td>
+<td>获取包代码路径</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SharedPreferences getSharedPreferences(String name, int mode)</td>
+<td>根据名称和模式获取分享偏好</td>
+</tr>
+<tr>
+<td>boolean moveSharedPreferencesFrom(Context sourceContext, String name)</td>
+<td>资源根据上下文和名称移动分享偏好</td>
+</tr>
+<tr>
+<td>deleteSharedPreferences(String name)</td>
+<td>根据名称删除分享偏好</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>FileInputStream openFileInput(String name)</td>
+<td>根据名称打开文件输入流，文件不存在抛出FileNotFoundException异常</td>
+</tr>
+<tr>
+<td>FileOutputStream openFileOutput(String name, int mode)</td>
+<td>根据名称和模式打开文件输出流，文件不存在抛出FileNotFoundException异常</td>
+</tr>
+<tr>
+<td>boolean deleteFile(String name)</td>
+<td>根据名称删除文件</td>
+</tr>
+<tr>
+<td>File getFileStreamPath(String name)</td>
+<td>根据名称获取文件</td>
+</tr>
+<tr>
+<td>File getDataDir()</td>
+<td>获取数据目录文件</td>
+</tr>
+<tr>
+<td>File getFilesDir()</td>
+<td>获取文件目录文件</td>
+</tr>
+<tr>
+<td>File getNoBackupFilesDir()</td>
+<td>获取非恢复文件目录文件</td>
+</tr>
+<tr>
+<td>File getExternalFilesDir(@Nullable String type)</td>
+<td>根据类型获取外置文件目录文件</td>
+</tr>
+<tr>
+<td>File[] getExternalFilesDirs(String type)</td>
+<td>根据类型获取外置文件目录文件数组</td>
+</tr>
+<tr>
+<td>File getObbDir()</td>
+<td>获取OBB目录文件</td>
+</tr>
+<tr>
+<td>File[] getObbDirs()</td>
+<td>获取OBB目录文件数组</td>
+</tr>
+<tr>
+<td>File getCacheDir()</td>
+<td>获取缓存目录文件</td>
+</tr>
+<tr>
+<td>File getCodeCacheDir()</td>
+<td>获取代码缓存目录文件</td>
+</tr>
+<tr>
+<td>File getExternalCacheDir()</td>
+<td>获取外置缓存目录文件</td>
+</tr>
+<tr>
+<td>File[] getExternalCacheDirs()</td>
+<td>获取外置缓存目录文件数组</td>
+</tr>
+<tr>
+<td>File[] getExternalMediaDirs()</td>
+<td>获取外置媒体目录文件数组</td>
+</tr>
+<tr>
+<td>String[] fileList()</td>
+<td>获取文件字符串数组</td>
+</tr>
+<tr>
+<td>File getDir(String name, int mode)</td>
+<td>根据名称和模式获取文件</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SQLiteDatabase openOrCreateDatabase(String name, int mode, SQLiteDatabase.CursorFactory factory)</td>
+<td>根据名称、模式和光标工厂，打开或创造数据库</td>
+</tr>
+<tr>
+<td>SQLiteDatabase openOrCreateDatabase(String name, int mode, SQLiteDatabase.CursorFactory factory, @Nullable DatabaseErrorHandler errorHandler)</td>
+<td>根据名称、模式、光标工厂和数据库错误处理器，打开或创造数据库</td>
+</tr>
+<tr>
+<td>boolean moveDatabaseFrom(Context sourceContext, String name)</td>
+<td>根据资源上下文和名称移动数据库</td>
+</tr>
+<tr>
+<td>boolean deleteDatabase(String name)</td>
+<td>根据名称删除数据库</td>
+</tr>
+<tr>
+<td>File getDatabasePath(String name)</td>
+<td>根据名称获取数据库路径文件</td>
+</tr>
+<tr>
+<td>String[] databaseList()</td>
+<td>获取数据库字符串数组</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Drawable getWallpaper()</td>
+<td>获取壁纸</td>
+</tr>
+<tr>
+<td>Drawable peekWallpaper()</td>
+<td>读取壁纸</td>
+</tr>
+<tr>
+<td>int getWallpaperDesiredMinimumWidth()</td>
+<td>获取壁纸要求的最小宽度</td>
+</tr>
+<tr>
+<td>int getWallpaperDesiredMinimumHeight()</td>
+<td>获取壁纸要求的最小高度</td>
+</tr>
+<tr>
+<td>void setWallpaper(Bitmap bitmap)</td>
+<td>通过位图设置壁纸，传输有问题则抛出IO异常</td>
+</tr>
+<tr>
+<td>void setWallpaper(InputStream data)</td>
+<td>通过输入流设置壁纸，传输有问题则抛出IO异常</td>
+</tr>
+<tr>
+<td>void clearWallpaper()</td>
+<td>清除壁纸</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>void startActivity(Intent intent)</td>
+<td>通过意图发起活动</td>
+</tr>
+<tr>
+<td>void startActivity(Intent intent, @Nullable Bundle options)</td>
+<td>通过意图和数据来发起意图</td>
+</tr>
+<tr>
+<td>void startActivities(Intent[] intents)</td>
+<td>通过意图数组发起活动数组</td>
+</tr>
+<tr>
+<td>void startActivities(Intent[] intents, Bundle options)</td>
+<td>通过意图数组和数据发起活动数组</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>void startIntentSender(IntentSender intent, @Nullable Intent fillInIntent, int flagsMask, int flagsValues, int extraFlags)</td>
+<td></td>
+</tr>
+<tr>
+<td>void startIntentSender(IntentSender intent, @Nullable Intent fillInIntent, int flagsMask, int flagsValues, int extraFlags, @Nullable Bundle options)</td>
+<td></td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>void sendBroadcast(Intent intent)</td>
+<td>通过意图发送广播</td>
+</tr>
+<tr>
+<td>void sendBroadcast(Intent intent, @Nullable String receiverPermission)</td>
+<td>通过意图和接收权限发送广播</td>
+</tr>
+<tr>
+<td>void sendOrderedBroadcast(Intent intent, @Nullable String receiverPermission)</td>
+<td>通过意图和接收权限发送有序广播</td>
+</tr>
+<tr>
+<td>void sendOrderedBroadcast(@NonNull Intent intent, @Nullable String receiverPermission, @Nullable BroadcastReceiver resultReceiver, @Nullable Handler scheduler, int initialCode, @Nullable String initialData, @Nullable Bundle initialExtras)</td>
+<td></td>
+</tr>
+<tr>
+<td>void sendBroadcastAsUser(Intent intent, UserHandle user)</td>
+<td></td>
+</tr>
+<tr>
+<td>void sendBroadcastAsUser(Intent intent, UserHandle user, @Nullable String receiverPermission)</td>
+<td></td>
+</tr>
+<tr>
+<td>void sendOrderedBroadcastAsUser(Intent intent, UserHandle user, @Nullable String receiverPermission, BroadcastReceiver resultReceiver, @Nullable Handler scheduler, int initialCode, @Nullable String initialData, @Nullable Bundle initialExtras)</td>
+<td></td>
+</tr>
+<tr>
+<td>void sendStickyBroadcast(Intent intent)</td>
+<td>发送粘性广播</td>
+</tr>
+<tr>
+<td>void sendStickyOrderedBroadcast(Intent intent, BroadcastReceiver resultReceiver, @Nullable Handler scheduler, int initialCode, @Nullable String initialData, @Nullable Bundle initialExtras)</td>
+<td>发送粘性有序广播</td>
+</tr>
+<tr>
+<td>void removeStickyBroadcast(Intent intent)</td>
+<td>通过意图移除粘性广播</td>
+</tr>
+<tr>
+<td>void sendStickyBroadcastAsUser(Intent intent, UserHandle user)</td>
+<td></td>
+</tr>
+<tr>
+<td>void sendStickyOrderedBroadcastAsUser(Intent intent, UserHandle user, BroadcastReceiver resultReceiver, @Nullable Handler scheduler, int initialCode, @Nullable String initialData, @Nullable Bundle initialExtras)</td>
+<td></td>
+</tr>
+<tr>
+<td>void removeStickyBroadcastAsUser(Intent intent, UserHandle user)</td>
+<td></td>
+</tr>
+<tr>
+<td>Intent registerReceiver(@Nullable BroadcastReceiver receiver, IntentFilter filter)</td>
+<td>注册广播</td>
+</tr>
+<tr>
+<td>Intent registerReceiver(@Nullable BroadcastReceiver receiver, IntentFilter filter, int flags)</td>
+<td>注册广播</td>
+</tr>
+<tr>
+<td>Intent registerReceiver(BroadcastReceiver receiver, IntentFilter filter, @Nullable String broadcastPermission, @Nullable Handler scheduler)</td>
+<td>注册广播</td>
+</tr>
+<tr>
+<td>Intent registerReceiver(BroadcastReceiver receiver, IntentFilter filter, @Nullable String broadcastPermission, @Nullable Handler scheduler, int flags)</td>
+<td></td>
+</tr>
+<tr>
+<td>void unregisterReceiver(BroadcastReceiver receiver)</td>
+<td>注销广播</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ComponentName startService(Intent service)</td>
+<td>启动服务，并返回组件名称</td>
+</tr>
+<tr>
+<td>ComponentName startForegroundService(Intent service)</td>
+<td>启动前台服务，并返回组件名称</td>
+</tr>
+<tr>
+<td>boolean stopService(Intent service)</td>
+<td>停止服务</td>
+</tr>
+<tr>
+<td>boolean bindService(Intent service, @NonNull ServiceConnection conn, int flags)</td>
+<td>绑定服务</td>
+</tr>
+<tr>
+<td>void unbindService(@NonNull ServiceConnection conn)</td>
+<td>解绑服务</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>boolean startInstrumentation(@NonNull ComponentName className, @Nullable String profileFile, @Nullable Bundle arguments)</td>
+<td>启动</td>
+</tr>
+<tr>
+<td>Object getSystemService(@NonNull String name)</td>
+<td>根据名称获取系统服务</td>
+</tr>
+<tr>
+<td>String getSystemServiceName(@NonNull Class&lt;?&gt; serviceClass)</td>
+<td>根据类获取系统服务名称</td>
+</tr>
+<tr>
+<td>int checkPermission(@NonNull String permission, int pid, int uid)</td>
+<td>检测权限</td>
+</tr>
+<tr>
+<td>int checkCallingPermission(@NonNull String permission)</td>
+<td>检测拨打权限</td>
+</tr>
+<tr>
+<td>int checkCallingOrSelfPermission(@NonNull String permission)</td>
+<td>检测</td>
+</tr>
+<tr>
+<td>int checkSelfPermission(@NonNull String permission)</td>
+<td>检测</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Context createPackageContext(String packageName, int flags)</td>
+<td>创建包上下文，如果包名不存在则抛出PackageManager.NameNotFoundException异常</td>
+</tr>
+<tr>
+<td>Context createContextForSplit(String splitName)</td>
+<td></td>
+</tr>
+<tr>
+<td>Context createConfigurationContext(@NonNull Configuration overrideConfiguration)</td>
+<td></td>
+</tr>
+<tr>
+<td>Context createDisplayContext(@NonNull Display display)</td>
+<td></td>
+</tr>
+<tr>
+<td>Context createDeviceProtectedStorageContext()</td>
+<td></td>
+</tr>
+<tr>
+<td>boolean isDeviceProtectedStorage()</td>
+<td></td>
+</tr>
+</tbody></table>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2019/11/07/setContentView%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" rel="next" title="setContentView源码解析">
+                  <i class="fa fa-chevron-left"></i> setContentView源码解析
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2019/11/09/iOS%E5%BC%80%E5%8F%91%E7%BB%8F%E9%AA%8C/" rel="prev" title="iOS开发经验">
+                  iOS开发经验 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Context"><span class="nav-number">1.</span> <span class="nav-text">Context</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="张潮州"
+    src="/images/header.jpeg">
+  <p class="site-author-name" itemprop="name">张潮州</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">张潮州</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.0.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.4.2
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -50,31 +50,28 @@
   };
 </script>
 
-  <meta name="description" content="1、类注释Hash table based implementation of the Map interface. This implementation provides all of the optional map operations, and permits null values and the null key.  The HashMap class is roughly equi">
-<meta property="og:type" content="article">
-<meta property="og:title" content="HashMap源码解析">
-<meta property="og:url" content="https:&#x2F;&#x2F;chaozhouzhang.github.io&#x2F;2019&#x2F;10&#x2F;29&#x2F;HashMap%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90&#x2F;index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="张潮州">
+<meta property="og:url" content="https:&#x2F;&#x2F;chaozhouzhang.github.io&#x2F;page&#x2F;2&#x2F;index.html">
 <meta property="og:site_name" content="张潮州">
-<meta property="og:description" content="1、类注释Hash table based implementation of the Map interface. This implementation provides all of the optional map operations, and permits null values and the null key.  The HashMap class is roughly equi">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-10-30T03:04:05.570Z">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://chaozhouzhang.github.io/2019/10/29/HashMap%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/">
+<link rel="canonical" href="https://chaozhouzhang.github.io/page/2/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true,
+    isHome: true,
+    isPost: false,
     isPage: false,
     isArchive: false
   };
 </script>
 
-  <title>HashMap源码解析 | 张潮州</title>
+  <title>张潮州</title>
   
 
 
@@ -186,10 +183,10 @@
             
 
   <div class="posts-expand">
-      
+        
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
     <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2019/10/29/HashMap%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -203,7 +200,8 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          HashMap源码解析
+          
+            <a href="/2019/10/29/HashMap%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" class="post-title-link" itemprop="url">HashMap源码解析</a>
         </h1>
 
         <div class="post-meta">
@@ -234,7 +232,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="1、类注释"><a href="#1、类注释" class="headerlink" title="1、类注释"></a>1、类注释</h2><p>Hash table based implementation of the Map interface. This implementation provides all of the optional map operations, and permits null values and the null key.  The HashMap class is roughly equivalent to Hashtable, except that it is unsynchronized and permits nulls.  This class makes no guarantees as to the order of the map; in particular, it does not guarantee that the order will remain constant over time.</p>
+          <h2 id="1、类注释"><a href="#1、类注释" class="headerlink" title="1、类注释"></a>1、类注释</h2><p>Hash table based implementation of the Map interface. This implementation provides all of the optional map operations, and permits null values and the null key.  The HashMap class is roughly equivalent to Hashtable, except that it is unsynchronized and permits nulls.  This class makes no guarantees as to the order of the map; in particular, it does not guarantee that the order will remain constant over time.</p>
 <p>基于哈希表实现的映射接口。此实现提供所有可选的映射操作，并允许空值和空键。HashMap类大致相当于Hashtable，只是它是不同步的，并且允许为空。该类不保证映射的顺序;特别是，它不能保证映射在一段时间内保持不变。</p>
 <p>This implementation provides constant-time performance for the basic operations get and put, assuming the hash function disperses the elements properly among the buckets.  Iteration over collection views requires time proportional to the “capacity” of the HashMap instance (the number of buckets) plus its size (the number of key-value mappings).  Thus, it’s very important not to set the initial capacity too high (or the load factor too low) if iteration performance is important.</p>
 <p>这个实现为基本操作get和put提供了固定时间的性能，假设散列函数正确地将元素分散到各个bucket中。集合视图的迭代需要与HashMap实例的“容量”(桶的数量)及其大小(键值映射的数量)成比例的时间。因此，如果迭代性能很重要，那么不要将初始容量设置得太高(或负载因子太低)是非常重要的。</p>
@@ -285,39 +283,253 @@
 
 <p>负载因子：0.75 超过table大小的0.75就会触发扩容。<br>tableSizeFor<br>返回一个大于等于且最接近 cap 的2的幂次方整数</p>
 
+      
     </div>
 
     
     
     
-
       <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
 
         
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2019/10/24/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/">
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/2019/10/24/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/" rel="next" title="Java多线程">
-                  <i class="fa fa-chevron-left"></i> Java多线程
-                </a>
-            </div>
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/header.jpeg">
+      <meta itemprop="name" content="张潮州">
+      <meta itemprop="description" content="">
+    </span>
 
-            <span class="post-nav-divider"></span>
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="张潮州">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/10/24/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/" class="post-title-link" itemprop="url">Java多线程</a>
+        </h1>
 
-            <div class="post-nav-prev post-nav-item">
-                <a href="/2019/10/29/hashCode%E8%A7%A3%E6%9E%90/" rel="prev" title="hashCode解析">
-                  hashCode解析 <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
-      </footer>
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2019-10-24 21:56:27 / Modified: 22:05:44" itemprop="dateCreated datePublished" datetime="2019-10-24T21:56:27+08:00">2019-10-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
     
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2019/10/24/Android%E5%90%AF%E5%8A%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/header.jpeg">
+      <meta itemprop="name" content="张潮州">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="张潮州">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/10/24/Android%E5%90%AF%E5%8A%A8/" class="post-title-link" itemprop="url">Android启动</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-10-24 17:14:00" itemprop="dateCreated datePublished" datetime="2019-10-24T17:14:00+08:00">2019-10-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-10-25 23:10:18" itemprop="dateModified" datetime="2019-10-25T23:10:18+08:00">2019-10-25</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Android启动"><a href="#Android启动" class="headerlink" title="Android启动"></a>Android启动</h1>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2019/10/24/Hexo%E4%BD%BF%E7%94%A8%E6%96%87%E6%A1%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/header.jpeg">
+      <meta itemprop="name" content="张潮州">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="张潮州">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/10/24/Hexo%E4%BD%BF%E7%94%A8%E6%96%87%E6%A1%A3/" class="post-title-link" itemprop="url">Hexo使用文档</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2019-10-24 14:59:57 / Modified: 22:05:55" itemprop="dateCreated datePublished" datetime="2019-10-24T14:59:57+08:00">2019-10-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hexo/" itemprop="url" rel="index">
+                    <span itemprop="name">Hexo</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
   </article>
   
   
   
 
   </div>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+  </nav>
+
 
 
           </div>
@@ -346,7 +558,6 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、类注释"><span class="nav-number">1.</span> <span class="nav-text">1、类注释</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、实现注意事项"><span class="nav-number">2.</span> <span class="nav-text">2、实现注意事项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、实现"><span class="nav-number">3.</span> <span class="nav-text">3、实现</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
