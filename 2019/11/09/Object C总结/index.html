@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.4.2',
+    exturl: false,
+    sidebar: {"position":"left","display":"always","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="接口界面文件MyClass.h： 123456@interface MyClass:NSObject&amp;#123; &#x2F;&#x2F; 类变量声明&amp;#125;&#x2F;&#x2F; 类属性声明&#x2F;&#x2F; 类方法和声明@end 执行&#x2F;实现执行&#x2F;实现文件MyClass.m： 123@implementation MyClass&#x2F;&#x2F; 类方法定义@end  创建对象创建MyClass对象： 1MyClass  *objectName = [[M">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Object C总结">
+<meta property="og:url" content="https:&#x2F;&#x2F;chaozhouzhang.github.io&#x2F;2019&#x2F;11&#x2F;09&#x2F;Object%20C%E6%80%BB%E7%BB%93&#x2F;index.html">
+<meta property="og:site_name" content="张潮州">
+<meta property="og:description" content="接口界面文件MyClass.h： 123456@interface MyClass:NSObject&amp;#123; &#x2F;&#x2F; 类变量声明&amp;#125;&#x2F;&#x2F; 类属性声明&#x2F;&#x2F; 类方法和声明@end 执行&#x2F;实现执行&#x2F;实现文件MyClass.m： 123@implementation MyClass&#x2F;&#x2F; 类方法定义@end  创建对象创建MyClass对象： 1MyClass  *objectName = [[M">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-11-11T08:31:57.281Z">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://chaozhouzhang.github.io/2019/11/09/Object%20C%E6%80%BB%E7%BB%93/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Object C总结 | 张潮州</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">张潮州</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2019/11/09/Object%20C%E6%80%BB%E7%BB%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/header.jpeg">
+      <meta itemprop="name" content="张潮州">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="张潮州">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Object C总结
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-11-09 15:18:52" itemprop="dateCreated datePublished" datetime="2019-11-09T15:18:52+08:00">2019-11-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-11-11 16:31:57" itemprop="dateModified" datetime="2019-11-11T16:31:57+08:00">2019-11-11</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h2><p>界面文件MyClass.h：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@interface MyClass:NSObject&#123; </span><br><span class="line">// 类变量声明</span><br><span class="line">&#125;</span><br><span class="line">// 类属性声明</span><br><span class="line">// 类方法和声明</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<h2 id="执行-实现"><a href="#执行-实现" class="headerlink" title="执行/实现"></a>执行/实现</h2><p>执行/实现文件MyClass.m：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@implementation MyClass</span><br><span class="line">// 类方法定义</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+
+<h2 id="创建对象"><a href="#创建对象" class="headerlink" title="创建对象"></a>创建对象</h2><p>创建MyClass对象：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MyClass  *objectName = [[MyClass alloc]init] ;</span><br></pre></td></tr></table></figure>
+
+<h2 id="声明方法"><a href="#声明方法" class="headerlink" title="声明方法"></a>声明方法</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-(returnType)methodName:(typeName) variable1 :(typeName)variable2;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-(void)calculateAreaForRectangleWithLength:(CGfloat)length </span><br><span class="line">andBreadth:(CGfloat)breadth;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="调用方法"><a href="#调用方法" class="headerlink" title="调用方法"></a>调用方法</h2><p>Self用来指定它是一个类的方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[self calculateAreaForRectangleWithLength:30 andBreadth:20];</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="声明类方法"><a href="#声明类方法" class="headerlink" title="声明类方法"></a>声明类方法</h2><p>直接而无需创建的对象，可以访问类方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">+(void)simpleClassMethod;</span><br></pre></td></tr></table></figure>
+<h2 id="调用类方法"><a href="#调用类方法" class="headerlink" title="调用类方法"></a>调用类方法</h2><p>可以通过使用类名访问类方法。<br>使用类名MyClass调用类方法simpleClassMethod：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[MyClass simpleClassMethod];</span><br></pre></td></tr></table></figure>
+<h2 id="声明实例方法"><a href="#声明实例方法" class="headerlink" title="声明实例方法"></a>声明实例方法</h2><p>创建类的对象后只访问实例方法，内存分配到的实例变量。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-(void)simpleInstanceMethod;</span><br></pre></td></tr></table></figure>
+
+<h2 id="调用实例方法"><a href="#调用实例方法" class="headerlink" title="调用实例方法"></a>调用实例方法</h2><p>创建类的对象后，可以调用实例方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MyClass  *objectName = [[MyClass alloc]init] ;</span><br><span class="line">[objectName simpleInstanceMethod];</span><br></pre></td></tr></table></figure>
+<h2 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h2><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>NSString</td>
+<td>字符串</td>
+</tr>
+<tr>
+<td>CGfloat</td>
+<td>浮点类型</td>
+</tr>
+<tr>
+<td>NSInteger</td>
+<td>整型</td>
+</tr>
+<tr>
+<td>BOOL</td>
+<td>布尔型</td>
+</tr>
+</tbody></table>
+<h2 id="打印日志"><a href="#打印日志" class="headerlink" title="打印日志"></a>打印日志</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NSlog(@&quot;&quot;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="控制结构"><a href="#控制结构" class="headerlink" title="控制结构"></a>控制结构</h2><h3 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h3><p>properties</p>
+<p>点运算符访问属性：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">self.myString = @&quot;Test&quot;;</span><br></pre></td></tr></table></figure>
+<p>set方法访问属性：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[self setMyString:@&quot;Test&quot;];</span><br></pre></td></tr></table></figure>
+
+<h3 id="类别"><a href="#类别" class="headerlink" title="类别"></a>类别</h3><p>categories</p>
+<p>类别用于将方法添加到现有类，不用执行文件，就可以在其中定义实际的类。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@interface MyClass(customAdditions)</span><br><span class="line">- (void)sampleCategoryMethod;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation MyClass(categoryAdditions)</span><br><span class="line"></span><br><span class="line">-(void)sampleCategoryMethod&#123;</span><br><span class="line">   NSLog(@&quot;Just a test category&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h2><table>
+<thead>
+<tr>
+<th>数组</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>NSMutableArray</td>
+<td>可变数组</td>
+</tr>
+<tr>
+<td>NSArray</td>
+<td>不可变数组</td>
+</tr>
+</tbody></table>
+<p>mutable 可变的，易变的；反复无常的，用情不专的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">NSMutableArray *aMutableArray = [[NSMutableArray alloc]init];</span><br><span class="line">[anArray addObject:@&quot;firstobject&quot;];</span><br><span class="line">NSArray *aImmutableArray = [[NSArray alloc]</span><br><span class="line">initWithObjects:@&quot;firstObject&quot;,nil];</span><br></pre></td></tr></table></figure>
+<h2 id="词典"><a href="#词典" class="headerlink" title="词典"></a>词典</h2><table>
+<thead>
+<tr>
+<th>词典</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>NSMutableDictionary</td>
+<td>可变词典</td>
+</tr>
+<tr>
+<td>NSDictionary</td>
+<td>不可变词典</td>
+</tr>
+</tbody></table>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">NSMutableDictionary*aMutableDictionary = [[NSMutableArray alloc]init];</span><br><span class="line">[aMutableDictionary setObject:@&quot;firstobject&quot; forKey:@&quot;aKey&quot;];</span><br><span class="line">NSDictionary*aImmutableDictionary= [[NSDictionary alloc]initWithObjects:[NSArray arrayWithObjects:</span><br><span class="line">@&quot;firstObject&quot;,nil] forKeys:[ NSArray arrayWithObjects:@&quot;aKey&quot;]];</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="AppDelegate"><a href="#AppDelegate" class="headerlink" title="AppDelegate"></a>AppDelegate</h2><p>AppDelegate.h</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">// Header File that provides all UI related items. </span><br><span class="line">#import &lt;UIKit/UIKit.h&gt; </span><br><span class="line"></span><br><span class="line"> // Forward declaration (Used when class will be defined /imported in future)</span><br><span class="line">@class ViewController;  </span><br><span class="line"></span><br><span class="line"> // Interface for Appdelegate</span><br><span class="line">@interface AppDelegate : UIResponder &lt;UIApplicationDelegate&gt;</span><br><span class="line"></span><br><span class="line">// Property window </span><br><span class="line">@property (strong, nonatomic) UIWindow *window; </span><br><span class="line"></span><br><span class="line"> // Property Viewcontroller</span><br><span class="line"></span><br><span class="line"> @property (strong, nonatomic) ViewController *viewController;</span><br><span class="line">//this marks end of interface </span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+
+<p>AppDelegate调用UIResponder来处理Ios事件。<br>完成UIApplication的命令，提供关键应用程序事件，如启动完毕，终止，等等<br>在iOS设备的屏幕上用UIWindow对象来管理和协调各种视角，它就像其它加载视图的基本视图一样。通常一个应用程序只有一个窗口。<br>UIViewController来处理屏幕流</p>
+<p>AppDelegate.m</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">// Imports the class Appdelegate&apos;s interface</span><br><span class="line">import &quot;AppDelegate.h&quot; </span><br><span class="line"></span><br><span class="line">// Imports the viewcontroller to be loaded</span><br><span class="line">#import &quot;ViewController.h&quot; </span><br><span class="line"></span><br><span class="line">// Class definition starts here</span><br><span class="line">@implementation AppDelegate </span><br><span class="line"></span><br><span class="line">// Following method intimates us the application launched  successfully </span><br><span class="line">- (BOOL)application:(UIApplication *)application </span><br><span class="line"> didFinishLaunchingWithOptions:(NSDictionary *)launchOptions </span><br><span class="line">&#123;</span><br><span class="line">    self.window = [[UIWindow alloc] initWithFrame:</span><br><span class="line">    [[UIScreen mainScreen] bounds]]; </span><br><span class="line">    // Override point for customization after application launch.</span><br><span class="line">    self.viewController = [[ViewController alloc] </span><br><span class="line">     initWithNibName:@&quot;ViewController&quot; bundle:nil];</span><br><span class="line">    self.window.rootViewController = self.viewController;</span><br><span class="line">    [self.window makeKeyAndVisible];</span><br><span class="line">    return YES;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)applicationWillResignActive:(UIApplication *)application</span><br><span class="line">&#123;</span><br><span class="line">    /* Sent when the application is about to move from active to inactive state.</span><br><span class="line">    This can occur for certain types of temporary interruptions</span><br><span class="line">    (such as an incoming phone call or SMS message)</span><br><span class="line">    or when the user quits the application and it begins the transition to the </span><br><span class="line">    background state. Use this method to pause ongoing tasks, disable timers, </span><br><span class="line">    and throttle down OpenGL ES frame rates. Games should use this method </span><br><span class="line">    to pause the game.*/</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)applicationDidEnterBackground:(UIApplication *)application</span><br><span class="line">&#123;</span><br><span class="line">    /* Use this method to release shared resources, save user data, invalidate </span><br><span class="line">    timers, and store enough application state information    to restore your</span><br><span class="line">    application to its current state in case it is terminated later. If your </span><br><span class="line">    application supports background execution, this method is called instead </span><br><span class="line">    of applicationWillTerminate: when the user quits.*/</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)applicationWillEnterForeground:(UIApplication *)application</span><br><span class="line">&#123;</span><br><span class="line">    /* Called as part of the transition from the background to the inactive state;</span><br><span class="line">    here you can undo many of the changes made on entering the background.*/</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)applicationDidBecomeActive:(UIApplication *)application</span><br><span class="line">&#123;</span><br><span class="line">    /* Restart any tasks that were paused (or not yet started) while the</span><br><span class="line">    application was inactive. If the application was previously in the background, </span><br><span class="line">    optionally refresh the user interface.*/</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)applicationWillTerminate:(UIApplication *)application</span><br><span class="line">&#123;</span><br><span class="line">    /* Called when the application is about to terminate. Save data if appropriate.</span><br><span class="line">    See also applicationDidEnterBackground:. */</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+
+<p>此处定义UIApplication。上面定义的所有方法都是应用程序UI调动和不包含任何用户定义的方法。<br>UIWindow对象被分配用来保存应用程序分配对象。<br>UIController作为窗口初始视图控制器<br>调用makeKeyAndVisible能使窗口可见</p>
+<h2 id="ViewController"><a href="#ViewController" class="headerlink" title="ViewController"></a>ViewController</h2><p>ViewController.h</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#import  </span><br><span class="line"></span><br><span class="line">// Interface for class ViewController</span><br><span class="line">@interface ViewController : UIViewController </span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>ViewController类继承UIViewController，为iOS应用程序提供基本视图管理模型。</p>
+<p>ViewController.m</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;ViewController.h&quot;</span><br><span class="line"></span><br><span class="line">// Category, an extension of ViewController class</span><br><span class="line">@interface ViewController ()</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation ViewController  </span><br><span class="line"></span><br><span class="line">- (void)viewDidLoad</span><br><span class="line">&#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    // Do any additional setup after loading the view, typically from a nib.</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)didReceiveMemoryWarning</span><br><span class="line">&#123;</span><br><span class="line">    [super didReceiveMemoryWarning];</span><br><span class="line">    // Dispose of any resources that can be recreated.</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+
+<p>在这里两种方法实现UIViewController类的基类中定义<br>初始视图加载后调用viewDidLoad中的安装程序<br>在内存警告的情况下调用didReceviveMemoryWarning</p>
+<h2 id="操作-输出口"><a href="#操作-输出口" class="headerlink" title="操作/输出口"></a>操作/输出口</h2><p>操作（action）和输出口（Outlet）指的是ibActions和ibOutlets，也就是ib接口生成器所在的地方</p>
+<p>IBAction</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-(IBAction) setTitleLabel:(id)sender&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>IBOutlet</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@property (weak, nonatomic) IBOutlet UIButton *myButton;</span><br></pre></td></tr></table></figure>
+
+<h2 id="委托"><a href="#委托" class="headerlink" title="委托"></a>委托</h2><p>假设对象A调用B来执行一项操作，操作一旦完成，对象A就必须知道对象B已完成任务且对象A将执行其他必要操作。</p>
+<p>A是B的委托对象<br>B引用一个A<br>A将实现B的委托方法<br>B通过委托方法通知</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2019/11/09/iOS%E5%BC%80%E5%8F%91%E7%BB%8F%E9%AA%8C/" rel="next" title="iOS开发经验">
+                  <i class="fa fa-chevron-left"></i> iOS开发经验
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#接口"><span class="nav-number">1.</span> <span class="nav-text">接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#执行-实现"><span class="nav-number">2.</span> <span class="nav-text">执行/实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建对象"><span class="nav-number">3.</span> <span class="nav-text">创建对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#声明方法"><span class="nav-number">4.</span> <span class="nav-text">声明方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#调用方法"><span class="nav-number">5.</span> <span class="nav-text">调用方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#声明类方法"><span class="nav-number">6.</span> <span class="nav-text">声明类方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#调用类方法"><span class="nav-number">7.</span> <span class="nav-text">调用类方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#声明实例方法"><span class="nav-number">8.</span> <span class="nav-text">声明实例方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#调用实例方法"><span class="nav-number">9.</span> <span class="nav-text">调用实例方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据类型"><span class="nav-number">10.</span> <span class="nav-text">数据类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#打印日志"><span class="nav-number">11.</span> <span class="nav-text">打印日志</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#控制结构"><span class="nav-number">12.</span> <span class="nav-text">控制结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#属性"><span class="nav-number">12.1.</span> <span class="nav-text">属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类别"><span class="nav-number">12.2.</span> <span class="nav-text">类别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数组"><span class="nav-number">13.</span> <span class="nav-text">数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#词典"><span class="nav-number">14.</span> <span class="nav-text">词典</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AppDelegate"><span class="nav-number">15.</span> <span class="nav-text">AppDelegate</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ViewController"><span class="nav-number">16.</span> <span class="nav-text">ViewController</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#操作-输出口"><span class="nav-number">17.</span> <span class="nav-text">操作/输出口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#委托"><span class="nav-number">18.</span> <span class="nav-text">委托</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="张潮州"
+    src="/images/header.jpeg">
+  <p class="site-author-name" itemprop="name">张潮州</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">张潮州</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.0.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.4.2
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

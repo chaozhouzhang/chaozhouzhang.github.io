@@ -187,6 +187,190 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2019/11/09/Object%20C%E6%80%BB%E7%BB%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/header.jpeg">
+      <meta itemprop="name" content="张潮州">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="张潮州">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/11/09/Object%20C%E6%80%BB%E7%BB%93/" class="post-title-link" itemprop="url">Object C总结</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-11-09 15:18:52" itemprop="dateCreated datePublished" datetime="2019-11-09T15:18:52+08:00">2019-11-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-11-11 16:31:57" itemprop="dateModified" datetime="2019-11-11T16:31:57+08:00">2019-11-11</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h2><p>界面文件MyClass.h：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@interface MyClass:NSObject&#123; </span><br><span class="line">// 类变量声明</span><br><span class="line">&#125;</span><br><span class="line">// 类属性声明</span><br><span class="line">// 类方法和声明</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<h2 id="执行-实现"><a href="#执行-实现" class="headerlink" title="执行/实现"></a>执行/实现</h2><p>执行/实现文件MyClass.m：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@implementation MyClass</span><br><span class="line">// 类方法定义</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+
+<h2 id="创建对象"><a href="#创建对象" class="headerlink" title="创建对象"></a>创建对象</h2><p>创建MyClass对象：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MyClass  *objectName = [[MyClass alloc]init] ;</span><br></pre></td></tr></table></figure>
+
+<h2 id="声明方法"><a href="#声明方法" class="headerlink" title="声明方法"></a>声明方法</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-(returnType)methodName:(typeName) variable1 :(typeName)variable2;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-(void)calculateAreaForRectangleWithLength:(CGfloat)length </span><br><span class="line">andBreadth:(CGfloat)breadth;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="调用方法"><a href="#调用方法" class="headerlink" title="调用方法"></a>调用方法</h2><p>Self用来指定它是一个类的方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[self calculateAreaForRectangleWithLength:30 andBreadth:20];</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="声明类方法"><a href="#声明类方法" class="headerlink" title="声明类方法"></a>声明类方法</h2><p>直接而无需创建的对象，可以访问类方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">+(void)simpleClassMethod;</span><br></pre></td></tr></table></figure>
+<h2 id="调用类方法"><a href="#调用类方法" class="headerlink" title="调用类方法"></a>调用类方法</h2><p>可以通过使用类名访问类方法。<br>使用类名MyClass调用类方法simpleClassMethod：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[MyClass simpleClassMethod];</span><br></pre></td></tr></table></figure>
+<h2 id="声明实例方法"><a href="#声明实例方法" class="headerlink" title="声明实例方法"></a>声明实例方法</h2><p>创建类的对象后只访问实例方法，内存分配到的实例变量。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-(void)simpleInstanceMethod;</span><br></pre></td></tr></table></figure>
+
+<h2 id="调用实例方法"><a href="#调用实例方法" class="headerlink" title="调用实例方法"></a>调用实例方法</h2><p>创建类的对象后，可以调用实例方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MyClass  *objectName = [[MyClass alloc]init] ;</span><br><span class="line">[objectName simpleInstanceMethod];</span><br></pre></td></tr></table></figure>
+<h2 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h2><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>NSString</td>
+<td>字符串</td>
+</tr>
+<tr>
+<td>CGfloat</td>
+<td>浮点类型</td>
+</tr>
+<tr>
+<td>NSInteger</td>
+<td>整型</td>
+</tr>
+<tr>
+<td>BOOL</td>
+<td>布尔型</td>
+</tr>
+</tbody></table>
+<h2 id="打印日志"><a href="#打印日志" class="headerlink" title="打印日志"></a>打印日志</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NSlog(@&quot;&quot;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="控制结构"><a href="#控制结构" class="headerlink" title="控制结构"></a>控制结构</h2><h3 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h3><p>properties</p>
+<p>点运算符访问属性：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">self.myString = @&quot;Test&quot;;</span><br></pre></td></tr></table></figure>
+<p>set方法访问属性：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[self setMyString:@&quot;Test&quot;];</span><br></pre></td></tr></table></figure>
+
+<h3 id="类别"><a href="#类别" class="headerlink" title="类别"></a>类别</h3><p>categories</p>
+<p>类别用于将方法添加到现有类，不用执行文件，就可以在其中定义实际的类。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@interface MyClass(customAdditions)</span><br><span class="line">- (void)sampleCategoryMethod;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation MyClass(categoryAdditions)</span><br><span class="line"></span><br><span class="line">-(void)sampleCategoryMethod&#123;</span><br><span class="line">   NSLog(@&quot;Just a test category&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h2><table>
+<thead>
+<tr>
+<th>数组</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>NSMutableArray</td>
+<td>可变数组</td>
+</tr>
+<tr>
+<td>NSArray</td>
+<td>不可变数组</td>
+</tr>
+</tbody></table>
+<p>mutable 可变的，易变的；反复无常的，用情不专的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">NSMutableArray *aMutableArray = [[NSMutableArray alloc]init];</span><br><span class="line">[anArray addObject:@&quot;firstobject&quot;];</span><br><span class="line">NSArray *aImmutableArray = [[NSArray alloc]</span><br><span class="line">initWithObjects:@&quot;firstObject&quot;,nil];</span><br></pre></td></tr></table></figure>
+<h2 id="词典"><a href="#词典" class="headerlink" title="词典"></a>词典</h2><table>
+<thead>
+<tr>
+<th>词典</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>NSMutableDictionary</td>
+<td>可变词典</td>
+</tr>
+<tr>
+<td>NSDictionary</td>
+<td>不可变词典</td>
+</tr>
+</tbody></table>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">NSMutableDictionary*aMutableDictionary = [[NSMutableArray alloc]init];</span><br><span class="line">[aMutableDictionary setObject:@&quot;firstobject&quot; forKey:@&quot;aKey&quot;];</span><br><span class="line">NSDictionary*aImmutableDictionary= [[NSDictionary alloc]initWithObjects:[NSArray arrayWithObjects:</span><br><span class="line">@&quot;firstObject&quot;,nil] forKeys:[ NSArray arrayWithObjects:@&quot;aKey&quot;]];</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="AppDelegate"><a href="#AppDelegate" class="headerlink" title="AppDelegate"></a>AppDelegate</h2><p>AppDelegate.h</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">// Header File that provides all UI related items. </span><br><span class="line">#import &lt;UIKit/UIKit.h&gt; </span><br><span class="line"></span><br><span class="line"> // Forward declaration (Used when class will be defined /imported in future)</span><br><span class="line">@class ViewController;  </span><br><span class="line"></span><br><span class="line"> // Interface for Appdelegate</span><br><span class="line">@interface AppDelegate : UIResponder &lt;UIApplicationDelegate&gt;</span><br><span class="line"></span><br><span class="line">// Property window </span><br><span class="line">@property (strong, nonatomic) UIWindow *window; </span><br><span class="line"></span><br><span class="line"> // Property Viewcontroller</span><br><span class="line"></span><br><span class="line"> @property (strong, nonatomic) ViewController *viewController;</span><br><span class="line">//this marks end of interface </span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+
+<p>AppDelegate调用UIResponder来处理Ios事件。<br>完成UIApplication的命令，提供关键应用程序事件，如启动完毕，终止，等等<br>在iOS设备的屏幕上用UIWindow对象来管理和协调各种视角，它就像其它加载视图的基本视图一样。通常一个应用程序只有一个窗口。<br>UIViewController来处理屏幕流</p>
+<p>AppDelegate.m</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">// Imports the class Appdelegate&apos;s interface</span><br><span class="line">import &quot;AppDelegate.h&quot; </span><br><span class="line"></span><br><span class="line">// Imports the viewcontroller to be loaded</span><br><span class="line">#import &quot;ViewController.h&quot; </span><br><span class="line"></span><br><span class="line">// Class definition starts here</span><br><span class="line">@implementation AppDelegate </span><br><span class="line"></span><br><span class="line">// Following method intimates us the application launched  successfully </span><br><span class="line">- (BOOL)application:(UIApplication *)application </span><br><span class="line"> didFinishLaunchingWithOptions:(NSDictionary *)launchOptions </span><br><span class="line">&#123;</span><br><span class="line">    self.window = [[UIWindow alloc] initWithFrame:</span><br><span class="line">    [[UIScreen mainScreen] bounds]]; </span><br><span class="line">    // Override point for customization after application launch.</span><br><span class="line">    self.viewController = [[ViewController alloc] </span><br><span class="line">     initWithNibName:@&quot;ViewController&quot; bundle:nil];</span><br><span class="line">    self.window.rootViewController = self.viewController;</span><br><span class="line">    [self.window makeKeyAndVisible];</span><br><span class="line">    return YES;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)applicationWillResignActive:(UIApplication *)application</span><br><span class="line">&#123;</span><br><span class="line">    /* Sent when the application is about to move from active to inactive state.</span><br><span class="line">    This can occur for certain types of temporary interruptions</span><br><span class="line">    (such as an incoming phone call or SMS message)</span><br><span class="line">    or when the user quits the application and it begins the transition to the </span><br><span class="line">    background state. Use this method to pause ongoing tasks, disable timers, </span><br><span class="line">    and throttle down OpenGL ES frame rates. Games should use this method </span><br><span class="line">    to pause the game.*/</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)applicationDidEnterBackground:(UIApplication *)application</span><br><span class="line">&#123;</span><br><span class="line">    /* Use this method to release shared resources, save user data, invalidate </span><br><span class="line">    timers, and store enough application state information    to restore your</span><br><span class="line">    application to its current state in case it is terminated later. If your </span><br><span class="line">    application supports background execution, this method is called instead </span><br><span class="line">    of applicationWillTerminate: when the user quits.*/</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)applicationWillEnterForeground:(UIApplication *)application</span><br><span class="line">&#123;</span><br><span class="line">    /* Called as part of the transition from the background to the inactive state;</span><br><span class="line">    here you can undo many of the changes made on entering the background.*/</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)applicationDidBecomeActive:(UIApplication *)application</span><br><span class="line">&#123;</span><br><span class="line">    /* Restart any tasks that were paused (or not yet started) while the</span><br><span class="line">    application was inactive. If the application was previously in the background, </span><br><span class="line">    optionally refresh the user interface.*/</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)applicationWillTerminate:(UIApplication *)application</span><br><span class="line">&#123;</span><br><span class="line">    /* Called when the application is about to terminate. Save data if appropriate.</span><br><span class="line">    See also applicationDidEnterBackground:. */</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+
+<p>此处定义UIApplication。上面定义的所有方法都是应用程序UI调动和不包含任何用户定义的方法。<br>UIWindow对象被分配用来保存应用程序分配对象。<br>UIController作为窗口初始视图控制器<br>调用makeKeyAndVisible能使窗口可见</p>
+<h2 id="ViewController"><a href="#ViewController" class="headerlink" title="ViewController"></a>ViewController</h2><p>ViewController.h</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#import  </span><br><span class="line"></span><br><span class="line">// Interface for class ViewController</span><br><span class="line">@interface ViewController : UIViewController </span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>ViewController类继承UIViewController，为iOS应用程序提供基本视图管理模型。</p>
+<p>ViewController.m</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;ViewController.h&quot;</span><br><span class="line"></span><br><span class="line">// Category, an extension of ViewController class</span><br><span class="line">@interface ViewController ()</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation ViewController  </span><br><span class="line"></span><br><span class="line">- (void)viewDidLoad</span><br><span class="line">&#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    // Do any additional setup after loading the view, typically from a nib.</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)didReceiveMemoryWarning</span><br><span class="line">&#123;</span><br><span class="line">    [super didReceiveMemoryWarning];</span><br><span class="line">    // Dispose of any resources that can be recreated.</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+
+<p>在这里两种方法实现UIViewController类的基类中定义<br>初始视图加载后调用viewDidLoad中的安装程序<br>在内存警告的情况下调用didReceviveMemoryWarning</p>
+<h2 id="操作-输出口"><a href="#操作-输出口" class="headerlink" title="操作/输出口"></a>操作/输出口</h2><p>操作（action）和输出口（Outlet）指的是ibActions和ibOutlets，也就是ib接口生成器所在的地方</p>
+<p>IBAction</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-(IBAction) setTitleLabel:(id)sender&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>IBOutlet</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@property (weak, nonatomic) IBOutlet UIButton *myButton;</span><br></pre></td></tr></table></figure>
+
+<h2 id="委托"><a href="#委托" class="headerlink" title="委托"></a>委托</h2><p>假设对象A调用B来执行一项操作，操作一旦完成，对象A就必须知道对象B已完成任务且对象A将执行其他必要操作。</p>
+<p>A是B的委托对象<br>B引用一个A<br>A将实现B的委托方法<br>B通过委托方法通知</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
     <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2019/11/09/iOS%E5%BC%80%E5%8F%91%E7%BB%8F%E9%AA%8C/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -210,10 +394,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2019-11-09 11:44:15 / Modified: 11:45:34" itemprop="dateCreated datePublished" datetime="2019-11-09T11:44:15+08:00">2019-11-09</time>
+              <time title="Created: 2019-11-09 11:44:15" itemprop="dateCreated datePublished" datetime="2019-11-09T11:44:15+08:00">2019-11-09</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-12-03 19:21:00" itemprop="dateModified" datetime="2019-12-03T19:21:00+08:00">2019-12-03</time>
+              </span>
 
           
 
@@ -230,6 +420,17 @@
 
 <p>原因：<br>第一次运行没有权限。</p>
 <p>解决方法：<br>1、打开终端。<br>2、cd到目标文件夹。<br>3、输入 chmod 755 你的文件名.sh。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chmod+x Pods-QianClass-resources.sh</span><br></pre></td></tr></table></figure>
+
+<h1 id="2、添加依赖"><a href="#2、添加依赖" class="headerlink" title="2、添加依赖"></a>2、添加依赖</h1><p>往Podfile添加依赖：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">project ‘QianClass.xcodeproj&apos;</span><br><span class="line">platform :ios, &apos;8.0&apos;</span><br><span class="line">target ‘QianClass&apos; do</span><br><span class="line"></span><br><span class="line">    pod &apos;AFNetworking&apos;, &apos;~&gt; 3.1.0&apos;</span><br><span class="line">    pod &apos;SDWebImage&apos;, &apos;~&gt; 3.8.1&apos;</span><br><span class="line">    pod &apos;CYLTabBarController/Lottie&apos;, &apos;~&gt; 1.28.4&apos; # 依赖Lottie库</span><br><span class="line">    pod &apos;MJRefresh&apos;</span><br><span class="line"></span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<p>科学上网，查看HTTP代理端口，设置终端代理：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ export https_proxy=http://127.0.0.1:7890</span><br><span class="line">$ export http_proxy=http://127.0.0.1:7890</span><br></pre></td></tr></table></figure>
+<p>在终端中打开项目目录，输入安装指令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod install</span><br></pre></td></tr></table></figure>
+<p>如果卡顿，输入安装指令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ pod install --verbose --no-repo-update</span><br><span class="line">$ pod update --verbose --no-repo-update</span><br></pre></td></tr></table></figure>
+
 
       
     </div>
@@ -1063,10 +1264,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2019-10-30 11:30:16 / Modified: 19:09:17" itemprop="dateCreated datePublished" datetime="2019-10-30T11:30:16+08:00">2019-10-30</time>
+              <time title="Created: 2019-10-30 11:30:16" itemprop="dateCreated datePublished" datetime="2019-10-30T11:30:16+08:00">2019-10-30</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-11-02 14:31:05" itemprop="dateModified" datetime="2019-11-02T14:31:05+08:00">2019-11-02</time>
+              </span>
 
           
 
@@ -1441,65 +1648,6 @@
   
   
 
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2019/10/29/hashCode%E8%A7%A3%E6%9E%90/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/header.jpeg">
-      <meta itemprop="name" content="张潮州">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="张潮州">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/10/29/hashCode%E8%A7%A3%E6%9E%90/" class="post-title-link" itemprop="url">hashCode解析</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2019-10-29 16:06:33 / Modified: 22:14:57" itemprop="dateCreated datePublished" datetime="2019-10-29T16:06:33+08:00">2019-10-29</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="1、"><a href="#1、" class="headerlink" title="1、"></a>1、</h1><p>Class Object is the root of the class hierarchy.Every class has Object as a superclass. All objects, including arrays, implement the methods of this class.</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1550,7 +1698,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-count">15</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
