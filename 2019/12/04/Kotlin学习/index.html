@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.4.2',
+    exturl: false,
+    sidebar: {"position":"left","display":"always","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="包目录与包的结构无需匹配，源代码可以在文件系统的任意位置。 包声明包的声明应处于源文件顶部。源文件所有内容，无论是类还是函数，都包含在声明的包内。如果没有指明包，该源文件的内容属于无名字的默认包。 1package org.example  包导入默认导入有多个包会默认导入到每个 Kotlin 源文件中。    包 解释    kotlin.* Kotlin   kotlin.annotation">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kotlin学习">
+<meta property="og:url" content="https:&#x2F;&#x2F;chaozhouzhang.github.io&#x2F;2019&#x2F;12&#x2F;04&#x2F;Kotlin%E5%AD%A6%E4%B9%A0&#x2F;index.html">
+<meta property="og:site_name" content="张潮州">
+<meta property="og:description" content="包目录与包的结构无需匹配，源代码可以在文件系统的任意位置。 包声明包的声明应处于源文件顶部。源文件所有内容，无论是类还是函数，都包含在声明的包内。如果没有指明包，该源文件的内容属于无名字的默认包。 1package org.example  包导入默认导入有多个包会默认导入到每个 Kotlin 源文件中。    包 解释    kotlin.* Kotlin   kotlin.annotation">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-12-04T10:26:34.008Z">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://chaozhouzhang.github.io/2019/12/04/Kotlin%E5%AD%A6%E4%B9%A0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Kotlin学习 | 张潮州</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">张潮州</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2019/12/04/Kotlin%E5%AD%A6%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/header.jpeg">
+      <meta itemprop="name" content="张潮州">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="张潮州">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Kotlin学习
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2019-12-04 15:07:10 / Modified: 18:26:34" itemprop="dateCreated datePublished" datetime="2019-12-04T15:07:10+08:00">2019-12-04</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="包"><a href="#包" class="headerlink" title="包"></a>包</h1><p>目录与包的结构无需匹配，源代码可以在文件系统的任意位置。</p>
+<h2 id="包声明"><a href="#包声明" class="headerlink" title="包声明"></a>包声明</h2><p>包的声明应处于源文件顶部。<br>源文件所有内容，无论是类还是函数，都包含在声明的包内。<br>如果没有指明包，该源文件的内容属于无名字的默认包。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">package org.example</span><br></pre></td></tr></table></figure>
+
+<h2 id="包导入"><a href="#包导入" class="headerlink" title="包导入"></a>包导入</h2><h3 id="默认导入"><a href="#默认导入" class="headerlink" title="默认导入"></a>默认导入</h3><p>有多个包会默认导入到每个 Kotlin 源文件中。</p>
+<table>
+<thead>
+<tr>
+<th>包</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>kotlin.*</td>
+<td>Kotlin</td>
+</tr>
+<tr>
+<td>kotlin.annotation.*</td>
+<td>注解</td>
+</tr>
+<tr>
+<td>kotlin.collections.*</td>
+<td>集合</td>
+</tr>
+<tr>
+<td>kotlin.comparisons.*</td>
+<td>比较</td>
+</tr>
+<tr>
+<td>kotlin.io.*</td>
+<td>输入输入出</td>
+</tr>
+<tr>
+<td>kotlin.ranges.*</td>
+<td>区间</td>
+</tr>
+<tr>
+<td>kotlin.sequences.*</td>
+<td>序列</td>
+</tr>
+<tr>
+<td>kotlin.text.*</td>
+<td>文本</td>
+</tr>
+<tr>
+<td>java.lang.*</td>
+<td>JVM平台额外导入–Java语言</td>
+</tr>
+<tr>
+<td>kotlin.jvm.*</td>
+<td>JVM平台额外导入–JVM</td>
+</tr>
+<tr>
+<td>kotlin.js.*</td>
+<td>JS平台额外导入–JS</td>
+</tr>
+</tbody></table>
+<h3 id="手动导入"><a href="#手动导入" class="headerlink" title="手动导入"></a>手动导入</h3><p>导入单独名称</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import org.example.Message</span><br></pre></td></tr></table></figure>
+<p>导入作用域下所有内容</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import org.example.*</span><br></pre></td></tr></table></figure>
+<p>如果出现导入名称冲突，可以使用 as 关键字在本地重命名冲突项来消歧义</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import org.test.Message as testMessage</span><br></pre></td></tr></table></figure>
+
+<h3 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h3><p>导入声明<br>顶层函数以及属性<br>在对象声明中声明的函数和属性<br>枚举常量</p>
+<p>顶层声明的可见性<br>如果顶层声明是 private 的，它是声明它的文件所私有的</p>
+<h1 id="可见性修饰符"><a href="#可见性修饰符" class="headerlink" title="可见性修饰符"></a>可见性修饰符</h1><h2 id="包-1"><a href="#包-1" class="headerlink" title="包"></a>包</h2><p>函数、属性和类、对象和接口可以在顶层声明，即直接在包内声明</p>
+<table>
+<thead>
+<tr>
+<th>可见性修饰符</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>private</td>
+<td>只会在声明它的文件内可见</td>
+</tr>
+<tr>
+<td>protected</td>
+<td>不适用于顶层声明</td>
+</tr>
+<tr>
+<td>internal</td>
+<td>会在相同模块内随处可见</td>
+</tr>
+<tr>
+<td>public</td>
+<td>默认可见性，此声明将随处可见</td>
+</tr>
+</tbody></table>
+<h2 id="类和接口"><a href="#类和接口" class="headerlink" title="类和接口"></a>类和接口</h2><p>类内部成员的声明</p>
+<table>
+<thead>
+<tr>
+<th>可见性修饰符</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>private</td>
+<td>只在这个类内部可见，外部类不能访问内部类的 private 成员</td>
+</tr>
+<tr>
+<td>protected</td>
+<td>只在这个类内部可见，如果覆盖一个 protected 成员并且没有显式指定其可见性，该成员还会是 protected 可见性</td>
+</tr>
+<tr>
+<td>internal</td>
+<td>能见到类声明的 本模块内 的任何客户端都可见其 internal 成员</td>
+</tr>
+<tr>
+<td>public</td>
+<td>能见到类声明的任何客户端都可见其 public 成员</td>
+</tr>
+</tbody></table>
+<h2 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h2><p>指定一个类的的主构造函数的可见性</p>
+<table>
+<thead>
+<tr>
+<th>可见性修饰符</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>private</td>
+<td>私有的</td>
+</tr>
+<tr>
+<td>protected</td>
+<td>受保护的</td>
+</tr>
+<tr>
+<td>internal</td>
+<td>一个 internal 类的构造函数只能在相同模块内可见</td>
+</tr>
+<tr>
+<td>public</td>
+<td>默认情况下，所有构造函数都是 public，这实际上等于类可见的地方它就可见</td>
+</tr>
+</tbody></table>
+<h2 id="局部声明"><a href="#局部声明" class="headerlink" title="局部声明"></a>局部声明</h2><p>局部变量、函数和类不能有可见性修饰符。</p>
+<h2 id="模块"><a href="#模块" class="headerlink" title="模块"></a>模块</h2><p>可见性修饰符 internal 意味着该成员只在相同模块内可见。<br>更具体地说， 一个模块是编译在一起的一套 Kotlin 文件。</p>
+<h1 id="基本类型"><a href="#基本类型" class="headerlink" title="基本类型"></a>基本类型</h1><h2 id="数字"><a href="#数字" class="headerlink" title="数字"></a>数字</h2><h3 id="整数"><a href="#整数" class="headerlink" title="整数"></a>整数</h3><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>大小（比特数）</th>
+<th>最小值</th>
+<th>最大值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Byte</td>
+<td>8</td>
+<td>-128</td>
+<td>127</td>
+</tr>
+<tr>
+<td>Short</td>
+<td>16</td>
+<td>-32768</td>
+<td>32767</td>
+</tr>
+<tr>
+<td>Int</td>
+<td>32</td>
+<td>-2,147,483,648 (-2^31)</td>
+<td>2,147,483,647 (2^31 - 1)</td>
+</tr>
+<tr>
+<td>Long</td>
+<td>64</td>
+<td>-9,223,372,036,854,775,808 (-2^63)</td>
+<td>9,223,372,036,854,775,807 (2^63 - 1)</td>
+</tr>
+</tbody></table>
+<p>未超出 Int 最大值的整型值初始化的变量都会推断为 Int 类型。<br>如果初始值超过了其最大值，那么推断为 Long 类型。<br>如需显式指定 Long 型值，请在该值后追加 L 后缀。</p>
+<h3 id="浮点数"><a href="#浮点数" class="headerlink" title="浮点数"></a>浮点数</h3><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>大小（比特数）</th>
+<th>有效数字比特数</th>
+<th>指数比特数</th>
+<th>十进制位数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Float</td>
+<td>32</td>
+<td>24</td>
+<td>8</td>
+<td>6-7</td>
+</tr>
+<tr>
+<td>Double</td>
+<td>64</td>
+<td>53</td>
+<td>11</td>
+<td>15-16</td>
+</tr>
+</tbody></table>
+<p>Float 反映了 IEEE 754 单精度，而 Double 提供了双精度。</p>
+<p>对于以浮点数初始化的变量，编译器会推断为 Double 类型。 如需将一个值显式指定为 Float 类型，请添加 f 或 F 后缀。 如果这样的值包含多于 6～7 位十进制数，那么会将其舍入。</p>
+<p>Kotlin 中的数字没有隐式拓宽转换。 例如，具有 Double 参数的函数只能对 Double 值调用，而不能对 Float、 Int 或者其他数字值调用。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2019/11/09/Object%20C%E6%80%BB%E7%BB%93/" rel="next" title="Object C总结">
+                  <i class="fa fa-chevron-left"></i> Object C总结
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2019/12/26/Android%E5%B9%B3%E5%8F%B0%E6%9E%B6%E6%9E%84/" rel="prev" title="Android平台架构">
+                  Android平台架构 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#包"><span class="nav-number">1.</span> <span class="nav-text">包</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#包声明"><span class="nav-number">1.1.</span> <span class="nav-text">包声明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#包导入"><span class="nav-number">1.2.</span> <span class="nav-text">包导入</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#默认导入"><span class="nav-number">1.2.1.</span> <span class="nav-text">默认导入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#手动导入"><span class="nav-number">1.2.2.</span> <span class="nav-text">手动导入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#扩展"><span class="nav-number">1.2.3.</span> <span class="nav-text">扩展</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#可见性修饰符"><span class="nav-number">2.</span> <span class="nav-text">可见性修饰符</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#包-1"><span class="nav-number">2.1.</span> <span class="nav-text">包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类和接口"><span class="nav-number">2.2.</span> <span class="nav-text">类和接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构造函数"><span class="nav-number">2.3.</span> <span class="nav-text">构造函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#局部声明"><span class="nav-number">2.4.</span> <span class="nav-text">局部声明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模块"><span class="nav-number">2.5.</span> <span class="nav-text">模块</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基本类型"><span class="nav-number">3.</span> <span class="nav-text">基本类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数字"><span class="nav-number">3.1.</span> <span class="nav-text">数字</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#整数"><span class="nav-number">3.1.1.</span> <span class="nav-text">整数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#浮点数"><span class="nav-number">3.1.2.</span> <span class="nav-text">浮点数</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="张潮州"
+    src="/images/header.jpeg">
+  <p class="site-author-name" itemprop="name">张潮州</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">张潮州</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.0.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.4.2
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
