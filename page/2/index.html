@@ -187,6 +187,1398 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2019/12/26/Android%E5%B9%B3%E5%8F%B0%E6%9E%B6%E6%9E%84/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/header.jpeg">
+      <meta itemprop="name" content="张潮州">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="张潮州">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/12/26/Android%E5%B9%B3%E5%8F%B0%E6%9E%B6%E6%9E%84/" class="post-title-link" itemprop="url">Android平台架构</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2019-12-26 13:54:41 / Modified: 13:59:22" itemprop="dateCreated datePublished" datetime="2019-12-26T13:54:41+08:00">2019-12-26</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Android平台架构"><a href="#Android平台架构" class="headerlink" title="Android平台架构"></a>Android平台架构</h1><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Linux内核</td>
+<td>Linux Kernel</td>
+</tr>
+<tr>
+<td>硬件抽象层HAL</td>
+<td>Hardware Abstraction Layer，硬件抽象层提供标准界面，向更高级别的 Java API 框架显示设备硬件功能。HAL 包含多个库模块，其中每个模块都为特定类型的硬件组件实现一个界面，例如相机或蓝牙模块。当框架 API 要求访问设备硬件时，Android 系统将为该硬件组件加载库模块。</td>
+</tr>
+</tbody></table>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2019/12/04/Kotlin%E5%AD%A6%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/header.jpeg">
+      <meta itemprop="name" content="张潮州">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="张潮州">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/12/04/Kotlin%E5%AD%A6%E4%B9%A0/" class="post-title-link" itemprop="url">Kotlin学习</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2019-12-04 15:07:10 / Modified: 18:26:34" itemprop="dateCreated datePublished" datetime="2019-12-04T15:07:10+08:00">2019-12-04</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="包"><a href="#包" class="headerlink" title="包"></a>包</h1><p>目录与包的结构无需匹配，源代码可以在文件系统的任意位置。</p>
+<h2 id="包声明"><a href="#包声明" class="headerlink" title="包声明"></a>包声明</h2><p>包的声明应处于源文件顶部。<br>源文件所有内容，无论是类还是函数，都包含在声明的包内。<br>如果没有指明包，该源文件的内容属于无名字的默认包。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">package org.example</span><br></pre></td></tr></table></figure>
+
+<h2 id="包导入"><a href="#包导入" class="headerlink" title="包导入"></a>包导入</h2><h3 id="默认导入"><a href="#默认导入" class="headerlink" title="默认导入"></a>默认导入</h3><p>有多个包会默认导入到每个 Kotlin 源文件中。</p>
+<table>
+<thead>
+<tr>
+<th>包</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>kotlin.*</td>
+<td>Kotlin</td>
+</tr>
+<tr>
+<td>kotlin.annotation.*</td>
+<td>注解</td>
+</tr>
+<tr>
+<td>kotlin.collections.*</td>
+<td>集合</td>
+</tr>
+<tr>
+<td>kotlin.comparisons.*</td>
+<td>比较</td>
+</tr>
+<tr>
+<td>kotlin.io.*</td>
+<td>输入输入出</td>
+</tr>
+<tr>
+<td>kotlin.ranges.*</td>
+<td>区间</td>
+</tr>
+<tr>
+<td>kotlin.sequences.*</td>
+<td>序列</td>
+</tr>
+<tr>
+<td>kotlin.text.*</td>
+<td>文本</td>
+</tr>
+<tr>
+<td>java.lang.*</td>
+<td>JVM平台额外导入–Java语言</td>
+</tr>
+<tr>
+<td>kotlin.jvm.*</td>
+<td>JVM平台额外导入–JVM</td>
+</tr>
+<tr>
+<td>kotlin.js.*</td>
+<td>JS平台额外导入–JS</td>
+</tr>
+</tbody></table>
+<h3 id="手动导入"><a href="#手动导入" class="headerlink" title="手动导入"></a>手动导入</h3><p>导入单独名称</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import org.example.Message</span><br></pre></td></tr></table></figure>
+<p>导入作用域下所有内容</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import org.example.*</span><br></pre></td></tr></table></figure>
+<p>如果出现导入名称冲突，可以使用 as 关键字在本地重命名冲突项来消歧义</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import org.test.Message as testMessage</span><br></pre></td></tr></table></figure>
+
+<h3 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h3><p>导入声明<br>顶层函数以及属性<br>在对象声明中声明的函数和属性<br>枚举常量</p>
+<p>顶层声明的可见性<br>如果顶层声明是 private 的，它是声明它的文件所私有的</p>
+<h1 id="可见性修饰符"><a href="#可见性修饰符" class="headerlink" title="可见性修饰符"></a>可见性修饰符</h1><h2 id="包-1"><a href="#包-1" class="headerlink" title="包"></a>包</h2><p>函数、属性和类、对象和接口可以在顶层声明，即直接在包内声明</p>
+<table>
+<thead>
+<tr>
+<th>可见性修饰符</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>private</td>
+<td>只会在声明它的文件内可见</td>
+</tr>
+<tr>
+<td>protected</td>
+<td>不适用于顶层声明</td>
+</tr>
+<tr>
+<td>internal</td>
+<td>会在相同模块内随处可见</td>
+</tr>
+<tr>
+<td>public</td>
+<td>默认可见性，此声明将随处可见</td>
+</tr>
+</tbody></table>
+<h2 id="类和接口"><a href="#类和接口" class="headerlink" title="类和接口"></a>类和接口</h2><p>类内部成员的声明</p>
+<table>
+<thead>
+<tr>
+<th>可见性修饰符</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>private</td>
+<td>只在这个类内部可见，外部类不能访问内部类的 private 成员</td>
+</tr>
+<tr>
+<td>protected</td>
+<td>只在这个类内部可见，如果覆盖一个 protected 成员并且没有显式指定其可见性，该成员还会是 protected 可见性</td>
+</tr>
+<tr>
+<td>internal</td>
+<td>能见到类声明的 本模块内 的任何客户端都可见其 internal 成员</td>
+</tr>
+<tr>
+<td>public</td>
+<td>能见到类声明的任何客户端都可见其 public 成员</td>
+</tr>
+</tbody></table>
+<h2 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h2><p>指定一个类的的主构造函数的可见性</p>
+<table>
+<thead>
+<tr>
+<th>可见性修饰符</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>private</td>
+<td>私有的</td>
+</tr>
+<tr>
+<td>protected</td>
+<td>受保护的</td>
+</tr>
+<tr>
+<td>internal</td>
+<td>一个 internal 类的构造函数只能在相同模块内可见</td>
+</tr>
+<tr>
+<td>public</td>
+<td>默认情况下，所有构造函数都是 public，这实际上等于类可见的地方它就可见</td>
+</tr>
+</tbody></table>
+<h2 id="局部声明"><a href="#局部声明" class="headerlink" title="局部声明"></a>局部声明</h2><p>局部变量、函数和类不能有可见性修饰符。</p>
+<h2 id="模块"><a href="#模块" class="headerlink" title="模块"></a>模块</h2><p>可见性修饰符 internal 意味着该成员只在相同模块内可见。<br>更具体地说， 一个模块是编译在一起的一套 Kotlin 文件。</p>
+<h1 id="基本类型"><a href="#基本类型" class="headerlink" title="基本类型"></a>基本类型</h1><h2 id="数字"><a href="#数字" class="headerlink" title="数字"></a>数字</h2><h3 id="整数"><a href="#整数" class="headerlink" title="整数"></a>整数</h3><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>大小（比特数）</th>
+<th>最小值</th>
+<th>最大值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Byte</td>
+<td>8</td>
+<td>-128</td>
+<td>127</td>
+</tr>
+<tr>
+<td>Short</td>
+<td>16</td>
+<td>-32768</td>
+<td>32767</td>
+</tr>
+<tr>
+<td>Int</td>
+<td>32</td>
+<td>-2,147,483,648 (-2^31)</td>
+<td>2,147,483,647 (2^31 - 1)</td>
+</tr>
+<tr>
+<td>Long</td>
+<td>64</td>
+<td>-9,223,372,036,854,775,808 (-2^63)</td>
+<td>9,223,372,036,854,775,807 (2^63 - 1)</td>
+</tr>
+</tbody></table>
+<p>未超出 Int 最大值的整型值初始化的变量都会推断为 Int 类型。<br>如果初始值超过了其最大值，那么推断为 Long 类型。<br>如需显式指定 Long 型值，请在该值后追加 L 后缀。</p>
+<h3 id="浮点数"><a href="#浮点数" class="headerlink" title="浮点数"></a>浮点数</h3><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>大小（比特数）</th>
+<th>有效数字比特数</th>
+<th>指数比特数</th>
+<th>十进制位数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Float</td>
+<td>32</td>
+<td>24</td>
+<td>8</td>
+<td>6-7</td>
+</tr>
+<tr>
+<td>Double</td>
+<td>64</td>
+<td>53</td>
+<td>11</td>
+<td>15-16</td>
+</tr>
+</tbody></table>
+<p>Float 反映了 IEEE 754 单精度，而 Double 提供了双精度。</p>
+<p>对于以浮点数初始化的变量，编译器会推断为 Double 类型。 如需将一个值显式指定为 Float 类型，请添加 f 或 F 后缀。 如果这样的值包含多于 6～7 位十进制数，那么会将其舍入。</p>
+<p>Kotlin 中的数字没有隐式拓宽转换。 例如，具有 Double 参数的函数只能对 Double 值调用，而不能对 Float、 Int 或者其他数字值调用。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2019/11/09/Object%20C%E6%80%BB%E7%BB%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/header.jpeg">
+      <meta itemprop="name" content="张潮州">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="张潮州">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/11/09/Object%20C%E6%80%BB%E7%BB%93/" class="post-title-link" itemprop="url">Object C总结</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-11-09 15:18:52" itemprop="dateCreated datePublished" datetime="2019-11-09T15:18:52+08:00">2019-11-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-11-11 16:31:57" itemprop="dateModified" datetime="2019-11-11T16:31:57+08:00">2019-11-11</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h2><p>界面文件MyClass.h：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@interface MyClass:NSObject&#123; </span><br><span class="line">// 类变量声明</span><br><span class="line">&#125;</span><br><span class="line">// 类属性声明</span><br><span class="line">// 类方法和声明</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<h2 id="执行-实现"><a href="#执行-实现" class="headerlink" title="执行/实现"></a>执行/实现</h2><p>执行/实现文件MyClass.m：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@implementation MyClass</span><br><span class="line">// 类方法定义</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+
+<h2 id="创建对象"><a href="#创建对象" class="headerlink" title="创建对象"></a>创建对象</h2><p>创建MyClass对象：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MyClass  *objectName = [[MyClass alloc]init] ;</span><br></pre></td></tr></table></figure>
+
+<h2 id="声明方法"><a href="#声明方法" class="headerlink" title="声明方法"></a>声明方法</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-(returnType)methodName:(typeName) variable1 :(typeName)variable2;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-(void)calculateAreaForRectangleWithLength:(CGfloat)length </span><br><span class="line">andBreadth:(CGfloat)breadth;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="调用方法"><a href="#调用方法" class="headerlink" title="调用方法"></a>调用方法</h2><p>Self用来指定它是一个类的方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[self calculateAreaForRectangleWithLength:30 andBreadth:20];</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="声明类方法"><a href="#声明类方法" class="headerlink" title="声明类方法"></a>声明类方法</h2><p>直接而无需创建的对象，可以访问类方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">+(void)simpleClassMethod;</span><br></pre></td></tr></table></figure>
+<h2 id="调用类方法"><a href="#调用类方法" class="headerlink" title="调用类方法"></a>调用类方法</h2><p>可以通过使用类名访问类方法。<br>使用类名MyClass调用类方法simpleClassMethod：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[MyClass simpleClassMethod];</span><br></pre></td></tr></table></figure>
+<h2 id="声明实例方法"><a href="#声明实例方法" class="headerlink" title="声明实例方法"></a>声明实例方法</h2><p>创建类的对象后只访问实例方法，内存分配到的实例变量。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-(void)simpleInstanceMethod;</span><br></pre></td></tr></table></figure>
+
+<h2 id="调用实例方法"><a href="#调用实例方法" class="headerlink" title="调用实例方法"></a>调用实例方法</h2><p>创建类的对象后，可以调用实例方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MyClass  *objectName = [[MyClass alloc]init] ;</span><br><span class="line">[objectName simpleInstanceMethod];</span><br></pre></td></tr></table></figure>
+<h2 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h2><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>NSString</td>
+<td>字符串</td>
+</tr>
+<tr>
+<td>CGfloat</td>
+<td>浮点类型</td>
+</tr>
+<tr>
+<td>NSInteger</td>
+<td>整型</td>
+</tr>
+<tr>
+<td>BOOL</td>
+<td>布尔型</td>
+</tr>
+</tbody></table>
+<h2 id="打印日志"><a href="#打印日志" class="headerlink" title="打印日志"></a>打印日志</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NSlog(@&quot;&quot;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="控制结构"><a href="#控制结构" class="headerlink" title="控制结构"></a>控制结构</h2><h3 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h3><p>properties</p>
+<p>点运算符访问属性：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">self.myString = @&quot;Test&quot;;</span><br></pre></td></tr></table></figure>
+<p>set方法访问属性：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[self setMyString:@&quot;Test&quot;];</span><br></pre></td></tr></table></figure>
+
+<h3 id="类别"><a href="#类别" class="headerlink" title="类别"></a>类别</h3><p>categories</p>
+<p>类别用于将方法添加到现有类，不用执行文件，就可以在其中定义实际的类。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@interface MyClass(customAdditions)</span><br><span class="line">- (void)sampleCategoryMethod;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation MyClass(categoryAdditions)</span><br><span class="line"></span><br><span class="line">-(void)sampleCategoryMethod&#123;</span><br><span class="line">   NSLog(@&quot;Just a test category&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h2><table>
+<thead>
+<tr>
+<th>数组</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>NSMutableArray</td>
+<td>可变数组</td>
+</tr>
+<tr>
+<td>NSArray</td>
+<td>不可变数组</td>
+</tr>
+</tbody></table>
+<p>mutable 可变的，易变的；反复无常的，用情不专的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">NSMutableArray *aMutableArray = [[NSMutableArray alloc]init];</span><br><span class="line">[anArray addObject:@&quot;firstobject&quot;];</span><br><span class="line">NSArray *aImmutableArray = [[NSArray alloc]</span><br><span class="line">initWithObjects:@&quot;firstObject&quot;,nil];</span><br></pre></td></tr></table></figure>
+<h2 id="词典"><a href="#词典" class="headerlink" title="词典"></a>词典</h2><table>
+<thead>
+<tr>
+<th>词典</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>NSMutableDictionary</td>
+<td>可变词典</td>
+</tr>
+<tr>
+<td>NSDictionary</td>
+<td>不可变词典</td>
+</tr>
+</tbody></table>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">NSMutableDictionary*aMutableDictionary = [[NSMutableArray alloc]init];</span><br><span class="line">[aMutableDictionary setObject:@&quot;firstobject&quot; forKey:@&quot;aKey&quot;];</span><br><span class="line">NSDictionary*aImmutableDictionary= [[NSDictionary alloc]initWithObjects:[NSArray arrayWithObjects:</span><br><span class="line">@&quot;firstObject&quot;,nil] forKeys:[ NSArray arrayWithObjects:@&quot;aKey&quot;]];</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="AppDelegate"><a href="#AppDelegate" class="headerlink" title="AppDelegate"></a>AppDelegate</h2><p>AppDelegate.h</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">// Header File that provides all UI related items. </span><br><span class="line">#import &lt;UIKit/UIKit.h&gt; </span><br><span class="line"></span><br><span class="line"> // Forward declaration (Used when class will be defined /imported in future)</span><br><span class="line">@class ViewController;  </span><br><span class="line"></span><br><span class="line"> // Interface for Appdelegate</span><br><span class="line">@interface AppDelegate : UIResponder &lt;UIApplicationDelegate&gt;</span><br><span class="line"></span><br><span class="line">// Property window </span><br><span class="line">@property (strong, nonatomic) UIWindow *window; </span><br><span class="line"></span><br><span class="line"> // Property Viewcontroller</span><br><span class="line"></span><br><span class="line"> @property (strong, nonatomic) ViewController *viewController;</span><br><span class="line">//this marks end of interface </span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+
+<p>AppDelegate调用UIResponder来处理Ios事件。<br>完成UIApplication的命令，提供关键应用程序事件，如启动完毕，终止，等等<br>在iOS设备的屏幕上用UIWindow对象来管理和协调各种视角，它就像其它加载视图的基本视图一样。通常一个应用程序只有一个窗口。<br>UIViewController来处理屏幕流</p>
+<p>AppDelegate.m</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">// Imports the class Appdelegate&apos;s interface</span><br><span class="line">import &quot;AppDelegate.h&quot; </span><br><span class="line"></span><br><span class="line">// Imports the viewcontroller to be loaded</span><br><span class="line">#import &quot;ViewController.h&quot; </span><br><span class="line"></span><br><span class="line">// Class definition starts here</span><br><span class="line">@implementation AppDelegate </span><br><span class="line"></span><br><span class="line">// Following method intimates us the application launched  successfully </span><br><span class="line">- (BOOL)application:(UIApplication *)application </span><br><span class="line"> didFinishLaunchingWithOptions:(NSDictionary *)launchOptions </span><br><span class="line">&#123;</span><br><span class="line">    self.window = [[UIWindow alloc] initWithFrame:</span><br><span class="line">    [[UIScreen mainScreen] bounds]]; </span><br><span class="line">    // Override point for customization after application launch.</span><br><span class="line">    self.viewController = [[ViewController alloc] </span><br><span class="line">     initWithNibName:@&quot;ViewController&quot; bundle:nil];</span><br><span class="line">    self.window.rootViewController = self.viewController;</span><br><span class="line">    [self.window makeKeyAndVisible];</span><br><span class="line">    return YES;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)applicationWillResignActive:(UIApplication *)application</span><br><span class="line">&#123;</span><br><span class="line">    /* Sent when the application is about to move from active to inactive state.</span><br><span class="line">    This can occur for certain types of temporary interruptions</span><br><span class="line">    (such as an incoming phone call or SMS message)</span><br><span class="line">    or when the user quits the application and it begins the transition to the </span><br><span class="line">    background state. Use this method to pause ongoing tasks, disable timers, </span><br><span class="line">    and throttle down OpenGL ES frame rates. Games should use this method </span><br><span class="line">    to pause the game.*/</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)applicationDidEnterBackground:(UIApplication *)application</span><br><span class="line">&#123;</span><br><span class="line">    /* Use this method to release shared resources, save user data, invalidate </span><br><span class="line">    timers, and store enough application state information    to restore your</span><br><span class="line">    application to its current state in case it is terminated later. If your </span><br><span class="line">    application supports background execution, this method is called instead </span><br><span class="line">    of applicationWillTerminate: when the user quits.*/</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)applicationWillEnterForeground:(UIApplication *)application</span><br><span class="line">&#123;</span><br><span class="line">    /* Called as part of the transition from the background to the inactive state;</span><br><span class="line">    here you can undo many of the changes made on entering the background.*/</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)applicationDidBecomeActive:(UIApplication *)application</span><br><span class="line">&#123;</span><br><span class="line">    /* Restart any tasks that were paused (or not yet started) while the</span><br><span class="line">    application was inactive. If the application was previously in the background, </span><br><span class="line">    optionally refresh the user interface.*/</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)applicationWillTerminate:(UIApplication *)application</span><br><span class="line">&#123;</span><br><span class="line">    /* Called when the application is about to terminate. Save data if appropriate.</span><br><span class="line">    See also applicationDidEnterBackground:. */</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+
+<p>此处定义UIApplication。上面定义的所有方法都是应用程序UI调动和不包含任何用户定义的方法。<br>UIWindow对象被分配用来保存应用程序分配对象。<br>UIController作为窗口初始视图控制器<br>调用makeKeyAndVisible能使窗口可见</p>
+<h2 id="ViewController"><a href="#ViewController" class="headerlink" title="ViewController"></a>ViewController</h2><p>ViewController.h</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#import  </span><br><span class="line"></span><br><span class="line">// Interface for class ViewController</span><br><span class="line">@interface ViewController : UIViewController </span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>ViewController类继承UIViewController，为iOS应用程序提供基本视图管理模型。</p>
+<p>ViewController.m</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;ViewController.h&quot;</span><br><span class="line"></span><br><span class="line">// Category, an extension of ViewController class</span><br><span class="line">@interface ViewController ()</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation ViewController  </span><br><span class="line"></span><br><span class="line">- (void)viewDidLoad</span><br><span class="line">&#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    // Do any additional setup after loading the view, typically from a nib.</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)didReceiveMemoryWarning</span><br><span class="line">&#123;</span><br><span class="line">    [super didReceiveMemoryWarning];</span><br><span class="line">    // Dispose of any resources that can be recreated.</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+
+<p>在这里两种方法实现UIViewController类的基类中定义<br>初始视图加载后调用viewDidLoad中的安装程序<br>在内存警告的情况下调用didReceviveMemoryWarning</p>
+<h2 id="操作-输出口"><a href="#操作-输出口" class="headerlink" title="操作/输出口"></a>操作/输出口</h2><p>操作（action）和输出口（Outlet）指的是ibActions和ibOutlets，也就是ib接口生成器所在的地方</p>
+<p>IBAction</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-(IBAction) setTitleLabel:(id)sender&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>IBOutlet</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@property (weak, nonatomic) IBOutlet UIButton *myButton;</span><br></pre></td></tr></table></figure>
+
+<h2 id="委托"><a href="#委托" class="headerlink" title="委托"></a>委托</h2><p>假设对象A调用B来执行一项操作，操作一旦完成，对象A就必须知道对象B已完成任务且对象A将执行其他必要操作。</p>
+<p>A是B的委托对象<br>B引用一个A<br>A将实现B的委托方法<br>B通过委托方法通知</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2019/11/09/iOS%E5%BC%80%E5%8F%91%E7%BB%8F%E9%AA%8C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/header.jpeg">
+      <meta itemprop="name" content="张潮州">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="张潮州">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/11/09/iOS%E5%BC%80%E5%8F%91%E7%BB%8F%E9%AA%8C/" class="post-title-link" itemprop="url">iOS开发经验</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-11-09 11:44:15" itemprop="dateCreated datePublished" datetime="2019-11-09T11:44:15+08:00">2019-11-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-12-03 19:32:25" itemprop="dateModified" datetime="2019-12-03T19:32:25+08:00">2019-12-03</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="1、运行权限"><a href="#1、运行权限" class="headerlink" title="1、运行权限"></a>1、运行权限</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Showing Recent Errors Only</span><br><span class="line">/Users/zhangchaozhou/Library/Developer/Xcode/DerivedData/QianClass-ckuknezluznxrzbfferwmqboddhi/Build/Intermediates.noindex/QianClass.build/Debug-iphonesimulator/QianClass.build/Script-9DC6AE692F1EE7DA612CC2F9.sh: line 2: /Users/zhangchaozhou/Work/hot_ios_beta/HOTTV_PHONE_IOS/Pods/Target Support Files/Pods-QianClass/Pods-QianClass-frameworks.sh: Permission denied</span><br></pre></td></tr></table></figure>
+
+<p>原因：<br>第一次运行没有权限。</p>
+<p>解决方法：<br>1、打开终端。<br>2、cd到目标文件夹。<br>3、输入 chmod 755 你的文件名.sh。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chmod+x Pods-QianClass-resources.sh</span><br></pre></td></tr></table></figure>
+
+<h1 id="2、添加依赖"><a href="#2、添加依赖" class="headerlink" title="2、添加依赖"></a>2、添加依赖</h1><p>往Podfile添加依赖：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">project ‘X.xcodeproj&apos;</span><br><span class="line">platform :ios, &apos;8.0&apos;</span><br><span class="line">target ‘X&apos; do</span><br><span class="line"></span><br><span class="line">    pod &apos;AFNetworking&apos;, &apos;~&gt; 3.1.0&apos;</span><br><span class="line">    pod &apos;SDWebImage&apos;, &apos;~&gt; 3.8.1&apos;</span><br><span class="line">    pod &apos;CYLTabBarController/Lottie&apos;, &apos;~&gt; 1.28.4&apos; # 依赖Lottie库</span><br><span class="line">    pod &apos;MJRefresh&apos;</span><br><span class="line"></span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<p>科学上网，查看HTTP代理端口，设置终端代理：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ export https_proxy=http://127.0.0.1:7890</span><br><span class="line">$ export http_proxy=http://127.0.0.1:7890</span><br></pre></td></tr></table></figure>
+<p>在终端中打开项目目录，输入安装指令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod install</span><br></pre></td></tr></table></figure>
+<p>如果卡顿，输入安装指令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ pod install --verbose --no-repo-update</span><br><span class="line">$ pod update --verbose --no-repo-update</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2019/11/08/%E6%8A%BD%E8%B1%A1%E7%B1%BBContext%E7%9A%84%E6%8A%BD%E8%B1%A1%E6%96%B9%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/header.jpeg">
+      <meta itemprop="name" content="张潮州">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="张潮州">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/11/08/%E6%8A%BD%E8%B1%A1%E7%B1%BBContext%E7%9A%84%E6%8A%BD%E8%B1%A1%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">抽象类Context的抽象方法</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2019-11-08 13:58:46 / Modified: 17:32:39" itemprop="dateCreated datePublished" datetime="2019-11-08T13:58:46+08:00">2019-11-08</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Context"><a href="#Context" class="headerlink" title="Context"></a>Context</h1><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>AssetManager getAssets()</td>
+<td>获取资源管理器</td>
+</tr>
+<tr>
+<td>Resources getResources()</td>
+<td>获取资源</td>
+</tr>
+<tr>
+<td>PackageManager getPackageManager()</td>
+<td>获取包管理器</td>
+</tr>
+<tr>
+<td>ContentResolver getContentResolver()</td>
+<td>获取内容解析器</td>
+</tr>
+<tr>
+<td>Looper getMainLooper()</td>
+<td>获取主线程循环器</td>
+</tr>
+<tr>
+<td>Context getApplicationContext()</td>
+<td>获取应用上下文</td>
+</tr>
+<tr>
+<td>void setTheme(int resid)</td>
+<td>根据资源ID设置主题</td>
+</tr>
+<tr>
+<td>Resources.Theme getTheme()</td>
+<td>获取资源主题</td>
+</tr>
+<tr>
+<td>ClassLoader getClassLoader()</td>
+<td>获取类加载器</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>String getPackageName()</td>
+<td>获取包名</td>
+</tr>
+<tr>
+<td>ApplicationInfo getApplicationInfo()</td>
+<td>获取应用信息</td>
+</tr>
+<tr>
+<td>String getPackageResourcePath()</td>
+<td>获取包资源路径</td>
+</tr>
+<tr>
+<td>String getPackageCodePath()</td>
+<td>获取包代码路径</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SharedPreferences getSharedPreferences(String name, int mode)</td>
+<td>根据名称和模式获取分享偏好</td>
+</tr>
+<tr>
+<td>boolean moveSharedPreferencesFrom(Context sourceContext, String name)</td>
+<td>资源根据上下文和名称移动分享偏好</td>
+</tr>
+<tr>
+<td>deleteSharedPreferences(String name)</td>
+<td>根据名称删除分享偏好</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>FileInputStream openFileInput(String name)</td>
+<td>根据名称打开文件输入流，文件不存在抛出FileNotFoundException异常</td>
+</tr>
+<tr>
+<td>FileOutputStream openFileOutput(String name, int mode)</td>
+<td>根据名称和模式打开文件输出流，文件不存在抛出FileNotFoundException异常</td>
+</tr>
+<tr>
+<td>boolean deleteFile(String name)</td>
+<td>根据名称删除文件</td>
+</tr>
+<tr>
+<td>File getFileStreamPath(String name)</td>
+<td>根据名称获取文件</td>
+</tr>
+<tr>
+<td>File getDataDir()</td>
+<td>获取数据目录文件</td>
+</tr>
+<tr>
+<td>File getFilesDir()</td>
+<td>获取文件目录文件</td>
+</tr>
+<tr>
+<td>File getNoBackupFilesDir()</td>
+<td>获取非恢复文件目录文件</td>
+</tr>
+<tr>
+<td>File getExternalFilesDir(@Nullable String type)</td>
+<td>根据类型获取外置文件目录文件</td>
+</tr>
+<tr>
+<td>File[] getExternalFilesDirs(String type)</td>
+<td>根据类型获取外置文件目录文件数组</td>
+</tr>
+<tr>
+<td>File getObbDir()</td>
+<td>获取OBB目录文件</td>
+</tr>
+<tr>
+<td>File[] getObbDirs()</td>
+<td>获取OBB目录文件数组</td>
+</tr>
+<tr>
+<td>File getCacheDir()</td>
+<td>获取缓存目录文件</td>
+</tr>
+<tr>
+<td>File getCodeCacheDir()</td>
+<td>获取代码缓存目录文件</td>
+</tr>
+<tr>
+<td>File getExternalCacheDir()</td>
+<td>获取外置缓存目录文件</td>
+</tr>
+<tr>
+<td>File[] getExternalCacheDirs()</td>
+<td>获取外置缓存目录文件数组</td>
+</tr>
+<tr>
+<td>File[] getExternalMediaDirs()</td>
+<td>获取外置媒体目录文件数组</td>
+</tr>
+<tr>
+<td>String[] fileList()</td>
+<td>获取文件字符串数组</td>
+</tr>
+<tr>
+<td>File getDir(String name, int mode)</td>
+<td>根据名称和模式获取文件</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SQLiteDatabase openOrCreateDatabase(String name, int mode, SQLiteDatabase.CursorFactory factory)</td>
+<td>根据名称、模式和光标工厂，打开或创造数据库</td>
+</tr>
+<tr>
+<td>SQLiteDatabase openOrCreateDatabase(String name, int mode, SQLiteDatabase.CursorFactory factory, @Nullable DatabaseErrorHandler errorHandler)</td>
+<td>根据名称、模式、光标工厂和数据库错误处理器，打开或创造数据库</td>
+</tr>
+<tr>
+<td>boolean moveDatabaseFrom(Context sourceContext, String name)</td>
+<td>根据资源上下文和名称移动数据库</td>
+</tr>
+<tr>
+<td>boolean deleteDatabase(String name)</td>
+<td>根据名称删除数据库</td>
+</tr>
+<tr>
+<td>File getDatabasePath(String name)</td>
+<td>根据名称获取数据库路径文件</td>
+</tr>
+<tr>
+<td>String[] databaseList()</td>
+<td>获取数据库字符串数组</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Drawable getWallpaper()</td>
+<td>获取壁纸</td>
+</tr>
+<tr>
+<td>Drawable peekWallpaper()</td>
+<td>读取壁纸</td>
+</tr>
+<tr>
+<td>int getWallpaperDesiredMinimumWidth()</td>
+<td>获取壁纸要求的最小宽度</td>
+</tr>
+<tr>
+<td>int getWallpaperDesiredMinimumHeight()</td>
+<td>获取壁纸要求的最小高度</td>
+</tr>
+<tr>
+<td>void setWallpaper(Bitmap bitmap)</td>
+<td>通过位图设置壁纸，传输有问题则抛出IO异常</td>
+</tr>
+<tr>
+<td>void setWallpaper(InputStream data)</td>
+<td>通过输入流设置壁纸，传输有问题则抛出IO异常</td>
+</tr>
+<tr>
+<td>void clearWallpaper()</td>
+<td>清除壁纸</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>void startActivity(Intent intent)</td>
+<td>通过意图发起活动</td>
+</tr>
+<tr>
+<td>void startActivity(Intent intent, @Nullable Bundle options)</td>
+<td>通过意图和数据来发起意图</td>
+</tr>
+<tr>
+<td>void startActivities(Intent[] intents)</td>
+<td>通过意图数组发起活动数组</td>
+</tr>
+<tr>
+<td>void startActivities(Intent[] intents, Bundle options)</td>
+<td>通过意图数组和数据发起活动数组</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>void startIntentSender(IntentSender intent, @Nullable Intent fillInIntent, int flagsMask, int flagsValues, int extraFlags)</td>
+<td></td>
+</tr>
+<tr>
+<td>void startIntentSender(IntentSender intent, @Nullable Intent fillInIntent, int flagsMask, int flagsValues, int extraFlags, @Nullable Bundle options)</td>
+<td></td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>void sendBroadcast(Intent intent)</td>
+<td>通过意图发送广播</td>
+</tr>
+<tr>
+<td>void sendBroadcast(Intent intent, @Nullable String receiverPermission)</td>
+<td>通过意图和接收权限发送广播</td>
+</tr>
+<tr>
+<td>void sendOrderedBroadcast(Intent intent, @Nullable String receiverPermission)</td>
+<td>通过意图和接收权限发送有序广播</td>
+</tr>
+<tr>
+<td>void sendOrderedBroadcast(@NonNull Intent intent, @Nullable String receiverPermission, @Nullable BroadcastReceiver resultReceiver, @Nullable Handler scheduler, int initialCode, @Nullable String initialData, @Nullable Bundle initialExtras)</td>
+<td></td>
+</tr>
+<tr>
+<td>void sendBroadcastAsUser(Intent intent, UserHandle user)</td>
+<td></td>
+</tr>
+<tr>
+<td>void sendBroadcastAsUser(Intent intent, UserHandle user, @Nullable String receiverPermission)</td>
+<td></td>
+</tr>
+<tr>
+<td>void sendOrderedBroadcastAsUser(Intent intent, UserHandle user, @Nullable String receiverPermission, BroadcastReceiver resultReceiver, @Nullable Handler scheduler, int initialCode, @Nullable String initialData, @Nullable Bundle initialExtras)</td>
+<td></td>
+</tr>
+<tr>
+<td>void sendStickyBroadcast(Intent intent)</td>
+<td>发送粘性广播</td>
+</tr>
+<tr>
+<td>void sendStickyOrderedBroadcast(Intent intent, BroadcastReceiver resultReceiver, @Nullable Handler scheduler, int initialCode, @Nullable String initialData, @Nullable Bundle initialExtras)</td>
+<td>发送粘性有序广播</td>
+</tr>
+<tr>
+<td>void removeStickyBroadcast(Intent intent)</td>
+<td>通过意图移除粘性广播</td>
+</tr>
+<tr>
+<td>void sendStickyBroadcastAsUser(Intent intent, UserHandle user)</td>
+<td></td>
+</tr>
+<tr>
+<td>void sendStickyOrderedBroadcastAsUser(Intent intent, UserHandle user, BroadcastReceiver resultReceiver, @Nullable Handler scheduler, int initialCode, @Nullable String initialData, @Nullable Bundle initialExtras)</td>
+<td></td>
+</tr>
+<tr>
+<td>void removeStickyBroadcastAsUser(Intent intent, UserHandle user)</td>
+<td></td>
+</tr>
+<tr>
+<td>Intent registerReceiver(@Nullable BroadcastReceiver receiver, IntentFilter filter)</td>
+<td>注册广播</td>
+</tr>
+<tr>
+<td>Intent registerReceiver(@Nullable BroadcastReceiver receiver, IntentFilter filter, int flags)</td>
+<td>注册广播</td>
+</tr>
+<tr>
+<td>Intent registerReceiver(BroadcastReceiver receiver, IntentFilter filter, @Nullable String broadcastPermission, @Nullable Handler scheduler)</td>
+<td>注册广播</td>
+</tr>
+<tr>
+<td>Intent registerReceiver(BroadcastReceiver receiver, IntentFilter filter, @Nullable String broadcastPermission, @Nullable Handler scheduler, int flags)</td>
+<td></td>
+</tr>
+<tr>
+<td>void unregisterReceiver(BroadcastReceiver receiver)</td>
+<td>注销广播</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ComponentName startService(Intent service)</td>
+<td>启动服务，并返回组件名称</td>
+</tr>
+<tr>
+<td>ComponentName startForegroundService(Intent service)</td>
+<td>启动前台服务，并返回组件名称</td>
+</tr>
+<tr>
+<td>boolean stopService(Intent service)</td>
+<td>停止服务</td>
+</tr>
+<tr>
+<td>boolean bindService(Intent service, @NonNull ServiceConnection conn, int flags)</td>
+<td>绑定服务</td>
+</tr>
+<tr>
+<td>void unbindService(@NonNull ServiceConnection conn)</td>
+<td>解绑服务</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>boolean startInstrumentation(@NonNull ComponentName className, @Nullable String profileFile, @Nullable Bundle arguments)</td>
+<td>启动</td>
+</tr>
+<tr>
+<td>Object getSystemService(@NonNull String name)</td>
+<td>根据名称获取系统服务</td>
+</tr>
+<tr>
+<td>String getSystemServiceName(@NonNull Class&lt;?&gt; serviceClass)</td>
+<td>根据类获取系统服务名称</td>
+</tr>
+<tr>
+<td>int checkPermission(@NonNull String permission, int pid, int uid)</td>
+<td>检测权限</td>
+</tr>
+<tr>
+<td>int checkCallingPermission(@NonNull String permission)</td>
+<td>检测拨打权限</td>
+</tr>
+<tr>
+<td>int checkCallingOrSelfPermission(@NonNull String permission)</td>
+<td>检测</td>
+</tr>
+<tr>
+<td>int checkSelfPermission(@NonNull String permission)</td>
+<td>检测</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Context createPackageContext(String packageName, int flags)</td>
+<td>创建包上下文，如果包名不存在则抛出PackageManager.NameNotFoundException异常</td>
+</tr>
+<tr>
+<td>Context createContextForSplit(String splitName)</td>
+<td></td>
+</tr>
+<tr>
+<td>Context createConfigurationContext(@NonNull Configuration overrideConfiguration)</td>
+<td></td>
+</tr>
+<tr>
+<td>Context createDisplayContext(@NonNull Display display)</td>
+<td></td>
+</tr>
+<tr>
+<td>Context createDeviceProtectedStorageContext()</td>
+<td></td>
+</tr>
+<tr>
+<td>boolean isDeviceProtectedStorage()</td>
+<td></td>
+</tr>
+</tbody></table>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2019/11/07/setContentView%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/header.jpeg">
+      <meta itemprop="name" content="张潮州">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="张潮州">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/11/07/setContentView%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" class="post-title-link" itemprop="url">setContentView源码解析</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2019-11-07 16:27:58 / Modified: 16:28:02" itemprop="dateCreated datePublished" datetime="2019-11-07T16:27:58+08:00">2019-11-07</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>#</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2019/11/02/Runnable%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/header.jpeg">
+      <meta itemprop="name" content="张潮州">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="张潮州">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/11/02/Runnable%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" class="post-title-link" itemprop="url">Runnable源码解析</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2019-11-02 17:07:29 / Modified: 17:22:15" itemprop="dateCreated datePublished" datetime="2019-11-02T17:07:29+08:00">2019-11-02</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Runnable源码解析"><a href="#Runnable源码解析" class="headerlink" title="Runnable源码解析"></a>Runnable源码解析</h1><p>The Runnable interface should be implemented by any class whose instances are intended to be executed by a thread. The class must define a method of no arguments called run.<br>Runnable接口应该由任何类实现，该类实例将被线程所执行。该类必须定义一个名为run的无参数方法。</p>
+<p>This interface is designed to provide a common protocol for objects that wish to execute code while they are active. For example,Runnable is implemented by class Thread. Being active simply means that a thread has been started and has not yet been stopped.<br>此接口旨在为希望在活动状态下执行代码的对象提供公共协议。例如，Runnable是由class Thread实现的。激活仅仅意味着线程已经启动，还没有被停止。</p>
+<p>In addition, Runnable provides the means for a class to be active while not subclassing Thread. A class that implements Runnable can run without subclassing Thread by instantiating a Thread instance and passing itself in as the target.  In most cases, the Runnable interface should  be used if you are only planning to override the run() method and no other Thread methods. This is important because classes should not be subclassed unless the programmer intends on modifying or enhancing the fundamental behavior of the class.<br>另外，Runnable提供了在不子类化Thread的情况下使类处于活动状态的方法。实现Runnable的类可以通过实例化Thread实例并将自身作为目标传递来运行，而无需子类化Thread。在大多数情况下，如果只打算覆盖run()方法而不打算覆盖其他线程方法，那么应该使用Runnable接口。这很重要，因为除非程序员打算修改或增强类的基本行为，否则不应该子类化类。</p>
+<p>When an object implementing interface Runnable is used to create a thread, starting the thread causes the object’s run method to be called in that separately executing thread.<br>当使用实现接口Runnable的对象创建线程时，启动线程将导致在单独执行的线程中调用对象的run方法。</p>
+<p>The general contract of the method run is that it may take any action whatsoever.<br>方法run的一般约定是它可以采取任何操作。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * @see     java.lang.Thread</span><br><span class="line"> * @see     java.util.concurrent.Callable</span><br><span class="line"> * @since   JDK1.0</span><br><span class="line"> */</span><br><span class="line">@FunctionalInterface</span><br><span class="line">public interface Runnable &#123;</span><br><span class="line">    /**</span><br><span class="line">     * @see     java.lang.Thread#run()</span><br><span class="line">     */</span><br><span class="line">    public abstract void run();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2019/11/02/Thread%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/header.jpeg">
+      <meta itemprop="name" content="张潮州">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="张潮州">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/11/02/Thread%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" class="post-title-link" itemprop="url">Thread源码解析</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-11-02 13:55:34" itemprop="dateCreated datePublished" datetime="2019-11-02T13:55:34+08:00">2019-11-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-11-03 00:48:26" itemprop="dateModified" datetime="2019-11-03T00:48:26+08:00">2019-11-03</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Thread源码解析"><a href="#Thread源码解析" class="headerlink" title="Thread源码解析"></a>Thread源码解析</h1><p>什么是线程？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">线程是操作系统能够进行运算调度的最小单位。</span><br></pre></td></tr></table></figure>
+<p>多线程的目的是什么？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">为了更好地利用cpu的资源。</span><br></pre></td></tr></table></figure>
+
+<h2 id="1、类解析"><a href="#1、类解析" class="headerlink" title="1、类解析"></a>1、类解析</h2><p>A thread is a thread of execution in a program. The Java Virtual Machine allows an application to have multiple threads of execution running concurrently.<br>线程是程序中执行的线程。Java虚拟机允许应用程序拥有多个并发运行的执行线程。</p>
+<p>Every thread has a priority. Threads with higher priority are executed in preference to threads with lower priority. Each thread may or may not also be marked as a daemon. When code running in some thread creates a new Thread object, the new thread has its priority initially set equal to the priority of the creating thread, and is a daemon thread if and only if the creating thread is a daemon.<br>每个线程都有一个优先级。优先级高的线程优先于优先级低的线程执行。每个线程可能被标记为守护进程，也可能不被标记为守护进程。当在某个线程中运行的代码创建一个新线程对象时，新线程的优先级最初设置为创建线程的优先级，并且只有在创建线程是一个守护进程时，新线程才是守护进程。</p>
+<p>When a Java Virtual Machine starts up, there is usually a single non-daemon thread (which typically calls the method named main of some designated class). The Java Virtual Machine continues to execute threads until either of the following occurs:<br>The exit method of class Runtime has been called and the security manager has permitted the exit operation to take place.<br>All threads that are not daemon threads have died, either by returning from the call to the run method or by throwing an exception that propagates beyond the run method.<br>当Java虚拟机启动时，通常有一个非守护进程线程(它通常调用某个指定类的main方法)。Java虚拟机继续执行线程，直到发生以下任何一种情况:<br>类运行时的退出方法已被调用，且安全管理器已允许进行退出操作。<br>不是守护进程线程的所有线程都已死亡，要么从对run方法的调用返回，要么抛出一个在run方法之外传播的异常。</p>
+<p>There are two ways to create a new thread of execution. One is to declare a class to be a subclass of Thread. This subclass should override the run method of class Thread. An instance of the subclass can then be allocated and started. For example, a thread that computes primes larger than a stated value could be written as follows:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">class PrimeThread extends Thread &#123;</span><br><span class="line">    long minPrime;</span><br><span class="line"></span><br><span class="line">    PrimeThread(long minPrime) &#123;</span><br><span class="line">        this.minPrime = minPrime;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void run() &#123;</span><br><span class="line">        // compute primes larger than minPrime</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>The following code would then create a thread and start it running:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PrimeThread p = new PrimeThread(143);</span><br><span class="line">p.start();</span><br></pre></td></tr></table></figure>
+
+<p>创建新执行线程有两种方法。一种方法是将一个类声明为Thread的子类。这个子类应该覆盖类Thread的run方法。然后可以分配和启动子类的实例。例如，计算大于给定值的质数的线程可以写成如下形式:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">class PrimeThread extends Thread &#123;</span><br><span class="line">    long minPrime;</span><br><span class="line"></span><br><span class="line">    PrimeThread(long minPrime) &#123;</span><br><span class="line">        this.minPrime = minPrime;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void run() &#123;</span><br><span class="line">        // compute primes larger than minPrime</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>下面的代码将创建一个线程，并开始运行:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PrimeThread p = new PrimeThread(143);</span><br><span class="line">p.start();</span><br></pre></td></tr></table></figure>
+
+
+<p>The other way to create a thread is to declare a class that implements the Runnable interface. That class then implements the run method. An instance of the class can then be allocated, passed as an argument when creating Thread, and started. The same example in this other style looks like the following:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">class PrimeRun implements Runnable &#123;</span><br><span class="line">    long minPrime;</span><br><span class="line"></span><br><span class="line">    PrimeRun(long minPrime) &#123;</span><br><span class="line">        this.minPrime = minPrime;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void run() &#123;</span><br><span class="line">        // compute primes larger than minPrime</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>The following code would then create a thread and start it running:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PrimeRun p = new PrimeRun(143);</span><br><span class="line">new Thread(p).start();</span><br></pre></td></tr></table></figure>
+
+<p>创建线程的另一种方法是声明一个实现Runnable接口的类。然后，该类实现run方法。然后可以分配类的实例，在创建线程时作为参数传递，并启动它。同样的例子在这个其他风格看起来像以下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">class PrimeRun implements Runnable &#123;</span><br><span class="line">    long minPrime;</span><br><span class="line"></span><br><span class="line">    PrimeRun(long minPrime) &#123;</span><br><span class="line">        this.minPrime = minPrime;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void run() &#123;</span><br><span class="line">        // compute primes larger than minPrime</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>下面的代码将创建一个线程，并开始运行:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PrimeRun p = new PrimeRun(143);</span><br><span class="line">new Thread(p).start();</span><br></pre></td></tr></table></figure>
+
+
+<p>Every thread has a name for identification purposes. More than one thread may have the same name. If a name is not specified when a thread is created, a new name is generated for it.<br>每个线程都有一个用于标识的名称。多个线程可能具有相同的名称。如果在创建线程时未指定名称，则为其生成新名称。</p>
+<p>Unless otherwise noted, passing a null argument to a constructor or method in this class will cause a NullPointerException to be thrown.</p>
+<p>除非另有说明，否则将null参数传递给该类中的构造函数或方法将引发NullPointerException。</p>
+<h2 id="2、线程初始化"><a href="#2、线程初始化" class="headerlink" title="2、线程初始化"></a>2、线程初始化</h2><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>参数</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ThreadGroup</td>
+<td>g</td>
+<td>线程组</td>
+</tr>
+<tr>
+<td>Runnable</td>
+<td>target</td>
+<td>执行目标</td>
+</tr>
+<tr>
+<td>long</td>
+<td>stackSize</td>
+<td>堆栈大小</td>
+</tr>
+<tr>
+<td>AccessControlContext</td>
+<td>acc</td>
+<td>访问控制上下文</td>
+</tr>
+<tr>
+<td>boolean</td>
+<td>inheritThreadLocals</td>
+<td>是否继承本地线程</td>
+</tr>
+</tbody></table>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Initializes a Thread.</span><br><span class="line"> * 初始化一个线程。</span><br><span class="line"> * @param g the Thread group </span><br><span class="line"> * 线程组</span><br><span class="line"> * @param target the object whose run() method gets called </span><br><span class="line"> * 调用其run()方法的对象</span><br><span class="line"> * @param name the name of the new Thread 新线程的名称</span><br><span class="line"> * @param stackSize the desired stack size for the new thread, or</span><br><span class="line"> *        zero to indicate that this parameter is to be ignored. </span><br><span class="line"> * 新线程所需的堆栈大小，或零表示忽略此参数。</span><br><span class="line"> * @param acc the AccessControlContext to inherit, or</span><br><span class="line"> *            AccessController.getContext() if null</span><br><span class="line"> * 要继承的AccessControlContext，如果为空，则为AccessController.getContext()</span><br><span class="line"> * @param inheritThreadLocals if &#123;@code true&#125;, inherit initial values for</span><br><span class="line"> *            inheritable thread-locals from the constructing thread</span><br><span class="line"> * 如果为真，则从构造线程继承可继承的线程局部变量的初始值</span><br><span class="line"> */</span><br><span class="line">private void init(ThreadGroup g, Runnable target, String name,</span><br><span class="line">                  long stackSize, AccessControlContext acc,</span><br><span class="line">                  boolean inheritThreadLocals) &#123;</span><br><span class="line">    if (name == null) &#123;</span><br><span class="line">        throw new NullPointerException(&quot;name cannot be null&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    //设置线程名称</span><br><span class="line">    this.name = name;</span><br><span class="line">    //获取当前线程</span><br><span class="line">    Thread parent = currentThread();</span><br><span class="line">    //获取权限组</span><br><span class="line">    SecurityManager security = System.getSecurityManager();</span><br><span class="line">    if (g == null) &#123;</span><br><span class="line">        /* Determine if it&apos;s an applet or not */</span><br><span class="line"></span><br><span class="line">        /* If there is a security manager, ask the security manager</span><br><span class="line">           what to do. */</span><br><span class="line">        if (security != null) &#123;</span><br><span class="line">            g = security.getThreadGroup();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        /* If the security doesn&apos;t have a strong opinion of the matter</span><br><span class="line">           use the parent thread group. */</span><br><span class="line">        if (g == null) &#123;</span><br><span class="line">            g = parent.getThreadGroup();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /* checkAccess regardless of whether or not threadgroup is</span><br><span class="line">       explicitly passed in. */</span><br><span class="line">    //确定当前运行的线程是否具有修改此线程组的权限。</span><br><span class="line">    g.checkAccess();</span><br><span class="line">    </span><br><span class="line">    /*</span><br><span class="line">     * Do we have the required permissions?</span><br><span class="line">     */</span><br><span class="line">     //验证可以在不违反安全约束的情况下构造这个(可能是子类)实例:子类不能覆盖安全敏感的非final方法，否则检查“enableContextClassLoaderOverride”RuntimePermission。</span><br><span class="line">    if (security != null) &#123;</span><br><span class="line">        if (isCCLOverridden(getClass())) &#123;</span><br><span class="line">            security.checkPermission(SUBCLASS_IMPLEMENTATION_PERMISSION);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    //添加到线程组中未启动的线程</span><br><span class="line">    g.addUnstarted();</span><br><span class="line">    //设置线程组</span><br><span class="line">    this.group = g;</span><br><span class="line">    //设置是否是守护线程，与父线程一致</span><br><span class="line">    this.daemon = parent.isDaemon();</span><br><span class="line">    //设置线程优先级，与父线程一致</span><br><span class="line">    this.priority = parent.getPriority();</span><br><span class="line">    //设置上下文类加载器</span><br><span class="line">    if (security == null || isCCLOverridden(parent.getClass()))</span><br><span class="line">        this.contextClassLoader = parent.getContextClassLoader();</span><br><span class="line">    else</span><br><span class="line">        this.contextClassLoader = parent.contextClassLoader;</span><br><span class="line">    //设置继承的访问控制上下文</span><br><span class="line">    this.inheritedAccessControlContext =</span><br><span class="line">            acc != null ? acc : AccessController.getContext();</span><br><span class="line">    //设置执行目标</span><br><span class="line">    this.target = target;</span><br><span class="line">    //设置优先级</span><br><span class="line">    setPriority(priority);</span><br><span class="line">    //是否继承本地线程</span><br><span class="line">    if (inheritThreadLocals &amp;&amp; parent.inheritableThreadLocals != null)</span><br><span class="line">        this.inheritableThreadLocals =</span><br><span class="line">            ThreadLocal.createInheritedMap(parent.inheritableThreadLocals);</span><br><span class="line">    /* Stash the specified stack size in case the VM cares */</span><br><span class="line">    //设置堆栈大小</span><br><span class="line">    this.stackSize = stackSize;</span><br><span class="line"></span><br><span class="line">    /* Set thread ID */</span><br><span class="line">    //设置线程ID</span><br><span class="line">    tid = nextThreadID();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="3、启动线程"><a href="#3、启动线程" class="headerlink" title="3、启动线程"></a>3、启动线程</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Causes this thread to begin execution; the Java Virtual Machine</span><br><span class="line"> * calls the run method of this thread.</span><br><span class="line"> * 使该线程开始执行;Java虚拟机调用这个线程的run方法。</span><br><span class="line"> * &lt;p&gt;</span><br><span class="line"> * The result is that two threads are running concurrently: the</span><br><span class="line"> * current thread (which returns from the call to the</span><br><span class="line"> * start method) and the other thread (which executes its</span><br><span class="line"> * run method).</span><br><span class="line"> * 结果是两个线程并发运行:当前线程(从对start方法的调用中返回)和另一个线程(执行其run方法)。</span><br><span class="line"> * &lt;p&gt;</span><br><span class="line"> * It is never legal to start a thread more than once.</span><br><span class="line"> * 多次启动一个线程是不合法的。</span><br><span class="line"> * In particular, a thread may not be restarted once it has completed</span><br><span class="line"> * execution.</span><br><span class="line"> * 特别是，线程在完成执行后可能不会重新启动。</span><br><span class="line"> * @exception  IllegalThreadStateException  if the thread was already</span><br><span class="line"> *               started.</span><br><span class="line"> * 如果线程已经启动，则抛异常。</span><br><span class="line"> * @see        #run()</span><br><span class="line"> * @see        #stop()</span><br><span class="line"> */</span><br><span class="line">public synchronized void start() &#123;</span><br><span class="line">    /**</span><br><span class="line">     * This method is not invoked for the main method thread or &quot;system&quot;</span><br><span class="line">     * group threads created/set up by the VM. Any new functionality added</span><br><span class="line">     * to this method in the future may have to also be added to the VM.</span><br><span class="line">     *</span><br><span class="line">     * A zero status value corresponds to state &quot;NEW&quot;.</span><br><span class="line">     */</span><br><span class="line">    if (threadStatus != 0)</span><br><span class="line">        throw new IllegalThreadStateException();</span><br><span class="line"></span><br><span class="line">    /* Notify the group that this thread is about to be started</span><br><span class="line">     * so that it can be added to the group&apos;s list of threads</span><br><span class="line">     * and the group&apos;s unstarted count can be decremented. */</span><br><span class="line">    //添加此线程到线程组</span><br><span class="line">    group.add(this);</span><br><span class="line"></span><br><span class="line">    boolean started = false;</span><br><span class="line">    try &#123;</span><br><span class="line">    		//启动线程</span><br><span class="line">        start0();</span><br><span class="line">        started = true;</span><br><span class="line">    &#125; finally &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            if (!started) &#123;</span><br><span class="line">            	  //添加到线程组中启动失败的线程</span><br><span class="line">                group.threadStartFailed(this);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; catch (Throwable ignore) &#123;</span><br><span class="line">            /* do nothing. If start0 threw a Throwable then</span><br><span class="line">              it will be passed up the call stack */</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="4、线程运行"><a href="#4、线程运行" class="headerlink" title="4、线程运行"></a>4、线程运行</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * If this thread was constructed using a separate</span><br><span class="line"> * Runnable run object, then that</span><br><span class="line"> * Runnable object&apos;s run method is called;</span><br><span class="line"> * otherwise, this method does nothing and returns.</span><br><span class="line"> * 如果这个线程是使用一个单独的Runnable运行对象构造的，那么调用该Runnable对象的run方法;否则，此方法不执行任何操作并返回。</span><br><span class="line"> * &lt;p&gt;</span><br><span class="line"> * Subclasses of Thread should override this method.</span><br><span class="line"> * Thread的子类应该覆盖此方法。</span><br><span class="line"> * @see     #start()</span><br><span class="line"> * @see     #stop()</span><br><span class="line"> * @see     #Thread(ThreadGroup, Runnable, String)</span><br><span class="line"> */</span><br><span class="line">@Override</span><br><span class="line">public void run() &#123;</span><br><span class="line">    if (target != null) &#123;</span><br><span class="line">        target.run();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="5、停止线程"><a href="#5、停止线程" class="headerlink" title="5、停止线程"></a>5、停止线程</h2><p>Forces the thread to stop executing.<br>强制线程停止执行。</p>
+<p>If there is a security manager installed, its checkAccess method is called with this as its argument. This may result in a SecurityException being raised (in the current thread).<br>如果安装了安全管理器，则调用其checkAccess方法并将其作为参数。这可能会导致(在当前线程中)引发SecurityException。</p>
+<h2 id="线程状态"><a href="#线程状态" class="headerlink" title="线程状态"></a>线程状态</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public enum State &#123;</span><br><span class="line">    NEW,</span><br><span class="line"></span><br><span class="line">    RUNNABLE,</span><br><span class="line"></span><br><span class="line">    BLOCKED,</span><br><span class="line"></span><br><span class="line">    WAITING,</span><br><span class="line"></span><br><span class="line">    TIMED_WAITING,</span><br><span class="line"></span><br><span class="line">    TERMINATED;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1、新建"><a href="#1、新建" class="headerlink" title="1、新建"></a>1、新建</h3><p>Thread state for a thread which has not yet started.<br>尚未启动的线程的线程状态。</p>
+<h3 id="2、可运行的"><a href="#2、可运行的" class="headerlink" title="2、可运行的"></a>2、可运行的</h3><p>Thread state for a runnable thread.  A thread in the runnable state is executing in the Java virtual machine but it may be waiting for other resources from the operating system such as processor.<br>可运行线程的线程状态。处于可运行状态的线程正在Java虚拟机中执行，但它可能正在等待来自操作系统(如处理器)的其他资源。</p>
+<h3 id="3、阻塞的"><a href="#3、阻塞的" class="headerlink" title="3、阻塞的"></a>3、阻塞的</h3><p>Thread state for a thread blocked waiting for a monitor lock.A thread in the blocked state is waiting for a monitor lock to enter a synchronized block/method or reenter a synchronized block/method after calling Object#wait() Object.wait.<br>等待监视器锁的阻塞线程的线程状态。处于阻塞状态的线程正在等待一个监视器锁输入一个同步块/方法，或者在调用对象#wait() Object.wait后重新输入一个同步块/方法。</p>
+<h3 id="4、等待中的"><a href="#4、等待中的" class="headerlink" title="4、等待中的"></a>4、等待中的</h3><p>Thread state for a waiting thread.<br>等待线程的线程状态。<br>A thread is in the waiting state due to calling one of the following methods:</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Object#wait() with no timeout</td>
+<td>Object没有timeout的wait方法</td>
+</tr>
+</tbody></table>
+<p>一个线程由于调用下列方法之一而处于等待状态:</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
     <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2019/10/30/HashMap%E8%A7%A3%E6%9E%90/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -326,685 +1718,11 @@
   
   
 
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2019/10/29/HashMap%E3%80%81HashTable%E3%80%81ConcurrentHashMap/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/header.jpeg">
-      <meta itemprop="name" content="张潮州">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="张潮州">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/10/29/HashMap%E3%80%81HashTable%E3%80%81ConcurrentHashMap/" class="post-title-link" itemprop="url">HashMap、HashTable、ConcurrentHashMap</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2019-10-29 22:29:11 / Modified: 22:37:44" itemprop="dateCreated datePublished" datetime="2019-10-29T22:29:11+08:00">2019-10-29</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="HashMap、HashTable、ConcurrentHashMap"><a href="#HashMap、HashTable、ConcurrentHashMap" class="headerlink" title="HashMap、HashTable、ConcurrentHashMap"></a>HashMap、HashTable、ConcurrentHashMap</h1><p>线程不安全<br>线程安全<br>并发</p>
-<p>线程安全问题：多线程的情况下和单线程操作的情况数据不一致<br>采用无锁化的机制保证数组数据化的</p>
-<p>CAS：乐观锁的机制，保证线程安全的机制<br>compare and swap </p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2019/10/29/Object%E7%B1%BB%E8%A7%A3%E6%9E%90/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/header.jpeg">
-      <meta itemprop="name" content="张潮州">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="张潮州">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/10/29/Object%E7%B1%BB%E8%A7%A3%E6%9E%90/" class="post-title-link" itemprop="url">Object类解析</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-10-29 16:33:39" itemprop="dateCreated datePublished" datetime="2019-10-29T16:33:39+08:00">2019-10-29</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-11-02 12:01:36" itemprop="dateModified" datetime="2019-11-02T12:01:36+08:00">2019-11-02</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="1、类注释"><a href="#1、类注释" class="headerlink" title="1、类注释"></a>1、类注释</h2><p>Class Object is the root of the class hierarchy.Every class has Object as a superclass. All objects, including arrays, implement the methods of this class.</p>
-<p>Object类是类层次结构的根。每个类都以Object作为他的一个超类。所有对象，包括数组，都实现这个类的方法。</p>
-<h2 id="2、注册原生相关"><a href="#2、注册原生相关" class="headerlink" title="2、注册原生相关"></a>2、注册原生相关</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">private static native void registerNatives();</span><br><span class="line">static &#123;</span><br><span class="line">    registerNatives();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="3、getClass"><a href="#3、getClass" class="headerlink" title="3、getClass"></a>3、getClass</h2><p>Returns the runtime class of this Object. The returned Class object is the object that is locked by static synchronized methods of the represented class.</p>
-<p>返回此对象的运行时类。返回的类对象是被所表示类的静态同步方法锁定的对象。</p>
-<p>The actual result type is Class&lt;? extends |X|&gt; where |X| is the erasure of the static type of the expression on which  getClass is called.For example, no cast is required in this code fragment:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Number n = 0;</span><br><span class="line">Class&lt;? extends Number&gt; c = n.getClass();</span><br></pre></td></tr></table></figure>
-<p>实际的结果类型是Class&lt;? extends |X|&gt;，其中|X|是对调用getClass的表达式的静态类型的擦除。例如，在这段代码中不需要强制转换:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Number n = 0;</span><br><span class="line">Class&lt;? extends Number&gt; c = n.getClass();</span><br></pre></td></tr></table></figure>
-<p>The Class object that represents the runtime  class of this object.<br>表示此对象的运行时类的类对象。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public final native Class&lt;?&gt; getClass();</span><br></pre></td></tr></table></figure>
-<h2 id="3、hashCode"><a href="#3、hashCode" class="headerlink" title="3、hashCode"></a>3、hashCode</h2><p>Returns a hash code value for the object. This method is supported for the benefit of hash tables such as those provided by  java.util.HashMap.</p>
-<p>返回对象的哈希码值。支持此方法的好处是可以使用散列表，比如java.util.HashMap提供的散列表。</p>
-<p>The general contract of hashCode is:<br>1、Whenever it is invoked on the same object more than once during an execution of a Java application, the  hashCode method must consistently return the same integer, provided no information  used in  equals comparisons on the object is modified. This integer need not remain consistent from one execution of an application to another execution of the same application.<br>2、If two objects are equal according to the  equals(Object) method, then calling the  hashCode method on each of the two objects must produce the same integer result.<br>3、It is not required that if two objects are unequal according to the java.lang.Object#equals(java.lang.Object) method, then calling the hashCode method on each of the two objects must produce distinct integer results.  However, the programmer should be aware that producing distinct integer results for unequal objects may improve the performance of hash tables.</p>
-<p>关于hashCode的所有约定是：<br>1、在Java应用程序的执行过程中，无论何时在同一个对象上多次调用它，hashCode方法都必须一致地返回相同的整数，前提是不对对象上的equals比较中使用的信息进行修改。此整数不需要在应用程序的一次执行与同一应用程序的另一次执行之间保持一致。<br>2、如果根据equals(Object)方法，两个对象是相等的，那么在每个对象上调用hashCode方法必须产生相同的整数结果。<br>3、如果两个对象根据java.lang.Object#equals(java.lang.Object)方法不相等，那么在每个对象上调用hashCode方法必须产生不同的整数结果，这是不需要的。但是，程序员应该意识到，为不相等的对象生成不同的整数结果可能会提高哈希表的性能。</p>
-<p>As much as is reasonably practical, the hashCode method defined by class  Object does return distinct integers for distinct objects. (This is typically implemented by converting the internal address of the object into an integer, but this implementation technique is not required by the Java&trade; programming language.）</p>
-<p>在相当实际的情况下，类对象定义的hashCode方法确实会为不同的对象返回不同的整数。(这通常是通过将对象的内部地址转换为整数来实现的，但是Java™并不需要这种实现技术编程语言)。</p>
-<p>a hash code value for this object.<br>此对象的哈希码值。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public native int hashCode();</span><br></pre></td></tr></table></figure>
-
-
-<h2 id="4、equals"><a href="#4、equals" class="headerlink" title="4、equals"></a>4、equals</h2><p>Indicates whether some other object is “equal to” this one.<br>指示某个其他对象是否“等于”这个对象。</p>
-<p>The equals method implements an equivalence relation on non-null object references:<br>equals方法实现了非空对象引用的等价关系:</p>
-<p>It is reflexive: for any non-null reference value x, x.equals(x)  should return true.<br>它是自反的:对于任何非空的参考值x，x.equals(x)应该返回true。</p>
-<p>It is symmetric: for any non-null reference values x and  y, x.equals(y) should return  true if and only if y.equals(x) returns  true.<br>它是对称的:对于任何非空的参考值x和y，当且仅当y.equals(x)返回true时，x.equals(y)返回true。</p>
-<p>It is  transitive: for any non-null reference values x, y, and  z, if x.equals(y) returns true and y.equals(z) returns  true, then x.equals(z) should return true.<br>它是可传递的:对于任何非空的参考值x、y和z，如果x.equals(y)返回true，而y.equals(z)返回true，那么x.equals(z)应该返回true。</p>
-<p>It is consistent: for any non-null reference values x and  y, multiple invocations of x.equals(y) consistently return  true or consistently return false, provided no  information used in  equals comparisons on the objects is modified.</p>
-<p>它是一致的:对于任何非空的参考值x和y，对x.equals(y)的多次调用一致返回真或一致返回假，前提是对对象的equals比较中使用的信息不进行修改。</p>
-<p>For any non-null reference value  x, x.equals(null)}should return false.<br>对于任何非空的参考值x, x.equals(null)}应该返回false。</p>
-<p>The equals method for class  Object implements the most discriminating possible equivalence relation on objects; that is, for any non-null reference values  x and  y, this method returns  true if and only if  x and y refer to the same object ( x == y has the value  true).</p>
-<p>类对象的equals方法实现了对对象尽可能区别的等价关系;也就是说，对于任何非空的参考值x和y，当且仅当x和y指向同一个对象时，该方法返回true (x == y的值为true)。</p>
-<p>Note that it is generally necessary to override the  hashCode method whenever this method is overridden, so as to maintain the general contract for the  hashCode method, which states that equal objects must have equal hash codes.</p>
-<p>注意，通常需要在重写hashCode方法时重写该方法，以便维护hashCode方法的常规契约，该契约规定相等的对象必须具有相等的散列代码。</p>
-<p>the reference object with which to compare.<br>要与之进行比较的引用对象。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public boolean equals(Object obj) &#123;</span><br><span class="line">    return (this == obj);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<h2 id="5、clone"><a href="#5、clone" class="headerlink" title="5、clone"></a>5、clone</h2><p>Creates and returns a copy of this object.  The precise meaning of “copy” may depend on the class of the object. The general intent is that, for any object  x, the expression:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x.clone() != x</span><br></pre></td></tr></table></figure>
-<p>will be true, and that the expression:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x.clone().getClass() == x.getClass()</span><br></pre></td></tr></table></figure>
-<p>will be true, but these are not absolute requirements.<br>While it is typically the case that:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x.clone().equals(x)</span><br></pre></td></tr></table></figure>
-<p>will be true, this is not an absolute requirement.</p>
-<p>创建并返回此对象的副本。“copy”的确切含义可能取决于对象的类。一般的意图是，对于任何对象x，表达式:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x.clone() != x</span><br></pre></td></tr></table></figure>
-<p>将是真的，表达式:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x.clone(). getClass () == x. getClass()</span><br></pre></td></tr></table></figure>
-<p>将是真的，但这些不是绝对的要求。<br>而通常的情况是:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x.clone().equals(x)</span><br></pre></td></tr></table></figure>
-<p>将是真的，这不是一个绝对的要求。</p>
-<p>By convention, the returned object should be obtained by calling  super.clone.  If a class and all of its superclasses (except Object) obey this convention, it will be the case that  x.clone().getClass() == x.getClass().<br>按照惯例，应该通过调用super.clone来获取返回的对象。如果一个类及其所有超类(对象除外)都遵守这个约定，那么x.c ondon (). getclass () == x.g getclass()。</p>
-<p>By convention, the object returned by this method should be independent of this object (which is being cloned).  To achieve this independence, it may be necessary to modify one or more fields of the object returned by  super.clone before returning it.  Typically, this means copying any mutable objects that comprise the internal “deep structure” of the object being cloned and replacing the references to these objects with references to the copies.  If a class contains only primitive fields or references to immutable objects, then it is usually the case that no fields in the object returned by  super.clone need to be modified.</p>
-<p>按照惯例，这个方法返回的对象应该独立于这个对象(它正在被克隆)。为了实现这种独立性，可能需要修改super返回的对象的一个或多个字段。在返回之前进行克隆。通常，这意味着复制任何包含被克隆对象的内部“深层结构”的可变对象，并将对这些对象的引用替换为对副本的引用。如果一个类只包含基元字段或对不可变对象的引用，那么通常情况下super返回的对象中没有字段。克隆需要修改。</p>
-<p>The method clone for class  Object performs a specific cloning operation. First, if the class of this object does not implement the interface Cloneable, then a CloneNotSupportedException is thrown. Note that all arrays are considered to implement the interface Cloneable and that the return type of the  clone method of an array type  T[] is  T[] where T is any reference or primitive type. Otherwise, this method creates a new instance of the class of this object and initializes all its fields with exactly the contents of the corresponding fields of this object, as if by assignment; the contents of the fields are not themselves cloned. Thus, this method performs a “shallow copy” of this object, not a “deep copy” operation.</p>
-<p>类对象的方法克隆执行特定的克隆操作。首先，如果这个对象的类没有实现Cloneable接口，那么抛出CloneNotSupportedException。注意，所有数组都被认为实现了可克隆接口，数组类型T[]的克隆方法的返回类型是T[]，其中T是任何引用或基本类型。否则，此方法创建此对象的类的一个新实例，并使用该对象相应字段的内容精确地初始化其所有字段，就像通过赋值一样;字段的内容本身不是克隆的。因此，此方法执行此对象的“浅拷贝”，而不是“深拷贝”操作。</p>
-<p>The class Object does not itself implement the interface Cloneable, so calling the clone method on an object whose class is Object will result in throwing an exception at run time.</p>
-<p>类对象本身并不实现接口可克隆性，因此调用其类为Object的对象的克隆方法将导致在运行时抛出异常。</p>
-<p>a clone of this instance.<br>此实例的克隆。</p>
-<p>if the object’s class does not support the Cloneable interface. Subclasses that override the clone method can also throw this exception to indicate that an instance cannot be cloned.</p>
-<p>如果对象的类不支持可克隆接口。重写克隆方法的子类也可以抛出此异常，以指示无法克隆实例。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">protected native Object clone() throws CloneNotSupportedException;</span><br></pre></td></tr></table></figure>
-
-<h2 id="6、toString"><a href="#6、toString" class="headerlink" title="6、toString"></a>6、toString</h2><p>Returns a string representation of the object. In general, the toString method returns a string that “textually represents” this object. The result should be a concise but informative representation that is easy for a person to read. It is recommended that all subclasses override this method.</p>
-<p>返回对象的字符串表示形式。通常，toString方法返回一个字符串，该字符串“以文本形式表示”该对象。结果应该是简洁但信息丰富的表示，便于阅读。建议所有子类都重写此方法。</p>
-<p>The toString method for class Object returns a string consisting of the name of the class of which the object is an instance, the at-sign character ‘@’, and the unsigned hexadecimal representation of the hash code of the object. In other words, this method returns a string equal to the value of:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">getClass().getName() + &apos;@&apos; + Integer.toHexString(hashCode())</span><br></pre></td></tr></table></figure>
-
-<p>Object类的toString方法返回一个字符串，该字符串由对象是其实例的类的名称、at符号字符“@”和对象的哈希码的无符号十六进制表示形式组成。换句话说，这个方法返回一个字符串等于:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">getClass().getName() + &apos;@&apos; + Integer.toHexString(hashCode())</span><br></pre></td></tr></table></figure>
-<p>a string representation of the object.<br>对象的字符串表示形式。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public String toString() &#123;</span><br><span class="line">    return getClass().getName() + &quot;@&quot; + Integer.toHexString(hashCode());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<h2 id="7、notify"><a href="#7、notify" class="headerlink" title="7、notify"></a>7、notify</h2><h3 id="7-1、notify"><a href="#7-1、notify" class="headerlink" title="7.1、notify"></a>7.1、notify</h3><p>Wakes up a single thread that is waiting on this object’s monitor. If any threads are waiting on this object, one of them is chosen to be awakened. The choice is arbitrary and occurs at the discretion of the implementation. A thread waits on an object’s monitor by calling one of the  wait methods.<br>唤醒正在此对象监视器上等待的单个线程。如果有任何线程正在等待这个对象，则选择其中一个线程被唤醒。选择是任意的，由实现决定。线程通过调用一个等待方法来等待对象的监视器。</p>
-<p>The awakened thread will not be able to proceed until the current thread relinquishes the lock on this object. The awakened thread will compete in the usual manner with any other threads that might be actively competing to synchronize on this object; for example, the awakened thread enjoys no reliable privilege or disadvantage in being the next thread to lock this object.<br>被唤醒的线程将无法继续，直到当前线程释放该对象上的锁。被唤醒的线程将以通常的方式与任何其他线程竞争，这些线程可能正在积极地对这个对象进行同步;例如，在成为下一个锁定该对象的线程时，被唤醒的线程没有任何可靠的特权或缺点。</p>
-<p>This method should only be called by a thread that is the owner of this object’s monitor. A thread becomes the owner of the object’s monitor in one of three ways:<br>By executing a synchronized instance method of that object.<br>By executing the body of a synchronized statement that synchronizes on the object.<br>For objects of type  Class, by executing a synchronized static method of that class.<br>此方法应仅由此对象监视器的所有者所在的线程调用。线程通过以下三种方式之一成为对象监视器的所有者:<br>通过执行该对象的同步实例方法。<br>通过执行对对象进行同步的同步语句的主体。<br>对于Class类型的对象，通过执行该类的同步静态方法。</p>
-<p>Only one thread at a time can own an object’s monitor.<br>一次只有一个线程可以拥有一个对象的监视器。</p>
-<p>IllegalMonitorStateException if the current thread is not the owner of this object’s monitor.<br>如果当前线程不是此对象监视器的所有者，抛出异常。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public final native void notify();</span><br></pre></td></tr></table></figure>
-
-<h3 id="7-2、notifyAll"><a href="#7-2、notifyAll" class="headerlink" title="7.2、notifyAll"></a>7.2、notifyAll</h3><p>Wakes up all threads that are waiting on this object’s monitor. A thread waits on an object’s monitor by calling one of the  wait methods.<br>唤醒正在此对象监视器上等待的所有线程。线程通过调用一个等待方法来等待对象的监视器。</p>
-<p>The awakened threads will not be able to proceed until the current thread relinquishes the lock on this object. The awakened threads will compete in the usual manner with any other threads that might be actively competing to synchronize on this object; for example, the awakened threads enjoy no reliable privilege or disadvantage in being the next thread to lock this object.<br>被唤醒的线程将无法继续，直到当前线程释放该对象上的锁。被唤醒的线程将以通常的方式与任何其他线程竞争，这些线程可能正在积极地对这个对象进行同步;例如，在成为下一个锁定此对象的线程时，被唤醒的线程没有任何可靠的特权或缺点。</p>
-<p>This method should only be called by a thread that is the owner of this object’s monitor. See the  notify method for a description of the ways in which a thread can become the owner of a monitor.<br>此方法应仅由此对象监视器的所有者所在的线程调用。有关线程如何成为监视器所有者的描述，请参阅notify方法。</p>
-<p>IllegalMonitorStateException if the current thread is not the owner of this object’s monitor.<br>如果当前线程不是此对象监视器的所有者，抛出异常。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public final native void notifyAll();</span><br></pre></td></tr></table></figure>
-<h2 id="8、wait"><a href="#8、wait" class="headerlink" title="8、wait"></a>8、wait</h2><h3 id="8-1、wait-long-timeout"><a href="#8-1、wait-long-timeout" class="headerlink" title="8.1、wait(long timeout)"></a>8.1、wait(long timeout)</h3><p>Causes the current thread to wait until either another thread invokes the java.lang.Object#notify() method or the java.lang.Object#notifyAll() method for this object, or a specified amount of time has elapsed.<br>导致当前线程等待，直到另一个线程调用该对象的java.lang.Object#notify()方法或java.lang.Object#notifyAll()方法，或者指定的时间已经过去。</p>
-<p>The current thread must own this object’s monitor.<br>当前线程必须拥有此对象的监视器。</p>
-<p>This method causes the current thread (call it T) to  place itself in the wait set for this object and then to relinquish  any and all synchronization claims on this object. Thread T becomes disabled for thread scheduling purposes and lies dormant until one of four things happens:<br>Some other thread invokes the notify method for this object and thread T happens to be arbitrarily chosen as the thread to be awakened.<br>Some other thread invokes the notifyAll method for this object.<br>Some other thread Thread#interrupt() interrupts thread T.<br>The specified amount of real time has elapsed, more or less.  If timeout is zero, however, then real time is not taken into consideration and the thread simply waits until notified.<br>此方法导致当前线程(称为T)将自己放入此对象的等待集中，然后放弃此对象上的任何和所有同步声明。线程T在线程调度时被禁用，并处于休眠状态，直到发生以下四种情况之一:<br>其他一些线程调用此对象的notify方法，而线程T恰好被任意选择为要唤醒的线程。<br>其他一些线程调用此对象的notifyAll方法。<br>其他一些线程的Thread#interrupt()方法中断线程T。<br>指定的实际时间已经过了，或多或少。但是，如果超时为零，则不考虑实时，线程只是等待，直到得到通知。</p>
-<p>The thread T is then removed from the wait set for this object and re-enabled for thread scheduling. It then competes in the usual manner with other threads for the right to synchronize on the object; once it has gained control of the object, all its synchronization claims on the object are restored to the status quo ante - that is, to the situation as of the time that the wait method was invoked. Thread T then returns from the invocation of the wait method. Thus, on return from the wait method, the synchronization state of the object and of thread T is exactly as it was when the wait method was invoked.<br>然后从该对象的等待集中删除线程T，并重新启用线程调度。然后它以通常的方式与其他线程竞争对象上的同步权;一旦它获得了对对象的控制，它对对象的所有同步声明就会恢复到原来的状态——也就是说，恢复到调用wait方法时的状态。然后线程T从wait方法的调用返回。因此，从wait方法返回时，对象和线程T的同步状态与调用wait方法时的同步状态完全相同。</p>
-<p>A thread can also wake up without being notified, interrupted, or timing out, a so-called spurious wakeup.  While this will rarely occur in practice, applications must guard against it by testing for the condition that should have caused the thread to be awakened, and continuing to wait if the condition is not satisfied.  In other words, waits should always occur in loops, like this one:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">synchronized (obj) &#123;</span><br><span class="line">    while (&lt;condition does not hold&gt;)</span><br><span class="line">    		obj.wait(timeout);</span><br><span class="line">    		// Perform action appropriate to condition</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>线程也可以在没有通知、中断或超时的情况下唤醒，这就是所谓的伪唤醒。虽然这种情况在实践中很少发生，但是应用程序必须通过测试导致线程被唤醒的条件来防范这种情况，如果条件不满足，则继续等待。换句话说，等待应该总是在循环中发生，就像这个:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">synchronized (obj) &#123;</span><br><span class="line">    while (&lt;condition does not hold&gt;)</span><br><span class="line">    		obj.wait(timeout);</span><br><span class="line">    		// Perform action appropriate to condition</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>For more information on this topic, see Section 3.2.3 in Doug Lea’s “Concurrent Programming in Java (Second Edition)” (Addison-Wesley, 2000), or Item 50 in Joshua Bloch’s “Effective Java Programming Language Guide” (Addison-Wesley, 2001).<br>有关此主题的更多信息，请参见Doug Lea的“Java并发编程(第二版)”中的3.2.3节。(Addison-Wesley, 2000)，或Joshua Bloch的“有效的Java编程语言指南”(Addison-Wesley, 2001)中的第50项。</p>
-<p>If the current thread is java.lang.Thread#interrupt()  interrupted by any thread before or while it is waiting, then an InterruptedException is thrown.  This exception is not thrown until the lock status of this object has been restored as described above.<br>如果当前线程是java.lang.Thread#interrupt()，在它等待之前或等待期间被任何线程中断，则抛出InterruptedException。在此对象的锁状态如前所述恢复之前，不会引发此异常。</p>
-<p>Note that the wait method, as it places the current thread into the wait set for this object, unlocks only this object; any other objects on which the current thread may be synchronized remain locked while the thread waits.<br>注意，wait方法在将当前线程放入该对象的等待集中时，只解锁该对象;当前线程可能被同步的任何其他对象在线程等待期间保持锁定状态。</p>
-<p>This method should only be called by a thread that is the owner of this object’s monitor. See the notify method for a description of the ways in which a thread can become the owner of a monitor.<br>此方法应仅由此对象监视器的所有者所在的线程调用。有关线程如何成为监视器所有者的描述，请参阅notify方法。</p>
-<p>the maximum time to wait in milliseconds.<br>等待的最大时间(以毫秒为单位)。</p>
-<p>IllegalArgumentException if the value of timeout is negative.<br>如果超时的值是负数，抛出异常。</p>
-<p>IllegalMonitorStateException if the current thread is not the owner of the object’s monitor.<br>如果当前线程不是对象监视器的所有者，抛出异常。</p>
-<p>InterruptedException if any thread interrupted the current thread before or while the current thread was waiting for a notification.  The interrupted  status of the current thread is cleared when this exception is thrown.<br>如果任何线程在当前线程等待通知之前或在当前线程等待通知期间中断当前线程，抛出异常。当抛出此异常时，当前线程的中断状态将被清除。</p>
-<h3 id="8-2、wait-long-timeout-int-nanos"><a href="#8-2、wait-long-timeout-int-nanos" class="headerlink" title="8.2、wait(long timeout, int nanos)"></a>8.2、wait(long timeout, int nanos)</h3><p>Causes the current thread to wait until another thread invokes the java.lang.Object#notify() method or the java.lang.Object#notifyAll() method for this object, or some other thread interrupts the current thread, or a certain amount of real time has elapsed.<br>导致当前线程等待，直到另一个线程调用该对象的java.lang.Object#notify()方法或java.lang.Object#notifyAll()方法，或其他一些线程中断当前线程，或经过了一定时间。</p>
-<p>This method is similar to the wait method of one argument, but it allows finer control over the amount of time to wait for a notification before giving up. The amount of real time, measured in nanoseconds, is given by:<br>这个方法类似于一个参数的wait方法，但是它允许更好地控制在放弃之前等待通知的时间。实时时间量，以纳秒为单位，由:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1000000*timeout+nanos</span><br></pre></td></tr></table></figure>
-
-<p>In all other respects, this method does the same thing as the method wait(long) of one argument. In particular, wait(0, 0) means the same thing as wait(0).<br>在所有其他方面，此方法的作用与一个参数的wait(long)方法相同。特别是，wait(0,0)与wait(0)的含义相同。</p>
-<p>The current thread must own this object’s monitor. The thread releases ownership of this monitor and waits until either of the following two conditions has occurred:<br>Another thread notifies threads waiting on this object’s monitor to wake up either through a call to the notify method or the notifyAll method.<br>The timeout period, specified by timeout milliseconds plus nanos nanoseconds arguments, has elapsed.</p>
-<p>当前线程必须拥有此对象的监视器。线程释放这个监视器的所有权，并等待，直到发生以下两种情况之一:<br>另一个线程通知等待该对象监视器的线程通过调用notify方法或notifyAll方法唤醒。<br>超时时间(由超时毫秒加上纳秒参数指定)已经过去。</p>
-<p>The thread then waits until it can re-obtain ownership of the monitor and resumes execution.<br>然后，线程等待，直到它可以重新获得监视器的所有权，并继续执行。</p>
-<p>As in the one argument version, interrupts and spurious wakeups are possible, and this method should always be used in a loop:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">synchronized (obj) &#123;</span><br><span class="line">        while (&lt;condition does not hold&gt;)</span><br><span class="line">            obj.wait(timeout, nanos);</span><br><span class="line">            // Perform action appropriate to condition</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>在一个参数版本中，中断和虚假的唤醒是可能的，这个方法应该总是在循环中使用:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">synchronized (obj) &#123;</span><br><span class="line">        while (&lt;condition does not hold&gt;)</span><br><span class="line">            obj.wait(timeout, nanos);</span><br><span class="line">            // Perform action appropriate to condition</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>This method should only be called by a thread that is the owner of this object’s monitor. See the notify method for a description of the ways in which a thread can become the owner of a monitor.<br>此方法应仅由此对象监视器的所有者所在的线程调用。有关线程如何成为监视器所有者的描述，请参阅notify方法。</p>
-<p>the maximum time to wait in milliseconds.<br>等待的最大时间(以毫秒为单位)。</p>
-<p>additional time, in nanoseconds range  0-999999.<br>附加时间，以纳秒为单位，范围为0-999999。</p>
-<p>IllegalMonitorStateException if the current thread is not the owner of the object’s monitor.<br>如果当前线程不是对象监视器的所有者，抛出异常。</p>
-<p>InterruptedException if any thread interrupted the current thread before or while the current thread was waiting for a notification.  The interrupted  status of the current thread is cleared when this exception is thrown.<br>如果任何线程在当前线程等待通知之前或在当前线程等待通知期间中断当前线程，抛出异常。当抛出此异常时，当前线程的中断状态将被清除。</p>
-<p>IllegalArgumentException if the value of timeout is  negative or the value of nanos is not in the range 0-999999.<br>如果timeout值为负，或者nanos值不在0-999999范围内，抛出异常。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">public final void wait(long timeout, int nanos) throws InterruptedException &#123;</span><br><span class="line">    if (timeout &lt; 0) &#123;</span><br><span class="line">        throw new IllegalArgumentException(&quot;timeout value is negative&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (nanos &lt; 0 || nanos &gt; 999999) &#123;</span><br><span class="line">        throw new IllegalArgumentException(</span><br><span class="line">                            &quot;nanosecond timeout value out of range&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (nanos &gt; 0) &#123;</span><br><span class="line">        timeout++;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    wait(timeout);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="8-3、wait"><a href="#8-3、wait" class="headerlink" title="8.3、wait()"></a>8.3、wait()</h3><p>Causes the current thread to wait until another thread invokes the java.lang.Object#notify() method or the java.lang.Object#notifyAll() method for this object. In other words, this method behaves exactly as if it simply performs the call wait(0).</p>
-<p>导致当前线程等待，直到另一个线程调用该对象的java.lang.Object#notify()方法或java.lang.Object#notifyAll()方法。换句话说，这个方法的行为与它简单地执行调用wait(0)完全一样。</p>
-<p>The current thread must own this object’s monitor. The thread releases ownership of this monitor and waits until another thread notifies threads waiting on this object’s monitor to wake up either through a call to the notify method or the notifyAll method. The thread then waits until it can re-obtain ownership of the monitor and resumes execution.<br>当前线程必须拥有此对象的监视器。线程释放此监视器的所有权，并等待，直到另一个线程通过调用notify方法或notifyAll方法通知等待该对象的监视器的线程唤醒。然后，线程等待，直到它可以重新获得监视器的所有权，并继续执行。</p>
-<p>As in the one argument version, interrupts and spurious wakeups are possible, and this method should always be used in a loop:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">synchronized (obj) &#123;</span><br><span class="line">        while (&lt;condition does not hold&gt;)</span><br><span class="line">            obj.wait();</span><br><span class="line">            // Perform action appropriate to condition</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>在一个参数版本中，中断和虚假的唤醒是可能的，这个方法应该总是在循环中使用:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">synchronized (obj) &#123;</span><br><span class="line">        while (&lt;condition does not hold&gt;)</span><br><span class="line">            obj.wait();</span><br><span class="line">            // Perform action appropriate to condition</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>This method should only be called by a thread that is the owner of this object’s monitor. See the notify method for a description of the ways in which a thread can become the owner of a monitor.<br>此方法应仅由此对象监视器的所有者所在的线程调用。有关线程如何成为监视器所有者的描述，请参阅notify方法。</p>
-<p>IllegalArgumentException if the value of timeout is negative.<br>如果超时的值是负数，抛出异常。<br>IllegalMonitorStateException if the current thread is not the owner of the object’s monitor.<br>如果当前线程不是对象监视器的所有者，抛出异常。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public final void wait() throws InterruptedException &#123;</span><br><span class="line">    wait(0);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="9、finalize"><a href="#9、finalize" class="headerlink" title="9、finalize"></a>9、finalize</h2><p>Called by the garbage collector on an object when garbage collection determines that there are no more references to the object. A subclass overrides the finalize method to dispose of system resources or to perform other cleanup.<br>当垃圾收集确定没有对对象的更多引用时，由对象上的垃圾收集器调用。一个子类覆盖finalize方法来处理系统资源或执行其他清理。</p>
-<p>The general contract of finalize is that it is invoked if and when the Java&trade; virtual machine has determined that there is no longer any means by which this object can be accessed by any thread that has not yet died, except as a result of an action taken by the  finalization of some other object or class which is ready to be finalized. The finalize method may take any action, including making this object available again to other threads; the usual purpose of finalize, however, is to perform cleanup actions before the object is irrevocably discarded. For example, the finalize method for an object that represents an input/output connection might perform explicit I/O transactions to break the connection before the object is permanently discarded.<br>finalize的一般约定是，当Java™时调用它虚拟机已经确定，没有任何方法可以让这个对象被任何还没有死的线程访问，除非是某个其他对象或类的终结所采取的行动的结果，该对象或类已经准备好被终结。finalize方法可以采取任何操作，包括使该对象再次对其他线程可用;然而，finalize的通常目的是在不可撤销地丢弃对象之前执行清理操作。例如，表示输入/输出连接的对象的finalize方法可能会执行显式的I/O事务，在对象被永久丢弃之前断开连接。</p>
-<p>The finalize method of class Object performs no special action; it simply returns normally. Subclasses of Object may override this definition.<br>类对象的finalize方法不执行任何特殊操作;它只是正常返回。对象的子类可以覆盖此定义。</p>
-<p>The Java programming language does not guarantee which thread will invoke the finalize method for any given object. It is guaranteed, however, that the thread that invokes finalize will not be holding any user-visible synchronization locks when finalize is invoked. If an uncaught exception is thrown by the finalize method, the exception is ignored and finalization of that object terminates.<br>Java编程语言并不保证哪个线程将为任何给定对象调用finalize方法。但是，可以保证调用finalize的线程在调用finalize时不会持有任何用户可见的同步锁。如果finalize方法抛出未捕获的异常，则忽略该异常并终止该对象的终结。</p>
-<p>After the finalize method has been invoked for an object, no further action is taken until the Java virtual machine has again determined that there is no longer any means by which this object can be accessed by any thread that has not yet died, including possible actions by other objects or classes which are ready to be finalized, at which point the object may be discarded.<br>对象的finalize方法被调用后,没有采取进一步的行动,直到Java虚拟机再次确定,不再有任何方法可以访问这个对象的线程还没有死,包括其他对象或类的可能的行动准备完成,此时对象可能被丢弃。</p>
-<p>The finalize method is never invoked more than once by a Java virtual machine for any given object.<br>对于任何给定对象，Java虚拟机都不会多次调用finalize方法。</p>
-<p>Any exception thrown by the finalize method causes the finalization of this object to be halted, but is otherwise ignored.<br>finalize方法抛出的任何异常都会导致此对象的终止，但在其他情况下会被忽略。</p>
-<p>Finalization of Class Instances<br>类实例的终结</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">protected void finalize() throws Throwable &#123; &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2019/10/29/hashCode%E8%A7%A3%E6%9E%90/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/header.jpeg">
-      <meta itemprop="name" content="张潮州">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="张潮州">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/10/29/hashCode%E8%A7%A3%E6%9E%90/" class="post-title-link" itemprop="url">hashCode解析</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2019-10-29 16:06:33 / Modified: 22:14:57" itemprop="dateCreated datePublished" datetime="2019-10-29T16:06:33+08:00">2019-10-29</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="1、"><a href="#1、" class="headerlink" title="1、"></a>1、</h1><p>Class Object is the root of the class hierarchy.Every class has Object as a superclass. All objects, including arrays, implement the methods of this class.</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2019/10/29/HashMap%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/header.jpeg">
-      <meta itemprop="name" content="张潮州">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="张潮州">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/10/29/HashMap%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" class="post-title-link" itemprop="url">HashMap源码解析</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-10-29 06:41:22" itemprop="dateCreated datePublished" datetime="2019-10-29T06:41:22+08:00">2019-10-29</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-10-30 11:04:05" itemprop="dateModified" datetime="2019-10-30T11:04:05+08:00">2019-10-30</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="1、类注释"><a href="#1、类注释" class="headerlink" title="1、类注释"></a>1、类注释</h2><p>Hash table based implementation of the Map interface. This implementation provides all of the optional map operations, and permits null values and the null key.  The HashMap class is roughly equivalent to Hashtable, except that it is unsynchronized and permits nulls.  This class makes no guarantees as to the order of the map; in particular, it does not guarantee that the order will remain constant over time.</p>
-<p>基于哈希表实现的映射接口。此实现提供所有可选的映射操作，并允许空值和空键。HashMap类大致相当于Hashtable，只是它是不同步的，并且允许为空。该类不保证映射的顺序;特别是，它不能保证映射在一段时间内保持不变。</p>
-<p>This implementation provides constant-time performance for the basic operations get and put, assuming the hash function disperses the elements properly among the buckets.  Iteration over collection views requires time proportional to the “capacity” of the HashMap instance (the number of buckets) plus its size (the number of key-value mappings).  Thus, it’s very important not to set the initial capacity too high (or the load factor too low) if iteration performance is important.</p>
-<p>这个实现为基本操作get和put提供了固定时间的性能，假设散列函数正确地将元素分散到各个bucket中。集合视图的迭代需要与HashMap实例的“容量”(桶的数量)及其大小(键值映射的数量)成比例的时间。因此，如果迭代性能很重要，那么不要将初始容量设置得太高(或负载因子太低)是非常重要的。</p>
-<p>An instance of HashMap has two parameters that affect its performance: initial capacity and load factor. The capacity is the number of buckets in the hash table, and the initial capacity is simply the capacity at the time the hash table is created.  The load factor is a measure of how full the hash table is allowed to get before its capacity is automatically increased. When the number of entries in the hash table exceeds the product of the load factor and the current capacity, the hash table is rehashed (that is, internal data structures are rebuilt) so that the hash table has approximately twice the number of buckets.</p>
-<p>HashMap实例有两个影响其性能的参数:初始容量和负载因子。容量是哈希表中的桶数，初始容量只是创建哈希表时的容量。负载因子是一个度量哈希表在其容量自动增加之前允许的满度的度量。当哈希表中的条目数超过负载因子和当前容量的乘积时，将对哈希表进行重新哈希(即重新构建内部数据结构)，使哈希表的桶数大约是桶数的两倍。</p>
-<p>As a general rule, the default load factor (.75) offers a good tradeoff between time and space costs.  Higher values decrease the space overhead but increase the lookup cost (reflected in most of the operations of the HashMap class, including get and put).  The expected number of entries in the map and its load factor should be taken into account when setting its initial capacity, so as to minimize the number of rehash operations.  If the initial capacity is greater than the maximum number of entries divided by the load factor, no rehash operations will ever occur.</p>
-<p>一般来说，默认的负载因子(.75)在时间和空间成本之间提供了很好的权衡。更高的值减少了空间开销，但增加了查找成本(反映在HashMap类的大多数操作中，包括get和put)。在设置map的初始容量时，应该考虑map中条目的期望数量及其负载因子，从而最小化rehash操作的数量。如果初始容量大于条目的最大数量除以负载因子，则不会发生重排操作。</p>
-<p>If many mappings are to be stored in a HashMap instance, creating it with a sufficiently large capacity will allow the mappings to be stored more efficiently than letting it perform automatic rehashing as needed to grow the table.  Note that using many keys with the same  hashCode is a sure way to slow down performance of any hash table. To ameliorate impact, when keys are Comparable, this class may use comparison order among keys to help break ties.</p>
-<p>如果要将许多映射存储在HashMap实例中，那么使用足够大的容量创建映射将比根据需要执行自动散列来扩展表更有效地存储映射。注意，使用具有相同hashCode的多个键肯定会降低任何散列表的性能。为了改善影响，当键是可比较的，这个类可以使用键之间的比较顺序来帮助打破联系。</p>
-<p>Note that this implementation is not synchronized.</strong> If multiple threads access a hash map concurrently, and at least one of the threads modifies the map structurally, it must be synchronized externally.  (A structural modification is any operation that adds or deletes one or more mappings; merely changing the value associated with a key that an instance already contains is not a structural modification.)  This is typically accomplished by synchronizing on some object that naturally encapsulates the map.</p>
-<p>注意，这个实现不是同步的。如果多个线程同时访问一个散列映射，并且至少有一个线程在结构上修改了这个映射，那么它必须在外部同步。(结构修改是指增加或删除一个或多个映射的操作;仅仅更改与一个实例已经包含的键相关联的值并不是结构修改。这通常是通过对一些自然封装了映射的对象进行同步来实现的。</p>
-<p>If no such object exists, the map should be “wrapped” using the Collections#synchronizedMap method.  This is best done at creation time, to prevent accidental unsynchronized access to the map:<br>Map m = Collections.synchronizedMap(new HashMap(…));</p>
-<p>如果不存在这样的对象，则应该使用Collections#synchronizedMap方法对映射进行“包装”。这最好在创建时完成，以防止意外的不同步访问映射:<br>Map m = Collections.synchronizedMap(new HashMap(…));</p>
-<p>The iterators returned by all of this class’s “collection view methods” are fail-fast: if the map is structurally modified at any time after the iterator is created, in any way except through the iterator’s own remove method, the iterator will throw a ConcurrentModificationException.  Thus, in the face of concurrent modification, the iterator fails quickly and cleanly, rather than risking arbitrary, non-deterministic behavior at an undetermined time in the future.</p>
-<p>这个类的所有“集合视图方法”返回的迭代器是快速失效的:如果在创建迭代器之后的任何时候，以任何方式(除了通过迭代器自己的删除方法)对映射进行结构修改，迭代器将抛出ConcurrentModificationException异常。因此，在面对并发修改时，迭代器会快速而干净地失败，而不是在将来某个不确定的时间冒任意的、不确定的行为的风险。</p>
-<p>Note that the fail-fast behavior of an iterator cannot be guaranteed as it is, generally speaking, impossible to make any hard guarantees in the presence of unsynchronized concurrent modification.  Fail-fast iterators throw ConcurrentModificationException on a best-effort basis. Therefore, it would be wrong to write a program that depended on this exception for its correctness: the fail-fast behavior of iterators should be used only to detect bugs.</p>
-<p>注意，不能保证迭代器的快速故障行为，因为通常来说，在存在非同步并发修改的情况下，不可能做出任何严格的保证。故障快速迭代器在最大努力的基础上抛出ConcurrentModificationException。因此，编写一个依赖于这个异常的正确性的程序是错误的:迭代器的快速故障行为应该只用于检测bug。</p>
-<p>This class is a member of the Java Collections Framework.</p>
-<p>该类是Java集合框架的成员。</p>
-<p><K> the type of keys maintained by this map<br><V> the type of mapped values</p>
-<p><K>此映射所维护的键的类型<br><V>映射值的类型</p>
-<h2 id="2、实现注意事项"><a href="#2、实现注意事项" class="headerlink" title="2、实现注意事项"></a>2、实现注意事项</h2><p>Implementation notes.<br>实现注意事项。</p>
-<p>This map usually acts as a binned (bucketed) hash table, but when bins get too large, they are transformed into bins of TreeNodes, each structured similarly to those in java.util.TreeMap. Most methods try to use normal bins, but relay to TreeNode methods when applicable (simply by checking instanceof a node).  Bins of TreeNodes may be traversed and used like any others, but additionally support faster lookup when overpopulated. However, since the vast majority of bins in normal use are not overpopulated, checking for existence of tree bins may be delayed in the course of table methods.</p>
-<p>这个映射通常充当一个二进制(二进制)哈希表，但是当箱子变得太大时，它们会被转换成treenode的箱子，每个箱子的结构与java.util.TreeMap中的箱子类似。大多数方法都尝试使用普通的bin，但是在适用时中继到TreeNode方法(只需检查一个节点的instanceof)。树节点的存储箱可以像其他存储箱一样被遍历和使用，但是在过度填充时支持更快的查找。但是，由于正常使用的大多数箱子并没有被过度填充，所以在表方法的过程中可能会延迟检查树箱子的存在。</p>
-<p>Tree bins (i.e., bins whose elements are all TreeNodes) are ordered primarily by hashCode, but in the case of ties, if two elements are of the same “class C implements Comparable<C>“, type then their compareTo method is used for ordering. (We conservatively check generic types via reflection to validate this – see method comparableClassFor).  The added complexity of tree bins is worthwhile in providing worst-case O(log n) operations when keys either have distinct hashes or are orderable, Thus, performance degrades gracefully under accidental or malicious usages in which hashCode() methods return values that are poorly distributed, as well as those in which many keys share a hashCode, so long as they are also Comparable. (If neither of these apply, we may waste about a factor of two in time and space compared to taking no precautions. But the only known cases stem from poor user programming practices that are already so slow that this makes little difference.)</p>
-<p>树垃圾箱(即。元素都是treenode的箱子)主要通过hashCode排序，但是对于tie，如果两个元素属于相同的“C类实现了Comparable<C>”，那么输入它们的compareTo方法来排序。(我们通过反射保守地检查泛型类型来验证这一点——参见comparableClassFor方法)。树的额外复杂性垃圾箱是值得的在提供坏的O (log n)操作键有不同的散列或公开,定货时因此,性能降低优雅地在意外或恶意使用hashCode()方法返回值的差分布,以及许多密钥共享一个hashCode,只要他们也类似。(如果这两种方法都不适用，我们可能会在时间和空间上浪费大约两倍于不采取预防措施的时间和空间。但已知的案例中，只有一些是由于糟糕的用户编程实践导致的，这些实践已经非常缓慢了，这几乎没有什么区别。</p>
-<p>Because TreeNodes are about twice the size of regular nodes, we use them only when bins contain enough nodes to warrant use (see TREEIFY_THRESHOLD). And when they become too small (due to removal or resizing) they are converted back to plain bins.  In usages with well-distributed user hashCodes, tree bins are rarely used.  Ideally, under random hashCodes, the frequency of nodes in bins follows a Poisson distribution (<a href="http://en.wikipedia.org/wiki/Poisson_distribution" target="_blank" rel="noopener">http://en.wikipedia.org/wiki/Poisson_distribution</a>) with a parameter of about 0.5 on average for the default resizing threshold of 0.75, although with a large variance because of resizing granularity. Ignoring variance, the expected occurrences of list size k are (exp(-0.5) * pow(0.5, k) / factorial(k)). The first values are:<br>0:    0.60653066<br>1:    0.30326533<br>2:    0.07581633<br>3:    0.01263606<br>4:    0.00157952<br>5:    0.00015795<br>6:    0.00001316<br>7:    0.00000094<br>8:    0.00000006<br>more: less than 1 in ten million</p>
-<p>因为树节点的大小大约是普通节点的两倍，所以我们只在箱子包含足够的节点时才使用树节点(参见TREEIFY_THRESHOLD)。当它们变得太小(由于删除或调整大小)时，就会被转换回普通的垃圾箱。在使用分布良好的用户hashcode时，很少使用树箱。理想情况下，在随机hashCodes下，bin中节点的频率遵循泊松分布(<a href="http://en.wikipedia.org/wiki/Poisson_distribution)，默认调整阈值为0.75，平均参数约为0.5，尽管由于调整粒度而存在较大的差异。忽略方差，列表大小k的预期出现次数是(exp(-0.5)" target="_blank" rel="noopener">http://en.wikipedia.org/wiki/Poisson_distribution)，默认调整阈值为0.75，平均参数约为0.5，尽管由于调整粒度而存在较大的差异。忽略方差，列表大小k的预期出现次数是(exp(-0.5)</a> * pow(0.5, k) / factorial(k))。第一个值是:<br>0:    0.60653066<br>1:    0.30326533<br>2:    0.07581633<br>3:    0.01263606<br>4:    0.00157952<br>5:    0.00015795<br>6:    0.00001316<br>7:    0.00000094<br>8:    0.00000006<br>更多:少于1千万分之一</p>
-<p>The root of a tree bin is normally its first node.  However, sometimes (currently only upon Iterator.remove), the root might be elsewhere, but can be recovered following parent links (method TreeNode.root()).</p>
-<p>树状容器的根通常是它的第一个节点。但是，有时(目前仅在Iterator.remove上)，根可能在其他地方，但是可以通过父链接(方法TreeNode.root())恢复。</p>
-<p>All applicable internal methods accept a hash code as an argument (as normally supplied from a public method), allowing them to call each other without recomputing user hashCodes. Most internal methods also accept a “tab” argument, that is normally the current table, but may be a new or old one when resizing or converting.</p>
-<p>所有适用的内部方法都接受散列码作为参数(通常由公共方法提供)，允许它们相互调用而无需重新计算用户散列码。大多数内部方法也接受“tab”参数，它通常是当前表，但在调整大小或转换时可能是新表或旧表。</p>
-<p>When bin lists are treeified, split, or untreeified, we keep them in the same relative access/traversal order (i.e., field Node.next) to better preserve locality, and to slightly simplify handling of splits and traversals that invoke iterator.remove. When using comparators on insertion, to keep a total ordering (or as close as is required here) across rebalancings, we compare classes and identityHashCodes as tie-breakers.</p>
-<p>当bin列表被treeified、split或untreeified时，我们将它们保持在相同的相对访问/遍历顺序(即为了更好地保存局部，并稍微简化对调用iterator.remove的分割和遍历的处理。当在插入时使用比较器时，为了在重新平衡时保持总排序(或尽可能接近这里的要求)，我们将类和identityHashCodes作为关键字进行比较。</p>
-<p>The use and transitions among plain vs tree modes is complicated by the existence of subclass LinkedHashMap. See below for hook methods defined to be invoked upon insertion, removal and access that allow LinkedHashMap internals to otherwise remain independent of these mechanics. (This also requires that a map instance be passed to some utility methods that may create new nodes.)</p>
-<p>普通vs树模式之间的使用和转换由于LinkedHashMap子类的存在而变得复杂。请参阅下面定义的钩子方法，这些方法将在插入、删除和访问时调用，否则LinkedHashMap内部将独立于这些机制。(这还要求将映射实例传递给一些可能创建新节点的实用程序方法。)</p>
-<p>The concurrent-programming-like SSA-based coding style helps avoid aliasing errors amid all of the twisty pointer operations.</p>
-<p>类似于并行编程的基于ssa的编码风格有助于避免所有扭曲指针操作中的别名错误。</p>
-<h2 id="3、实现"><a href="#3、实现" class="headerlink" title="3、实现"></a>3、实现</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">static final int hash(Object key) &#123;</span><br><span class="line">    int h;</span><br><span class="line">    return (key == null) ? 0 : (h = key.hashCode()) ^ (h &gt;&gt;&gt; 16);</span><br><span class="line">&#125;</span><br><span class="line">1、如果key为空，则哈希值为0；</span><br><span class="line">2、如果key不为空，则取key.hashCode()和key.hashCode()无符号右移16位的位异或运算结果。</span><br></pre></td></tr></table></figure>
-<p>Computes key.hashCode() and spreads (XORs) higher bits of hash to lower.  Because the table uses power-of-two masking, sets of hashes that vary only in bits above the current mask will always collide. (Among known examples are sets of Float keys holding consecutive whole numbers in small tables.)  So we apply a transform that spreads the impact of higher bits downward. There is a tradeoff between speed, utility, and quality of bit-spreading. Because many common sets of hashes are already reasonably distributed (so don’t benefit from spreading), and because we use trees to handle large sets of collisions in bins, we just XOR some shifted bits in the cheapest possible way to reduce systematic lossage, as well as to incorporate impact of the highest bits that would otherwise never be used in index calculations because of table bounds.</p>
-<p>计算key.hashCode()并将(XORs)哈希值从高到低。由于该表使用了power-of-two掩码，因此仅在当前掩码之上的位上变化的散列集总是会发生冲突。(已知的例子包括一组在小表中保存连续整数的浮点键。)因此，我们应用了一个转换，将更高位的影响向下传播。在速度、效用和比特传播的质量之间存在权衡。因为许多常见的散列集已经合理分布(所以不要受益于传播),因为我们用树来处理大型的碰撞在垃圾箱,我们只是XOR一些改变以最便宜的方式来减少系统lossage,以及将最高位的影响,否则永远不会因为指数计算中使用的表。</p>
-<p>通过key获取key的hash值：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hash(key)</span><br></pre></td></tr></table></figure>
-<p>通过hash值获取索引：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(table.length - 1) &amp; hash</span><br><span class="line">取表长度-1与哈希值进行位与运算的结果。</span><br></pre></td></tr></table></figure>
-
-
-
-<p>负载因子：0.75 超过table大小的0.75就会触发扩容。<br>tableSizeFor<br>返回一个大于等于且最接近 cap 的2的幂次方整数</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2019/10/24/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/header.jpeg">
-      <meta itemprop="name" content="张潮州">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="张潮州">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/10/24/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/" class="post-title-link" itemprop="url">Java多线程</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2019-10-24 21:56:27 / Modified: 22:05:44" itemprop="dateCreated datePublished" datetime="2019-10-24T21:56:27+08:00">2019-10-24</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2019/10/24/Android%E5%90%AF%E5%8A%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/header.jpeg">
-      <meta itemprop="name" content="张潮州">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="张潮州">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/10/24/Android%E5%90%AF%E5%8A%A8/" class="post-title-link" itemprop="url">Android启动</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-10-24 17:14:00" itemprop="dateCreated datePublished" datetime="2019-10-24T17:14:00+08:00">2019-10-24</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-10-25 23:10:18" itemprop="dateModified" datetime="2019-10-25T23:10:18+08:00">2019-10-25</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/" itemprop="url" rel="index">
-                    <span itemprop="name">Android</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="Android启动"><a href="#Android启动" class="headerlink" title="Android启动"></a>Android启动</h1>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2019/10/24/Hexo%E4%BD%BF%E7%94%A8%E6%96%87%E6%A1%A3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/header.jpeg">
-      <meta itemprop="name" content="张潮州">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="张潮州">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/10/24/Hexo%E4%BD%BF%E7%94%A8%E6%96%87%E6%A1%A3/" class="post-title-link" itemprop="url">Hexo使用文档</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-10-24 14:59:57" itemprop="dateCreated datePublished" datetime="2019-10-24T14:59:57+08:00">2019-10-24</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-12-03 19:30:45" itemprop="dateModified" datetime="2019-12-03T19:30:45+08:00">2019-12-03</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Hexo/" itemprop="url" rel="index">
-                    <span itemprop="name">Hexo</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo d -g</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -1050,7 +1768,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-count">27</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1088,7 +1806,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2019</span>
+  <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

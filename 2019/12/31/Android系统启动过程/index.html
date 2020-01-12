@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.4.2',
+    exturl: false,
+    sidebar: {"position":"left","display":"always","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="Android系统启动过程计算机    计算机 解释    计算机硬件 CPU，内存，硬盘，显卡，显示器，键盘鼠标等其他输入输出设备。   计算机软件 操作系统等，存放在硬盘上，程序执行时需要将程序从硬盘上读取到内存中然后加载到 CPU 中来运行。   计算机启动过程    启动阶段 解释    通电读取BIOS BIOS，Basic Input&#x2F;Output System，基本输入输出系统。主板">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android系统启动过程">
+<meta property="og:url" content="https:&#x2F;&#x2F;chaozhouzhang.github.io&#x2F;2019&#x2F;12&#x2F;31&#x2F;Android%E7%B3%BB%E7%BB%9F%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B&#x2F;index.html">
+<meta property="og:site_name" content="张潮州">
+<meta property="og:description" content="Android系统启动过程计算机    计算机 解释    计算机硬件 CPU，内存，硬盘，显卡，显示器，键盘鼠标等其他输入输出设备。   计算机软件 操作系统等，存放在硬盘上，程序执行时需要将程序从硬盘上读取到内存中然后加载到 CPU 中来运行。   计算机启动过程    启动阶段 解释    通电读取BIOS BIOS，Basic Input&#x2F;Output System，基本输入输出系统。主板">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-01-02T01:48:37.025Z">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://chaozhouzhang.github.io/2019/12/31/Android%E7%B3%BB%E7%BB%9F%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Android系统启动过程 | 张潮州</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">张潮州</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2019/12/31/Android%E7%B3%BB%E7%BB%9F%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/header.jpeg">
+      <meta itemprop="name" content="张潮州">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="张潮州">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Android系统启动过程
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-12-31 10:25:10" itemprop="dateCreated datePublished" datetime="2019-12-31T10:25:10+08:00">2019-12-31</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-01-02 09:48:37" itemprop="dateModified" datetime="2020-01-02T09:48:37+08:00">2020-01-02</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Android系统启动过程"><a href="#Android系统启动过程" class="headerlink" title="Android系统启动过程"></a>Android系统启动过程</h1><p>计算机</p>
+<table>
+<thead>
+<tr>
+<th>计算机</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>计算机硬件</td>
+<td>CPU，内存，硬盘，显卡，显示器，键盘鼠标等其他输入输出设备。</td>
+</tr>
+<tr>
+<td>计算机软件</td>
+<td>操作系统等，存放在硬盘上，程序执行时需要将程序从硬盘上读取到内存中然后加载到 CPU 中来运行。</td>
+</tr>
+</tbody></table>
+<p>计算机启动过程</p>
+<table>
+<thead>
+<tr>
+<th>启动阶段</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>通电读取BIOS</td>
+<td>BIOS，Basic Input/Output System，基本输入输出系统。主板芯片上的程序，计算机通电后，第一件事就是读取BIOS。</td>
+</tr>
+<tr>
+<td>BIOS硬件自检</td>
+<td>POST，Power-On Self-Test，硬件自检。BIOS 程序首先检查计算机硬件能否满足运行的基本条件，如果硬件出现问题，主板会发出不同含义的蜂鸣，启动中止；如果没有问题，屏幕就会显示出 CPU，内存，硬盘等信息。</td>
+</tr>
+<tr>
+<td>BIOS转交控制</td>
+<td>Boot Sequence，启动排序。BIOS根据启动排序将控制权转交给下一个存储设备，例如硬盘、U盘、光盘。</td>
+</tr>
+<tr>
+<td>主引导记录</td>
+<td>MBR，Master boot record，主引导记录，是位于启动排序中存储设备的第一个扇区/512个节的引导代码。它负责磁盘操作系统对磁盘进行读写时分区合法性的判别、分区引导信息的定位，它由磁盘操作系统在对硬盘进行初始化时产生的。硬盘的主引导记录 MBR 不属于任何一个操作系统，它先于所有的操作系统而被调入内存，并发挥作用，然后才将控制权交给主分区内的操作系统，并用主分区信息表来管理硬盘。如果主引导记录最后两个字节是 0x55 和 0xAA，表明这个设备可以用于启动；如果不是，表明设备不能用于启动，控制权于是被转交给启动排序中的下一个设备。找到可用的 MBR 后，计算机从 MBR 中读取前面 446 字节的机器码之后，不再把控制权转交给某一个分区，而是运行事先安装的启动管理器boot loader，由用户选择启动哪一个操作系统。</td>
+</tr>
+<tr>
+<td>加载内核</td>
+<td>选择完操作系统后，控制权转交给操作系统，操作系统的内核首先被载入内存。以 Linux 系统为例，先载入 /boot 目录下面的 kernel。 内核加载成功后，第一个运行的程序是 /sbin/init。 它根据配置文件（Debian 系统是 /etc/initab ）产生 init 进程。 这是 Linux 启动后的第一个进程，pid 进程编号为 1，其他进程都是它的后代。然后，init 线程加载系统的各个模块，比如：窗口程序和网络程序，直至执行 /bin/login 程序，跳出登录界面，等待用户输入用户名和密码。</td>
+</tr>
+</tbody></table>
+<p>Android的嵌入式Linux系统启动过程</p>
+<table>
+<thead>
+<tr>
+<th>启动阶段</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ROM</td>
+<td>在 Android 里没有硬盘，而是 ROM，它类似于硬盘存放操作系统，用户程序等。 ROM 跟硬盘一样也会划分为不同的区域，用于放置不同的程序。</td>
+</tr>
+<tr>
+<td>Bootloader</td>
+<td>系统启动加载器，类似 BIOS，在系统加载前，用以初始化硬件设备，建立内存空间的映像图，为最终调用系统内核准备好环境。当开机通电时首先会加载 Bootloader，Bootloader 会读取 ROM 找到操作系统并将 Linux 内核加载到 RAM 中。</td>
+</tr>
+<tr>
+<td>Kernel</td>
+<td>当 Linux 内核启动后会初始化各种软硬件环境，加载驱动程序，挂载根文件系统，Linux 内核加载的最后阶段会启动执行第一个用户空间进程 init 进程。</td>
+</tr>
+<tr>
+<td>init</td>
+<td>init 是 Linux 系统中用户空间的第一个进程(pid=1)，Kernel 启动后会调用 /system/core/init/Init.cpp 的 main() 方法。首先初始化 Kernel log，创建一块共享的内存空间，加载 /default.prop 文件，解析 init.rc 文件。init.rc 文件是 Android 系统的重要配置文件，位于 /system/core/rootdir/ 目录中。 主要功能是定义了系统启动时需要执行的特定动作、设置环境变量和属性和需要执行的特定 service。init.rc 脚本文件配置了一些重要的服务，init 进程通过创建子进程启动这些服务，这里创建的 service 都属于 native 服务，运行在 Linux 空间，通过 socket 向上层提供特定的服务，并以守护进程的方式运行在后台。</td>
+</tr>
+<tr>
+<td>Zygote</td>
+<td>Zygote 进程孵化了所有的 Android 应用进程，是 Android Framework 的基础，该进程的启动也标志着 Framework 框架初始化启动的开始。</td>
+</tr>
+<tr>
+<td>system_server</td>
+<td>system_server 进程启动后将初始化系统上下文（设置主题），创建系统服务管理 SystemServiceManager，然后启动各种系统服务。所有的服务启动完成后会注册到 ServiceManager。ActivityManagerService 服务启动完成后，会进入 ActivityManagerService.systemReady()，然后启动 SystemUI，WebViewFactory，Watchdog，最后启动桌面 Launcher App。</td>
+</tr>
+</tbody></table>
+<p>ROM分区</p>
+<table>
+<thead>
+<tr>
+<th>分区</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>/boot</td>
+<td>存放引导程序，包括内核和内存操作程序</td>
+</tr>
+<tr>
+<td>/system</td>
+<td>相当于电脑c盘，存放Android系统及系统应用</td>
+</tr>
+<tr>
+<td>/recovery</td>
+<td>恢复分区，可以进入该分区进行系统恢复</td>
+</tr>
+<tr>
+<td>/data</td>
+<td>用户数据区，包含了用户的数据：联系人、短信、设置、用户安装的程序</td>
+</tr>
+<tr>
+<td>/cache</td>
+<td>安卓系统缓存区，保存系统最常访问的数据和应用程序</td>
+</tr>
+<tr>
+<td>/misc</td>
+<td>包含一些杂项内容，如系统设置和系统功能启用禁用设置</td>
+</tr>
+<tr>
+<td>/sdcard</td>
+<td>用户自己的存储区，可以存放照片，音乐，视频等文件</td>
+</tr>
+</tbody></table>
+<p>通过 init.rc 脚本系统启动的服务</p>
+<table>
+<thead>
+<tr>
+<th>服务</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>service_manager</td>
+<td>启动 binder IPC，管理所有的 Android 系统服务。ServiceManager 是 Binder IPC 通信过程中的守护进程，本身也是一个 Binder 服务。ServiceManager 进程主要是启动 Binder，提供服务的查询和注册。</td>
+</tr>
+<tr>
+<td>mountd</td>
+<td>设备安装 Daemon，负责设备安装及状态通知</td>
+</tr>
+<tr>
+<td>debugger</td>
+<td>启动 debug system，处理调试进程的请求</td>
+</tr>
+<tr>
+<td>rild</td>
+<td>启动 radio interface layer daemon 服务，处理电话相关的事件和请求</td>
+</tr>
+<tr>
+<td>media_server</td>
+<td>启动 AudioFlinger，MediaPlayerService 和 CameraService，负责多媒体播放相关的功能，包括音视频解码。MediaServer 进程主要是启动 AudioFlinger 音频服务，CameraService 相机服务。负责处理音频解析播放，相机相关的处理。</td>
+</tr>
+<tr>
+<td>surface_flinger</td>
+<td>启动 SurfaceFlinger 负责显示输出。SurfaceFlinger 负责图像绘制，是应用 UI 的核心，其功能是合成所有 Surface 并渲染到显示设备。SurfaceFlinger 进程主要是启动 FrameBuffer，初始化显示系统。</td>
+</tr>
+<tr>
+<td>zygote</td>
+<td>进程孵化器，启动 Android Java VMRuntime 和启动 system_server，负责 Android 应用进程的孵化工作。Zygote 进程孵化了所有的 Android 应用进程，是 Android Framework 的基础，该进程的启动也标志着 Framework 框架初始化启动的开始。</td>
+</tr>
+</tbody></table>
+<p>Zygote 服务进程的主要功能</p>
+<table>
+<thead>
+<tr>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>注册底层功能的 JNI 函数到虚拟机</td>
+</tr>
+<tr>
+<td>预加载 Java 类和资源</td>
+</tr>
+<tr>
+<td>fork 并启动 system_server 核心进程</td>
+</tr>
+<tr>
+<td>作为守护进程监听处理孵化新进程的请求</td>
+</tr>
+</tbody></table>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2019/12/30/UML%E7%B1%BB%E5%9B%BE/" rel="next" title="UML类图">
+                  <i class="fa fa-chevron-left"></i> UML类图
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2019/12/31/Android%20App%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/" rel="prev" title="Android App启动过程">
+                  Android App启动过程 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Android系统启动过程"><span class="nav-number">1.</span> <span class="nav-text">Android系统启动过程</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="张潮州"
+    src="/images/header.jpeg">
+  <p class="site-author-name" itemprop="name">张潮州</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">张潮州</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.0.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.4.2
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
