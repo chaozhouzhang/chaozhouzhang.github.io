@@ -187,6 +187,518 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2020/01/15/ThreadLocal%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/header.jpeg">
+      <meta itemprop="name" content="张潮州">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="张潮州">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/01/15/ThreadLocal%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" class="post-title-link" itemprop="url">ThreadLocal源码解析</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-01-15 09:39:16 / Modified: 12:45:05" itemprop="dateCreated datePublished" datetime="2020-01-15T09:39:16+08:00">2020-01-15</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="ThreadLocal是什么？"><a href="#ThreadLocal是什么？" class="headerlink" title="ThreadLocal是什么？"></a>ThreadLocal是什么？</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ThreadLocal是用来维护线程中的变量不被其他线程干扰而出现的一个结构，内部包含一个ThreadLocalMap类，该类为Thread类的一个局部变量，该Map存储的key为ThreadLocal对象自身，value为我们要存储的对象，这样一来，在不同线程中，持有的其实都是当前线程的变量副本，与其他线程完全隔离，以此来保证线程执行过程中不受其他线程的影响。</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">一个线程Thread对应一个ThreadLocal.ThreadLocalMap，一个线程Thread也就是一个ThreadLocalMap可以对应多个相同或不同具体类型的ThreadLocal&lt;Loop&gt;或ThreadLocal&lt;String&gt;或ThreadLocal&lt;Integer&gt;等。</span><br></pre></td></tr></table></figure>
+<h1 id="Thread"><a href="#Thread" class="headerlink" title="Thread"></a>Thread</h1><p>一个线程对应一个ThreadLocal.ThreadLocalMap：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/* ThreadLocal values pertaining to this thread. This map is maintained</span><br><span class="line"> * by the ThreadLocal class. </span><br><span class="line"> * 与此线程相关的ThreadLocal值。这个映射由ThreadLocal类维护。</span><br><span class="line"> */</span><br><span class="line">ThreadLocal.ThreadLocalMap threadLocals = null;</span><br></pre></td></tr></table></figure>
+<h1 id="ThreadLocal"><a href="#ThreadLocal" class="headerlink" title="ThreadLocal"></a>ThreadLocal</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * This class provides thread-local variables.  These variables differ from</span><br><span class="line"> * their normal counterparts in that each thread that accesses one (via its</span><br><span class="line"> * &#123;@code get&#125; or &#123;@code set&#125; method) has its own, independently initialized</span><br><span class="line"> * copy of the variable.  &#123;@code ThreadLocal&#125; instances are typically private</span><br><span class="line"> * static fields in classes that wish to associate state with a thread (e.g.,</span><br><span class="line"> * a user ID or Transaction ID).</span><br><span class="line"> * </span><br><span class="line"> * 该类提供线程局部变量。</span><br><span class="line"> * 这些变量与普通的对应变量不同，因为每个访问一个变量的线程(通过它的&#123;@code get&#125;或&#123;@code set&#125;方法)都有自己独立初始化的变量副本。</span><br><span class="line"> * &#123;@code ThreadLocal&#125;实例通常是希望将状态与线程(例如，用户ID或事务ID)关联的类中的私有静态字段。</span><br><span class="line"> * </span><br><span class="line"> * Each thread holds an implicit reference to its copy of a thread-local</span><br><span class="line"> * variable as long as the thread is alive and the &#123;@code ThreadLocal&#125;</span><br><span class="line"> * instance is accessible; after a thread goes away, all of its copies of</span><br><span class="line"> * thread-local instances are subject to garbage collection (unless other</span><br><span class="line"> * references to these copies exist).</span><br><span class="line"> * </span><br><span class="line"> * 只要线程是活动的且&#123;@code ThreadLocal&#125;实例是可访问的，每个线程都持有对其线程局部变量副本的隐式引用;</span><br><span class="line"> * 在一个线程消失后，它的所有线程本地实例副本都要进行垃圾收集(除非存在对这些副本的其他引用)。</span><br><span class="line"> */</span><br></pre></td></tr></table></figure>
+<h2 id="ThreadLocal-Get"><a href="#ThreadLocal-Get" class="headerlink" title="ThreadLocal.Get"></a>ThreadLocal.Get</h2><p>通过具体类型的ThreadLocal<Loop>获取当前线程的本地变量Loop：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Returns the value in the current thread&apos;s copy of this</span><br><span class="line"> * thread-local variable.  If the variable has no value for the</span><br><span class="line"> * current thread, it is first initialized to the value returned</span><br><span class="line"> * by an invocation of the &#123;@link #initialValue&#125; method.</span><br><span class="line"> * </span><br><span class="line"> * 返回当前线程的线程局部变量副本中的值。</span><br><span class="line"> * 如果变量没有当前线程的值，则首先将其初始化为调用initialValue方法返回的值。</span><br><span class="line"> * @return the current thread&apos;s value of this thread-local</span><br><span class="line"> * 			当前线程的线程本地值</span><br><span class="line"> */</span><br><span class="line">public T get() &#123;</span><br><span class="line">    Thread t = Thread.currentThread();</span><br><span class="line">    ThreadLocalMap map = getMap(t);</span><br><span class="line">    if (map != null) &#123;</span><br><span class="line">        ThreadLocalMap.Entry e = map.getEntry(this);</span><br><span class="line">        if (e != null) &#123;</span><br><span class="line">            @SuppressWarnings(&quot;unchecked&quot;)</span><br><span class="line">            T result = (T)e.value;</span><br><span class="line">            return result;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return setInitialValue();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>根据线程获取线程对应的ThreadLocal.ThreadLocalMap：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Get the map associated with a ThreadLocal. Overridden in</span><br><span class="line"> * InheritableThreadLocal.</span><br><span class="line"> * 获取与ThreadLocal关联的映射。InheritableThreadLocal覆盖。</span><br><span class="line"> * @param  t the current thread</span><br><span class="line"> * 当前线程</span><br><span class="line"> * @return the map</span><br><span class="line"> * 映射</span><br><span class="line"> */</span><br><span class="line">ThreadLocalMap getMap(Thread t) &#123;</span><br><span class="line">    return t.threadLocals;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果无法获取到当前线程的本地变量，则设置初始值：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Variant of set() to establish initialValue. Used instead</span><br><span class="line"> * of set() in case user has overridden the set() method.</span><br><span class="line"> * set()的变体以建立initialValue。如果用户覆盖了set()方法，则使用此方法而不是set()。</span><br><span class="line"> * @return the initial value</span><br><span class="line"> * 初始值</span><br><span class="line"> */</span><br><span class="line">private T setInitialValue() &#123;</span><br><span class="line">    T value = initialValue();</span><br><span class="line">    Thread t = Thread.currentThread();</span><br><span class="line">    ThreadLocalMap map = getMap(t);</span><br><span class="line">    if (map != null)</span><br><span class="line">        map.set(this, value);</span><br><span class="line">    else</span><br><span class="line">        createMap(t, value);</span><br><span class="line">    return value;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果无法获取到当前线程的ThreadLocal.ThreadLocalMap，为线程创建ThreadLocal.ThreadLocalMap：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Create the map associated with a ThreadLocal. Overridden in</span><br><span class="line"> * InheritableThreadLocal.</span><br><span class="line"> * 创建与ThreadLocal关联的映射。InheritableThreadLocal覆盖。</span><br><span class="line"> * @param t the current thread</span><br><span class="line"> * 当前线程</span><br><span class="line"> * @param firstValue value for the initial entry of the map</span><br><span class="line"> * 映射的初始项的值</span><br><span class="line"> */</span><br><span class="line">void createMap(Thread t, T firstValue) &#123;</span><br><span class="line">    t.threadLocals = new ThreadLocalMap(this, firstValue);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="ThreadLocal-Set"><a href="#ThreadLocal-Set" class="headerlink" title="ThreadLocal.Set"></a>ThreadLocal.Set</h2><p>通过获取具体类型ThreadLocal<Loop>设置线程本地变量Loop：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Sets the current thread&apos;s copy of this thread-local variable</span><br><span class="line"> * to the specified value.  Most subclasses will have no need to</span><br><span class="line"> * override this method, relying solely on the &#123;@link #initialValue&#125;</span><br><span class="line"> * method to set the values of thread-locals.</span><br><span class="line"> * </span><br><span class="line"> * 将此线程局部变量的当前线程副本设置为指定的值。</span><br><span class="line"> * 大多数子类将不需要重写这个方法，仅仅依靠initialValue方法来设置线程局部变量的值。</span><br><span class="line"> * @param value the value to be stored in the current thread&apos;s copy of</span><br><span class="line"> *        this thread-local.</span><br><span class="line"> *        要存储在当前线程的线程本地副本中的值。</span><br><span class="line"> */</span><br><span class="line">public void set(T value) &#123;</span><br><span class="line">    Thread t = Thread.currentThread();</span><br><span class="line">    ThreadLocalMap map = getMap(t);</span><br><span class="line">    if (map != null)</span><br><span class="line">        map.set(this, value);</span><br><span class="line">    else</span><br><span class="line">        createMap(t, value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="ThreadLocal-ThreadLocalMap"><a href="#ThreadLocal-ThreadLocalMap" class="headerlink" title="ThreadLocal.ThreadLocalMap"></a>ThreadLocal.ThreadLocalMap</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * ThreadLocalMap is a customized hash map suitable only for</span><br><span class="line"> * maintaining thread local values. No operations are exported</span><br><span class="line"> * outside of the ThreadLocal class. The class is package private to</span><br><span class="line"> * allow declaration of fields in class Thread.  To help deal with</span><br><span class="line"> * very large and long-lived usages, the hash table entries use</span><br><span class="line"> * WeakReferences for keys. However, since reference queues are not</span><br><span class="line"> * used, stale entries are guaranteed to be removed only when</span><br><span class="line"> * the table starts running out of space.</span><br><span class="line"> * </span><br><span class="line"> * ThreadLocalMap是一个定制的散列映射，只适用于维护线程本地值。</span><br><span class="line"> * 没有任何操作被导出到ThreadLocal类之外。类是包私有的，允许在类线程中声明字段。</span><br><span class="line"> * 为了帮助处理非常大且长期存在的用法，哈希表条目对键使用WeakReference。</span><br><span class="line"> * 但是，由于没有使用引用队列，所以只有在表空间不足时才会删除陈旧的条目。</span><br><span class="line"> */</span><br></pre></td></tr></table></figure>
+<h2 id="ThreadLocal-ThreadLocalMap-Entry"><a href="#ThreadLocal-ThreadLocalMap-Entry" class="headerlink" title="ThreadLocal.ThreadLocalMap.Entry"></a>ThreadLocal.ThreadLocalMap.Entry</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * The entries in this hash map extend WeakReference, using</span><br><span class="line"> * its main ref field as the key (which is always a</span><br><span class="line"> * ThreadLocal object).  Note that null keys (i.e. entry.get()</span><br><span class="line"> * == null) mean that the key is no longer referenced, so the</span><br><span class="line"> * entry can be expunged from table.  Such entries are referred to</span><br><span class="line"> * as &quot;stale entries&quot; in the code that follows.</span><br><span class="line"> * </span><br><span class="line"> * 这个散列映射中的条目扩展了WeakReference，使用它的主ref字段作为键(它始终是一个ThreadLocal对象)。</span><br><span class="line"> * 注意，null键(即entry.get() == null)表示不再引用该键，因此可以从表中删除该条目。这样的条目在下面的代码中称为“陈旧的条目”。</span><br><span class="line"> */</span><br><span class="line">static class Entry extends WeakReference&lt;ThreadLocal&lt;?&gt;&gt; &#123;</span><br><span class="line">    /** The value associated with this ThreadLocal. */</span><br><span class="line">    Object value;</span><br><span class="line"></span><br><span class="line">    Entry(ThreadLocal&lt;?&gt; k, Object v) &#123;</span><br><span class="line">        super(k);</span><br><span class="line">        value = v;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2020/01/14/%E5%BC%95%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/header.jpeg">
+      <meta itemprop="name" content="张潮州">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="张潮州">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/01/14/%E5%BC%95%E7%94%A8/" class="post-title-link" itemprop="url">引用</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-01-14 17:22:08 / Modified: 17:22:23" itemprop="dateCreated datePublished" datetime="2020-01-14T17:22:08+08:00">2020-01-14</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Abstract base class for reference objects.  This class defines the operations common to all reference objects.  Because reference objects are implemented in close cooperation with the garbage collector, this class may not be subclassed directly.</span><br><span class="line"></span><br><span class="line">引用对象的抽象基类。这个类定义所有引用对象共有的操作。因为引用对象是在与垃圾收集器密切合作下实现的，所以这个类可能不会被直接子类化。</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2020/01/14/%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%B8%AD%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%88%9B%E5%BB%BA%E8%BF%87%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/header.jpeg">
+      <meta itemprop="name" content="张潮州">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="张潮州">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/01/14/%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%B8%AD%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%88%9B%E5%BB%BA%E8%BF%87%E7%A8%8B/" class="post-title-link" itemprop="url">虚拟机中对象的创建过程</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-01-14 17:05:56 / Modified: 17:07:17" itemprop="dateCreated datePublished" datetime="2020-01-14T17:05:56+08:00">2020-01-14</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id=""><a href="#" class="headerlink" title=""></a></h3>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2020/01/14/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Java%E8%99%9A%E6%8B%9F%E6%9C%BA-JVM%E9%AB%98%E7%BA%A7%E7%89%B9%E6%80%A7%E4%B8%8E%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5-%E7%AC%AC2%E7%89%88/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/header.jpeg">
+      <meta itemprop="name" content="张潮州">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="张潮州">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/01/14/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Java%E8%99%9A%E6%8B%9F%E6%9C%BA-JVM%E9%AB%98%E7%BA%A7%E7%89%B9%E6%80%A7%E4%B8%8E%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5-%E7%AC%AC2%E7%89%88/" class="post-title-link" itemprop="url">深入理解Java虚拟机-JVM高级特性与最佳实践-第2版</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-01-14 12:38:48 / Modified: 16:56:30" itemprop="dateCreated datePublished" datetime="2020-01-14T12:38:48+08:00">2020-01-14</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="自动内存管理机制"><a href="#自动内存管理机制" class="headerlink" title="自动内存管理机制"></a>自动内存管理机制</h1><h1 id="Java内存区域与内存溢出异常"><a href="#Java内存区域与内存溢出异常" class="headerlink" title="Java内存区域与内存溢出异常"></a>Java内存区域与内存溢出异常</h1><p>Java虚拟机在执行Java程序的过程中，会把它所管理的内存划分为若干个不同的数据区域。</p>
+<p>Java虚拟机运行时数据区</p>
+<table>
+<thead>
+<tr>
+<th>数据区</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>程序计数器 Program Counter Register</td>
+<td>当前线程所执行的字节码的行号指示器。线程私有。</td>
+</tr>
+<tr>
+<td>Java虚拟机栈 Java Virtual Machine Stacks</td>
+<td>描述了Java方法执行的内存模型。线程私有。</td>
+</tr>
+<tr>
+<td>本地方法栈Native Method Stack</td>
+<td>本地方法栈为虚拟机使用到的Native方法服务，与虚拟机栈为虚拟机执行Java方法服务的作用类似。</td>
+</tr>
+<tr>
+<td>Java堆 Java Heap</td>
+<td>Java堆是被所有线程共享的一块内存区域，在虚拟机启动时创建。次内存区域的唯一目的就是存放对象实例，几乎所有的对象实例都在这里分配内存。</td>
+</tr>
+<tr>
+<td>方法区 Method Area</td>
+<td>方法区是各个线程共享的内存区域，用于存储已经被虚拟机加载的类信息、常量、静态变量、即时编译器编译后的代码等数据。</td>
+</tr>
+</tbody></table>
+<h3 id="程序计数器"><a href="#程序计数器" class="headerlink" title="程序计数器"></a>程序计数器</h3><p>在虚拟机的概念模型里，字节码解释器工作时就是通过改变这个计数器的值来选取下一条需要执行的字节码指令，分支、循环、跳转、异常处理、线程恢复等基础功能都需要依赖程序计数器来完成。<br>由于Java虚拟机的多线程是通过线程轮流切换并分配处理器执行时间的方式来实现的，在任何一个确定的时刻，一个处理器/内核都只会执行一条线程中的指令。因此，为了线程切换后能恢复到正确的执行位置，每条线程都需要有一个独立的程序计数器，各条线程之间计数器互不影响，独立存储，这类内存区域是线程私有的内存。<br>如果线程正在执行的是一个Java方法，则计数器记录的是正在执行的虚拟机字节码指令的地址；如果线程正在执行的是一个Native方法，则计数器值为空（Undifined）。此内存区域是唯一一个在Java虚拟机规范中没有规定任何OutOfMemoryError情况的区域。</p>
+<h3 id="Java虚拟机栈"><a href="#Java虚拟机栈" class="headerlink" title="Java虚拟机栈"></a>Java虚拟机栈</h3><p>Java虚拟机栈的生命周期与线程相同，虚拟机栈描述了Java方法执行的内存模型，每个方法在执行的同时都会创建一个栈帧（Stack Frame）用于存储局部变量表、操作数栈、动态链接、方法出口等信息。每一个方法从调用直至执行完成的过程，就对应着一个栈帧在虚拟机中入栈到出栈的过程。</p>
+<p>局部变量表存放了编译期可知的各种基础数据类型、对象引用和returnAddreass类型。其中64位的long和double类型的数据会占用2个局部变量空间(Slot)，其余的数据类型只占用1个。<br>局部变量表所需的内存空间在编译期间完成分配，当进入一个方法时，这个方法需要在帧中分配多大的局部变量空间是完全确定的，在方法运行期间不会改变局部变量表的大小。</p>
+<p>在Java虚拟机规范中，对Java虚拟机栈规定了两个异常状况：如果线程请求的栈深度大于虚拟机所允许的深度，将抛出StackOverflowError异常；如果虚拟机栈可以动态扩展，如果扩展时候无法申请到足够的内存，就会抛出OutOfMemoryError异常。</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>基础数据类型</td>
+<td>boolean、byte、char、short、int、float、long、double</td>
+</tr>
+<tr>
+<td>对象引用</td>
+<td>reference类型，不等同于对象本身，可能是一个指向对象起始地址的引用指针，也可能是指向一个代表对象的句柄或其他与此对象相关的位置。</td>
+</tr>
+<tr>
+<td>returnAddress类型</td>
+<td>指向了一条字节码指令的地址。</td>
+</tr>
+</tbody></table>
+<h3 id="本地方法栈"><a href="#本地方法栈" class="headerlink" title="本地方法栈"></a>本地方法栈</h3><p>本地方法栈为虚拟机使用到的Native方法服务，与虚拟机栈为虚拟机执行Java方法服务的作用类似。</p>
+<h3 id="Java堆"><a href="#Java堆" class="headerlink" title="Java堆"></a>Java堆</h3><p>Java堆是垃圾收集器管理的主要区域，所以也叫GC堆Garbage Collected Heap。<br>从内存回收的角度看，由于现在收集器基本都采用分代收集算法，所以Java堆可以细分为新生代和老年代，或者Eden空间、From Survivor空间、To Survivor空间。<br>从内存分配的角度看，Java堆可以划分出多个线程私有的分配缓冲区TLAB Thread Local Allocation Buffer。<br>如果堆中没有内存完成实例分配，并且堆也无法再扩展的时候，将会抛出OutOfMemoryError异常。<br>不需要连续的内存，可以选择固定大小或者可扩展。</p>
+<h3 id="方法区"><a href="#方法区" class="headerlink" title="方法区"></a>方法区</h3><p>不需要连续的内存，可以选择固定大小或者可扩展，可以选择不实现垃圾收集。<br>当方法区无法满足内存分配需求的时候，将抛出OutOfMemoryError异常。</p>
+<h3 id="运行时常量池"><a href="#运行时常量池" class="headerlink" title="运行时常量池"></a>运行时常量池</h3><p>Runtime Constant Pool是方法区的一部分。用于存放编译期生成的各种字面量和符号引用，这部分内容将在类加载后进入方法区的运行时常量池中存放。<br>当常量池无法再申请到内存时，会抛出OutOfMemoryError异常。</p>
+<h3 id="直接内存"><a href="#直接内存" class="headerlink" title="直接内存"></a>直接内存</h3><p>Direct Memory并不是虚拟机运行时数据区的一部分，也不是Java虚拟机规范中定义的内存区域，但是这部分内存也被频繁地使用，而且也可能导致OutOfMemoryError异常出现。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2020/01/14/Java%E5%BC%B1%E5%BC%95%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/header.jpeg">
+      <meta itemprop="name" content="张潮州">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="张潮州">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/01/14/Java%E5%BC%B1%E5%BC%95%E7%94%A8/" class="post-title-link" itemprop="url">Java弱引用</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-01-14 11:27:14 / Modified: 14:05:14" itemprop="dateCreated datePublished" datetime="2020-01-14T11:27:14+08:00">2020-01-14</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">强引用（Strong Reference）：通常我们通过new来创建一个新对象时返回的引用就是一个强引用，若一个对象通过一系列强引用可到达，它就是强可达的(strongly reachable)，那么它就不被回收。</span><br><span class="line"></span><br><span class="line">弱引用（Weak Reference）：弱引用的对象拥有更短暂的生命周期。在垃圾回收器线程扫描它所管辖的内存区域的过程中，一旦发现了只具有弱引用的对象，不管当前内存空间足够与否，都会回收它的内存。</span><br><span class="line"></span><br><span class="line">软引用（Soft Reference）：软引用和弱引用的区别在于，若一个对象是弱引用可达，无论当前内存是否充足它都会被回收，而软引用可达的对象在内存不充足时才会被回收，因此软引用要比弱引用强一些。</span><br><span class="line"></span><br><span class="line">虚引用（Phantom Reference）：虚引用是Java中最弱的引用，那么它弱到什么程度呢？它是如此脆弱以至于我们通过虚引用甚至无法获取到被引用的对象，虚引用存在的唯一作用就是当它指向的对象被回收后，虚引用本身会被加入到引用队列中，用作记录它指向的对象已被回收。</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Weak reference objects, which do not prevent their referents from being made finalizable, finalized, and then reclaimed.  Weak references are most often used to implement canonicalizing mappings.</span><br><span class="line"></span><br><span class="line">Suppose that the garbage collector determines at a certain point in time that an object is weakly reachable.  At that time it will atomically clear all weak references to that object and all weak references to any other weakly-reachable objects from which that object is reachable through a chain of strong and soft references.  At the same time it will declare all of the formerly weakly-reachable objects to be finalizable.  At the same time or at some later time it will enqueue those newly-cleared weak references that are registered with reference queues.</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">弱引用对象，这并不会阻止它们的被引用对象变得可终结、最终确定，然后被回收。弱引用通常用于实现规范化映射。</span><br><span class="line"></span><br><span class="line">假设垃圾收集器在某一时间点确定对象是弱可及的。此时，它将原子性地清除对该对象的所有弱引用，以及对任何其他弱可及对象的所有弱引用，从这些弱可及对象可以通过强和软引用链访问。同时，它将声明所有以前弱可及的对象都是可终结的。与此同时，或者在以后的某个时候，它将对那些新清除的弱引用进行排队，这些弱引用是用引用队列注册的。</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">public class WeakReference&lt;T&gt; extends Reference&lt;T&gt; &#123;</span><br><span class="line">    /**</span><br><span class="line">     * Creates a new weak reference that refers to the given object.  The new</span><br><span class="line">     * reference is not registered with any queue.</span><br><span class="line">     * 创建引用给定对象的新弱引用。新引用未在任何队列中注册。</span><br><span class="line">     * @param referent object the new weak reference will refer to</span><br><span class="line">     * 新的弱引用将引用的对象</span><br><span class="line">     */</span><br><span class="line">    public WeakReference(T referent) &#123;</span><br><span class="line">        super(referent);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * Creates a new weak reference that refers to the given object and is</span><br><span class="line">     * registered with the given queue.</span><br><span class="line">     * 创建一个新的弱引用，该引用引用给定的对象，并在给定的队列中注册。</span><br><span class="line">     * @param referent object the new weak reference will refer to</span><br><span class="line">     * 新的弱引用将引用的对象</span><br><span class="line">     * @param q the queue with which the reference is to be registered,</span><br><span class="line">     *          or null if registration is not required</span><br><span class="line">     * 要注册引用的队列，如果不需要注册则为空</span><br><span class="line">     */</span><br><span class="line">    public WeakReference(T referent, ReferenceQueue&lt;? super T&gt; q) &#123;</span><br><span class="line">        super(referent, q);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2020/01/14/%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90IntentService/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/header.jpeg">
+      <meta itemprop="name" content="张潮州">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="张潮州">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/01/14/%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90IntentService/" class="post-title-link" itemprop="url">源码解析IntentService</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-01-14 10:05:12 / Modified: 14:05:16" itemprop="dateCreated datePublished" datetime="2020-01-14T10:05:12+08:00">2020-01-14</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2020/01/14/Android%E9%9D%A2%E8%AF%95%E7%9F%A5%E8%AF%86%E6%80%BB%E7%BB%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/header.jpeg">
+      <meta itemprop="name" content="张潮州">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="张潮州">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/01/14/Android%E9%9D%A2%E8%AF%95%E7%9F%A5%E8%AF%86%E6%80%BB%E7%BB%93/" class="post-title-link" itemprop="url">Android面试知识总结</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-01-14 09:39:15 / Modified: 14:05:19" itemprop="dateCreated datePublished" datetime="2020-01-14T09:39:15+08:00">2020-01-14</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="1、简述Handler消息机制"><a href="#1、简述Handler消息机制" class="headerlink" title="1、简述Handler消息机制"></a>1、简述Handler消息机制</h2><p>说一下Handler发送和接收消息的实现，尤其是Message的消息载体的工作流程。</p>
+<h2 id="2、Service和IntentService有什么区别？"><a href="#2、Service和IntentService有什么区别？" class="headerlink" title="2、Service和IntentService有什么区别？"></a>2、Service和IntentService有什么区别？</h2><h2 id="3、Service和Activity之间的通讯怎么实现？"><a href="#3、Service和Activity之间的通讯怎么实现？" class="headerlink" title="3、Service和Activity之间的通讯怎么实现？"></a>3、Service和Activity之间的通讯怎么实现？</h2><p>比如Service里面某个后台任务结束，怎么通知当前活动Activity，并且把结果传递出去？</p>
+<h2 id="4、Context-的sendBroadcast和LocalBroadcastManager-的sendBroadcast有什么区别？"><a href="#4、Context-的sendBroadcast和LocalBroadcastManager-的sendBroadcast有什么区别？" class="headerlink" title="4、Context 的sendBroadcast和LocalBroadcastManager 的sendBroadcast有什么区别？"></a>4、Context 的sendBroadcast和LocalBroadcastManager 的sendBroadcast有什么区别？</h2><p>从MVP、MVVM等流行结构框架问到多线程同步，然后再问点击事件分发，到自定义View，再聊动画效果实现，基础的ArrayList、HashMap底层实现，final static关键字用法，进阶的设计模式里面单例模式和观察者模式的实现，java类加载、内存分配，没用过设计模式，没用过分层框架设计。</p>
+<h2 id="ImageLoader的本地缓存机制是怎么实现的？"><a href="#ImageLoader的本地缓存机制是怎么实现的？" class="headerlink" title="ImageLoader的本地缓存机制是怎么实现的？"></a>ImageLoader的本地缓存机制是怎么实现的？</h2><h2 id="Activity的onStop-函数是否一定会被调用？"><a href="#Activity的onStop-函数是否一定会被调用？" class="headerlink" title="Activity的onStop()函数是否一定会被调用？"></a>Activity的onStop()函数是否一定会被调用？</h2><h2 id="Intent传递数据的限制，数据类型？数据大小？"><a href="#Intent传递数据的限制，数据类型？数据大小？" class="headerlink" title="Intent传递数据的限制，数据类型？数据大小？"></a>Intent传递数据的限制，数据类型？数据大小？</h2><h2 id="服务器正常，App访问服务器失败的原因都有哪些？"><a href="#服务器正常，App访问服务器失败的原因都有哪些？" class="headerlink" title="服务器正常，App访问服务器失败的原因都有哪些？"></a>服务器正常，App访问服务器失败的原因都有哪些？</h2><h2 id="有没有关注Android动态？简单说一下新版本的特性？"><a href="#有没有关注Android动态？简单说一下新版本的特性？" class="headerlink" title="有没有关注Android动态？简单说一下新版本的特性？"></a>有没有关注Android动态？简单说一下新版本的特性？</h2><h2 id="1"><a href="#1" class="headerlink" title="1"></a>1</h2><ol>
+<li>UI 线程是干什么用的？然后顺着这条线开始问 Activity 的启动过程以及启动失败的异常处理。</li>
+<li>事件分发流程。然后沿着这条主线问View实现原理，以及 View和主线程的联系，事件冲突的处理。</li>
+<li>做过什么酷炫的动画？沿着这条线问下动画的基础以及动画和View ，主线程联系。</li>
+<li>用过什么网络框架，各大网络框架的优缺点。顺便考察 HTTP TCP/IP 的基础。如果用过Okhttp，聊聊源码，以及问什么Okhttp比大多数网络库好。</li>
+<li>问问 新技术新理念，比如 RN，Rxjava等。</li>
+<li>聊聊插件化原理和各大实现方案利弊，顺便聊聊路由问题。</li>
+<li>安全，加固。</li>
+</ol>
+<h2 id="Android事件分发机制确实很难，最好的方式边看源码边画流程图。"><a href="#Android事件分发机制确实很难，最好的方式边看源码边画流程图。" class="headerlink" title="Android事件分发机制确实很难，最好的方式边看源码边画流程图。"></a>Android事件分发机制确实很难，最好的方式边看源码边画流程图。</h2><p>Activity生命周期和消息机制必须要熟悉、 Binder, AMS WMS 最好了解下。还有性能优化某一方面，比如内存优化，启动优化，CPU占用优化等。</p>
+<p>Binder机制，Zygote，Android系统启动流程，Android源码中的设计模式，插件化原理，热更新（修复）原理，Android常用GitHub库源码（网络，图片，注入，插件化等方面）</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
     <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2020/01/12/Glide%E8%A7%A3%E6%9E%90-(%E5%88%9D%E5%A7%8B%E5%8C%96)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -425,877 +937,11 @@
   
   
 
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2020/01/03/AMS/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/header.jpeg">
-      <meta itemprop="name" content="张潮州">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="张潮州">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/01/03/AMS/" class="post-title-link" itemprop="url">AMS</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2020-01-03 16:23:41 / Modified: 17:03:48" itemprop="dateCreated datePublished" datetime="2020-01-03T16:23:41+08:00">2020-01-03</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//获取IActivityManager的实现，也就是ActivityManagerService？</span><br><span class="line">final IActivityManager mgr = ActivityManager.getService();</span><br><span class="line">try &#123;</span><br><span class="line">    //触发ActivityManagerService的attachApplication方法</span><br><span class="line">    mgr.attachApplication(mAppThread, startSeq);</span><br><span class="line">&#125; catch (RemoteException ex) &#123;</span><br><span class="line">    throw ex.rethrowFromSystemServer();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * @hide</span><br><span class="line"> */</span><br><span class="line">@UnsupportedAppUsage</span><br><span class="line">public static IActivityManager getService() &#123;</span><br><span class="line">    return IActivityManagerSingleton.get();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@UnsupportedAppUsage</span><br><span class="line">private static final Singleton&lt;IActivityManager&gt; IActivityManagerSingleton =</span><br><span class="line">        new Singleton&lt;IActivityManager&gt;() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            protected IActivityManager create() &#123;</span><br><span class="line">                final IBinder b = ServiceManager.getService(Context.ACTIVITY_SERVICE);</span><br><span class="line">                final IActivityManager am = IActivityManager.Stub.asInterface(b);</span><br><span class="line">                return am;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br></pre></td></tr></table></figure>
-
-
-<h1 id="ServiceManager-java"><a href="#ServiceManager-java" class="headerlink" title="ServiceManager.java"></a>ServiceManager.java</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Returns a reference to a service with the given name.</span><br><span class="line"> *</span><br><span class="line"> * @param name the name of the service to get</span><br><span class="line"> * @return a reference to the service, or &lt;code&gt;null&lt;/code&gt; if the service doesn&apos;t exist</span><br><span class="line"> */</span><br><span class="line">@UnsupportedAppUsage</span><br><span class="line">public static IBinder getService(String name) &#123;</span><br><span class="line">    try &#123;</span><br><span class="line">        IBinder service = sCache.get(name);</span><br><span class="line">        if (service != null) &#123;</span><br><span class="line">            return service;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            return Binder.allowBlocking(rawGetService(name));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; catch (RemoteException e) &#123;</span><br><span class="line">        Log.e(TAG, &quot;error in getService&quot;, e);</span><br><span class="line">    &#125;</span><br><span class="line">    return null;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Allow blocking calls on the given interface, overriding the requested</span><br><span class="line"> * value of &#123;@link #setWarnOnBlocking(boolean)&#125;.</span><br><span class="line"> * &lt;p&gt;</span><br><span class="line"> * This should only be rarely called when you are &lt;em&gt;absolutely sure&lt;/em&gt;</span><br><span class="line"> * the remote interface is a built-in system component that can never be</span><br><span class="line"> * upgraded. In particular, this &lt;em&gt;must never&lt;/em&gt; be called for</span><br><span class="line"> * interfaces hosted by package that could be upgraded or replaced,</span><br><span class="line"> * otherwise you risk system instability if that remote interface wedges.</span><br><span class="line"> *</span><br><span class="line"> * @hide</span><br><span class="line"> */</span><br><span class="line">public static IBinder allowBlocking(IBinder binder) &#123;</span><br><span class="line">    try &#123;</span><br><span class="line">        if (binder instanceof BinderProxy) &#123;</span><br><span class="line">            ((BinderProxy) binder).mWarnOnBlocking = false;</span><br><span class="line">        &#125; else if (binder != null &amp;&amp; binder.getInterfaceDescriptor() != null</span><br><span class="line">                &amp;&amp; binder.queryLocalInterface(binder.getInterfaceDescriptor()) == null) &#123;</span><br><span class="line">            Log.w(TAG, &quot;Unable to allow blocking on interface &quot; + binder);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; catch (RemoteException ignored) &#123;</span><br><span class="line">    &#125;</span><br><span class="line">    return binder;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<p>通过服务名称获取服务IBinder</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">private static IBinder rawGetService(String name) throws RemoteException &#123;</span><br><span class="line">      final long start = sStatLogger.getTime();</span><br><span class="line"></span><br><span class="line">      final IBinder binder = getIServiceManager().getService(name);</span><br><span class="line"></span><br><span class="line">      final int time = (int) sStatLogger.logDurationStat(Stats.GET_SERVICE, start);</span><br><span class="line"></span><br><span class="line">      final int myUid = Process.myUid();</span><br><span class="line">      final boolean isCore = UserHandle.isCore(myUid);</span><br><span class="line"></span><br><span class="line">      final long slowThreshold = isCore</span><br><span class="line">              ? GET_SERVICE_SLOW_THRESHOLD_US_CORE</span><br><span class="line">              : GET_SERVICE_SLOW_THRESHOLD_US_NON_CORE;</span><br><span class="line"></span><br><span class="line">      synchronized (sLock) &#123;</span><br><span class="line">          sGetServiceAccumulatedUs += time;</span><br><span class="line">          sGetServiceAccumulatedCallCount++;</span><br><span class="line"></span><br><span class="line">          final long nowUptime = SystemClock.uptimeMillis();</span><br><span class="line"></span><br><span class="line">          // Was a slow call?</span><br><span class="line">          if (time &gt;= slowThreshold) &#123;</span><br><span class="line">              // We do a slow log:</span><br><span class="line">              // - At most once in every SLOW_LOG_INTERVAL_MS</span><br><span class="line">              // - OR it was slower than the previously logged slow call.</span><br><span class="line">              if ((nowUptime &gt; (sLastSlowLogUptime + SLOW_LOG_INTERVAL_MS))</span><br><span class="line">                      || (sLastSlowLogActualTime &lt; time)) &#123;</span><br><span class="line">                  EventLogTags.writeServiceManagerSlow(time / 1000, name);</span><br><span class="line"></span><br><span class="line">                  sLastSlowLogUptime = nowUptime;</span><br><span class="line">                  sLastSlowLogActualTime = time;</span><br><span class="line">              &#125;</span><br><span class="line">          &#125;</span><br><span class="line"></span><br><span class="line">          // Every GET_SERVICE_LOG_EVERY_CALLS calls, log the total time spent in getService().</span><br><span class="line"></span><br><span class="line">          final int logInterval = isCore</span><br><span class="line">                  ? GET_SERVICE_LOG_EVERY_CALLS_CORE</span><br><span class="line">                  : GET_SERVICE_LOG_EVERY_CALLS_NON_CORE;</span><br><span class="line"></span><br><span class="line">          if ((sGetServiceAccumulatedCallCount &gt;= logInterval)</span><br><span class="line">                  &amp;&amp; (nowUptime &gt;= (sLastStatsLogUptime + STATS_LOG_INTERVAL_MS))) &#123;</span><br><span class="line"></span><br><span class="line">              EventLogTags.writeServiceManagerStats(</span><br><span class="line">                      sGetServiceAccumulatedCallCount, // Total # of getService() calls.</span><br><span class="line">                      sGetServiceAccumulatedUs / 1000, // Total time spent in getService() calls.</span><br><span class="line">                      (int) (nowUptime - sLastStatsLogUptime)); // Uptime duration since last log.</span><br><span class="line">              sGetServiceAccumulatedCallCount = 0;</span><br><span class="line">              sGetServiceAccumulatedUs = 0;</span><br><span class="line">              sLastStatsLogUptime = nowUptime;</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      return binder;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Attempt to retrieve a local implementation of an interface</span><br><span class="line"> * for this Binder object.  If null is returned, you will need</span><br><span class="line"> * to instantiate a proxy class to marshall calls through</span><br><span class="line"> * the transact() method.</span><br><span class="line"> */</span><br><span class="line">public @Nullable IInterface queryLocalInterface(@NonNull String descriptor);</span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Use information supplied to attachInterface() to return the</span><br><span class="line"> * associated IInterface if it matches the requested</span><br><span class="line"> * descriptor.</span><br><span class="line"> */</span><br><span class="line">public @Nullable IInterface queryLocalInterface(@NonNull String descriptor) &#123;</span><br><span class="line">    if (mDescriptor != null &amp;&amp; mDescriptor.equals(descriptor)) &#123;</span><br><span class="line">        return mOwner;</span><br><span class="line">    &#125;</span><br><span class="line">    return null;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">@UnsupportedAppUsage</span><br><span class="line">private static IServiceManager getIServiceManager() &#123;</span><br><span class="line">    if (sServiceManager != null) &#123;</span><br><span class="line">        return sServiceManager;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // Find the service manager</span><br><span class="line">    sServiceManager = ServiceManagerNative</span><br><span class="line">            .asInterface(Binder.allowBlocking(BinderInternal.getContextObject()));</span><br><span class="line">    return sServiceManager;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">   * Return the global &quot;context object&quot; of the system.  This is usually</span><br><span class="line">   * an implementation of IServiceManager, which you can use to find</span><br><span class="line">   * other services.</span><br><span class="line">   */</span><br><span class="line">  @UnsupportedAppUsage</span><br><span class="line">  public static final native IBinder getContextObject();</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br><span class="line">401</span><br><span class="line">402</span><br><span class="line">403</span><br><span class="line">404</span><br><span class="line">405</span><br><span class="line">406</span><br><span class="line">407</span><br><span class="line">408</span><br><span class="line">409</span><br><span class="line">410</span><br><span class="line">411</span><br><span class="line">412</span><br><span class="line">413</span><br><span class="line">414</span><br><span class="line">415</span><br><span class="line">416</span><br><span class="line">417</span><br><span class="line">418</span><br><span class="line">419</span><br><span class="line">420</span><br><span class="line">421</span><br><span class="line">422</span><br><span class="line">423</span><br><span class="line">424</span><br><span class="line">425</span><br><span class="line">426</span><br><span class="line">427</span><br><span class="line">428</span><br><span class="line">429</span><br><span class="line">430</span><br><span class="line">431</span><br><span class="line">432</span><br><span class="line">433</span><br><span class="line">434</span><br><span class="line">435</span><br><span class="line">436</span><br><span class="line">437</span><br><span class="line">438</span><br><span class="line">439</span><br><span class="line">440</span><br><span class="line">441</span><br><span class="line">442</span><br><span class="line">443</span><br><span class="line">444</span><br><span class="line">445</span><br><span class="line">446</span><br><span class="line">447</span><br><span class="line">448</span><br><span class="line">449</span><br><span class="line">450</span><br><span class="line">451</span><br><span class="line">452</span><br><span class="line">453</span><br><span class="line">454</span><br><span class="line">455</span><br><span class="line">456</span><br><span class="line">457</span><br><span class="line">458</span><br><span class="line">459</span><br><span class="line">460</span><br><span class="line">461</span><br><span class="line">462</span><br><span class="line">463</span><br><span class="line">464</span><br><span class="line">465</span><br><span class="line">466</span><br><span class="line">467</span><br><span class="line">468</span><br><span class="line">469</span><br><span class="line">470</span><br><span class="line">471</span><br><span class="line">472</span><br><span class="line">473</span><br><span class="line">474</span><br><span class="line">475</span><br><span class="line">476</span><br><span class="line">477</span><br><span class="line">478</span><br><span class="line">479</span><br><span class="line">480</span><br><span class="line">481</span><br><span class="line">482</span><br><span class="line">483</span><br><span class="line">484</span><br><span class="line">485</span><br><span class="line">486</span><br><span class="line">487</span><br><span class="line">488</span><br><span class="line">489</span><br><span class="line">490</span><br><span class="line">491</span><br><span class="line">492</span><br><span class="line">493</span><br><span class="line">494</span><br><span class="line">495</span><br><span class="line">496</span><br><span class="line">497</span><br><span class="line">498</span><br><span class="line">499</span><br><span class="line">500</span><br><span class="line">501</span><br><span class="line">502</span><br><span class="line">503</span><br><span class="line">504</span><br><span class="line">505</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line"> * This file is auto-generated.  DO NOT MODIFY.</span><br><span class="line"> */</span><br><span class="line">package android.os;</span><br><span class="line">/**</span><br><span class="line"> * Basic interface for finding and publishing system services.</span><br><span class="line"> *</span><br><span class="line"> * You likely want to use android.os.ServiceManager in Java or</span><br><span class="line"> * android::IServiceManager in C++ in order to use this interface.</span><br><span class="line"> *</span><br><span class="line"> * @hide</span><br><span class="line"> */</span><br><span class="line">public interface IServiceManager extends android.os.IInterface</span><br><span class="line">&#123;</span><br><span class="line">  /** Default implementation for IServiceManager. */</span><br><span class="line">  public static class Default implements android.os.IServiceManager</span><br><span class="line">  &#123;</span><br><span class="line">    /**</span><br><span class="line">         * Retrieve an existing service called @a name from the</span><br><span class="line">         * service manager.</span><br><span class="line">         *</span><br><span class="line">         * This is the same as checkService (returns immediately) but</span><br><span class="line">         * exists for legacy purposes.</span><br><span class="line">         *</span><br><span class="line">         * Returns null if the service does not exist.</span><br><span class="line">         */</span><br><span class="line">    @Override public android.os.IBinder getService(java.lang.String name) throws android.os.RemoteException</span><br><span class="line">    &#123;</span><br><span class="line">      return null;</span><br><span class="line">    &#125;</span><br><span class="line">    /**</span><br><span class="line">         * Retrieve an existing service called @a name from the service</span><br><span class="line">         * manager. Non-blocking. Returns null if the service does not</span><br><span class="line">         * exist.</span><br><span class="line">         */</span><br><span class="line">    @Override public android.os.IBinder checkService(java.lang.String name) throws android.os.RemoteException</span><br><span class="line">    &#123;</span><br><span class="line">      return null;</span><br><span class="line">    &#125;</span><br><span class="line">    /**</span><br><span class="line">         * Place a new @a service called @a name into the service</span><br><span class="line">         * manager.</span><br><span class="line">         */</span><br><span class="line">    @Override public void addService(java.lang.String name, android.os.IBinder service, boolean allowIsolated, int dumpPriority) throws android.os.RemoteException</span><br><span class="line">    &#123;</span><br><span class="line">    &#125;</span><br><span class="line">    /**</span><br><span class="line">         * Return a list of all currently running services.</span><br><span class="line">         */</span><br><span class="line">    @Override public java.lang.String[] listServices(int dumpPriority) throws android.os.RemoteException</span><br><span class="line">    &#123;</span><br><span class="line">      return null;</span><br><span class="line">    &#125;</span><br><span class="line">    /**</span><br><span class="line">         * Request a callback when a service is registered.</span><br><span class="line">         */</span><br><span class="line">    @Override public void registerForNotifications(java.lang.String name, android.os.IServiceCallback callback) throws android.os.RemoteException</span><br><span class="line">    &#123;</span><br><span class="line">    &#125;</span><br><span class="line">    /**</span><br><span class="line">         * Unregisters all requests for notifications for a specific callback.</span><br><span class="line">         */</span><br><span class="line">    @Override public void unregisterForNotifications(java.lang.String name, android.os.IServiceCallback callback) throws android.os.RemoteException</span><br><span class="line">    &#123;</span><br><span class="line">    &#125;</span><br><span class="line">    /**</span><br><span class="line">         * Returns whether a given interface is declared on the device, even if it</span><br><span class="line">         * is not started yet. For instance, this could be a service declared in the VINTF</span><br><span class="line">         * manifest.</span><br><span class="line">         */</span><br><span class="line">    @Override public boolean isDeclared(java.lang.String name) throws android.os.RemoteException</span><br><span class="line">    &#123;</span><br><span class="line">      return false;</span><br><span class="line">    &#125;</span><br><span class="line">    @Override</span><br><span class="line">    public android.os.IBinder asBinder() &#123;</span><br><span class="line">      return null;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  /** Local-side IPC implementation stub class. */</span><br><span class="line">  public static abstract class Stub extends android.os.Binder implements android.os.IServiceManager</span><br><span class="line">  &#123;</span><br><span class="line">    private static final java.lang.String DESCRIPTOR = &quot;android.os.IServiceManager&quot;;</span><br><span class="line">    /** Construct the stub at attach it to the interface. */</span><br><span class="line">    public Stub()</span><br><span class="line">    &#123;</span><br><span class="line">      this.attachInterface(this, DESCRIPTOR);</span><br><span class="line">    &#125;</span><br><span class="line">    /**</span><br><span class="line">     * Cast an IBinder object into an android.os.IServiceManager interface,</span><br><span class="line">     * generating a proxy if needed.</span><br><span class="line">     */</span><br><span class="line">    public static android.os.IServiceManager asInterface(android.os.IBinder obj)</span><br><span class="line">    &#123;</span><br><span class="line">      if ((obj==null)) &#123;</span><br><span class="line">        return null;</span><br><span class="line">      &#125;</span><br><span class="line">      android.os.IInterface iin = obj.queryLocalInterface(DESCRIPTOR);</span><br><span class="line">      if (((iin!=null)&amp;&amp;(iin instanceof android.os.IServiceManager))) &#123;</span><br><span class="line">        return ((android.os.IServiceManager)iin);</span><br><span class="line">      &#125;</span><br><span class="line">      return new android.os.IServiceManager.Stub.Proxy(obj);</span><br><span class="line">    &#125;</span><br><span class="line">    @Override public android.os.IBinder asBinder()</span><br><span class="line">    &#123;</span><br><span class="line">      return this;</span><br><span class="line">    &#125;</span><br><span class="line">    /** @hide */</span><br><span class="line">    public static java.lang.String getDefaultTransactionName(int transactionCode)</span><br><span class="line">    &#123;</span><br><span class="line">      switch (transactionCode)</span><br><span class="line">      &#123;</span><br><span class="line">        case TRANSACTION_getService:</span><br><span class="line">        &#123;</span><br><span class="line">          return &quot;getService&quot;;</span><br><span class="line">        &#125;</span><br><span class="line">        case TRANSACTION_checkService:</span><br><span class="line">        &#123;</span><br><span class="line">          return &quot;checkService&quot;;</span><br><span class="line">        &#125;</span><br><span class="line">        case TRANSACTION_addService:</span><br><span class="line">        &#123;</span><br><span class="line">          return &quot;addService&quot;;</span><br><span class="line">        &#125;</span><br><span class="line">        case TRANSACTION_listServices:</span><br><span class="line">        &#123;</span><br><span class="line">          return &quot;listServices&quot;;</span><br><span class="line">        &#125;</span><br><span class="line">        case TRANSACTION_registerForNotifications:</span><br><span class="line">        &#123;</span><br><span class="line">          return &quot;registerForNotifications&quot;;</span><br><span class="line">        &#125;</span><br><span class="line">        case TRANSACTION_unregisterForNotifications:</span><br><span class="line">        &#123;</span><br><span class="line">          return &quot;unregisterForNotifications&quot;;</span><br><span class="line">        &#125;</span><br><span class="line">        case TRANSACTION_isDeclared:</span><br><span class="line">        &#123;</span><br><span class="line">          return &quot;isDeclared&quot;;</span><br><span class="line">        &#125;</span><br><span class="line">        default:</span><br><span class="line">        &#123;</span><br><span class="line">          return null;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    /** @hide */</span><br><span class="line">    public java.lang.String getTransactionName(int transactionCode)</span><br><span class="line">    &#123;</span><br><span class="line">      return this.getDefaultTransactionName(transactionCode);</span><br><span class="line">    &#125;</span><br><span class="line">    @Override public boolean onTransact(int code, android.os.Parcel data, android.os.Parcel reply, int flags) throws android.os.RemoteException</span><br><span class="line">    &#123;</span><br><span class="line">      java.lang.String descriptor = DESCRIPTOR;</span><br><span class="line">      switch (code)</span><br><span class="line">      &#123;</span><br><span class="line">        case INTERFACE_TRANSACTION:</span><br><span class="line">        &#123;</span><br><span class="line">          reply.writeString(descriptor);</span><br><span class="line">          return true;</span><br><span class="line">        &#125;</span><br><span class="line">        case TRANSACTION_getService:</span><br><span class="line">        &#123;</span><br><span class="line">          data.enforceInterface(descriptor);</span><br><span class="line">          java.lang.String _arg0;</span><br><span class="line">          _arg0 = data.readString();</span><br><span class="line">          android.os.IBinder _result = this.getService(_arg0);</span><br><span class="line">          reply.writeNoException();</span><br><span class="line">          reply.writeStrongBinder(_result);</span><br><span class="line">          return true;</span><br><span class="line">        &#125;</span><br><span class="line">        case TRANSACTION_checkService:</span><br><span class="line">        &#123;</span><br><span class="line">          data.enforceInterface(descriptor);</span><br><span class="line">          java.lang.String _arg0;</span><br><span class="line">          _arg0 = data.readString();</span><br><span class="line">          android.os.IBinder _result = this.checkService(_arg0);</span><br><span class="line">          reply.writeNoException();</span><br><span class="line">          reply.writeStrongBinder(_result);</span><br><span class="line">          return true;</span><br><span class="line">        &#125;</span><br><span class="line">        case TRANSACTION_addService:</span><br><span class="line">        &#123;</span><br><span class="line">          data.enforceInterface(descriptor);</span><br><span class="line">          java.lang.String _arg0;</span><br><span class="line">          _arg0 = data.readString();</span><br><span class="line">          android.os.IBinder _arg1;</span><br><span class="line">          _arg1 = data.readStrongBinder();</span><br><span class="line">          boolean _arg2;</span><br><span class="line">          _arg2 = (0!=data.readInt());</span><br><span class="line">          int _arg3;</span><br><span class="line">          _arg3 = data.readInt();</span><br><span class="line">          this.addService(_arg0, _arg1, _arg2, _arg3);</span><br><span class="line">          reply.writeNoException();</span><br><span class="line">          return true;</span><br><span class="line">        &#125;</span><br><span class="line">        case TRANSACTION_listServices:</span><br><span class="line">        &#123;</span><br><span class="line">          data.enforceInterface(descriptor);</span><br><span class="line">          int _arg0;</span><br><span class="line">          _arg0 = data.readInt();</span><br><span class="line">          java.lang.String[] _result = this.listServices(_arg0);</span><br><span class="line">          reply.writeNoException();</span><br><span class="line">          reply.writeStringArray(_result);</span><br><span class="line">          return true;</span><br><span class="line">        &#125;</span><br><span class="line">        case TRANSACTION_registerForNotifications:</span><br><span class="line">        &#123;</span><br><span class="line">          data.enforceInterface(descriptor);</span><br><span class="line">          java.lang.String _arg0;</span><br><span class="line">          _arg0 = data.readString();</span><br><span class="line">          android.os.IServiceCallback _arg1;</span><br><span class="line">          _arg1 = android.os.IServiceCallback.Stub.asInterface(data.readStrongBinder());</span><br><span class="line">          this.registerForNotifications(_arg0, _arg1);</span><br><span class="line">          reply.writeNoException();</span><br><span class="line">          return true;</span><br><span class="line">        &#125;</span><br><span class="line">        case TRANSACTION_unregisterForNotifications:</span><br><span class="line">        &#123;</span><br><span class="line">          data.enforceInterface(descriptor);</span><br><span class="line">          java.lang.String _arg0;</span><br><span class="line">          _arg0 = data.readString();</span><br><span class="line">          android.os.IServiceCallback _arg1;</span><br><span class="line">          _arg1 = android.os.IServiceCallback.Stub.asInterface(data.readStrongBinder());</span><br><span class="line">          this.unregisterForNotifications(_arg0, _arg1);</span><br><span class="line">          reply.writeNoException();</span><br><span class="line">          return true;</span><br><span class="line">        &#125;</span><br><span class="line">        case TRANSACTION_isDeclared:</span><br><span class="line">        &#123;</span><br><span class="line">          data.enforceInterface(descriptor);</span><br><span class="line">          java.lang.String _arg0;</span><br><span class="line">          _arg0 = data.readString();</span><br><span class="line">          boolean _result = this.isDeclared(_arg0);</span><br><span class="line">          reply.writeNoException();</span><br><span class="line">          reply.writeInt(((_result)?(1):(0)));</span><br><span class="line">          return true;</span><br><span class="line">        &#125;</span><br><span class="line">        default:</span><br><span class="line">        &#123;</span><br><span class="line">          return super.onTransact(code, data, reply, flags);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    private static class Proxy implements android.os.IServiceManager</span><br><span class="line">    &#123;</span><br><span class="line">      private android.os.IBinder mRemote;</span><br><span class="line">      Proxy(android.os.IBinder remote)</span><br><span class="line">      &#123;</span><br><span class="line">        mRemote = remote;</span><br><span class="line">      &#125;</span><br><span class="line">      @Override public android.os.IBinder asBinder()</span><br><span class="line">      &#123;</span><br><span class="line">        return mRemote;</span><br><span class="line">      &#125;</span><br><span class="line">      public java.lang.String getInterfaceDescriptor()</span><br><span class="line">      &#123;</span><br><span class="line">        return DESCRIPTOR;</span><br><span class="line">      &#125;</span><br><span class="line">      /**</span><br><span class="line">           * Retrieve an existing service called @a name from the</span><br><span class="line">           * service manager.</span><br><span class="line">           *</span><br><span class="line">           * This is the same as checkService (returns immediately) but</span><br><span class="line">           * exists for legacy purposes.</span><br><span class="line">           *</span><br><span class="line">           * Returns null if the service does not exist.</span><br><span class="line">           */</span><br><span class="line">      @Override public android.os.IBinder getService(java.lang.String name) throws android.os.RemoteException</span><br><span class="line">      &#123;</span><br><span class="line">        android.os.Parcel _data = android.os.Parcel.obtain();</span><br><span class="line">        android.os.Parcel _reply = android.os.Parcel.obtain();</span><br><span class="line">        android.os.IBinder _result;</span><br><span class="line">        try &#123;</span><br><span class="line">          _data.writeInterfaceToken(DESCRIPTOR);</span><br><span class="line">          _data.writeString(name);</span><br><span class="line">          boolean _status = mRemote.transact(Stub.TRANSACTION_getService, _data, _reply, 0);</span><br><span class="line">          if (!_status &amp;&amp; getDefaultImpl() != null) &#123;</span><br><span class="line">            return getDefaultImpl().getService(name);</span><br><span class="line">          &#125;</span><br><span class="line">          _reply.readException();</span><br><span class="line">          _result = _reply.readStrongBinder();</span><br><span class="line">        &#125;</span><br><span class="line">        finally &#123;</span><br><span class="line">          _reply.recycle();</span><br><span class="line">          _data.recycle();</span><br><span class="line">        &#125;</span><br><span class="line">        return _result;</span><br><span class="line">      &#125;</span><br><span class="line">      /**</span><br><span class="line">           * Retrieve an existing service called @a name from the service</span><br><span class="line">           * manager. Non-blocking. Returns null if the service does not</span><br><span class="line">           * exist.</span><br><span class="line">           */</span><br><span class="line">      @Override public android.os.IBinder checkService(java.lang.String name) throws android.os.RemoteException</span><br><span class="line">      &#123;</span><br><span class="line">        android.os.Parcel _data = android.os.Parcel.obtain();</span><br><span class="line">        android.os.Parcel _reply = android.os.Parcel.obtain();</span><br><span class="line">        android.os.IBinder _result;</span><br><span class="line">        try &#123;</span><br><span class="line">          _data.writeInterfaceToken(DESCRIPTOR);</span><br><span class="line">          _data.writeString(name);</span><br><span class="line">          boolean _status = mRemote.transact(Stub.TRANSACTION_checkService, _data, _reply, 0);</span><br><span class="line">          if (!_status &amp;&amp; getDefaultImpl() != null) &#123;</span><br><span class="line">            return getDefaultImpl().checkService(name);</span><br><span class="line">          &#125;</span><br><span class="line">          _reply.readException();</span><br><span class="line">          _result = _reply.readStrongBinder();</span><br><span class="line">        &#125;</span><br><span class="line">        finally &#123;</span><br><span class="line">          _reply.recycle();</span><br><span class="line">          _data.recycle();</span><br><span class="line">        &#125;</span><br><span class="line">        return _result;</span><br><span class="line">      &#125;</span><br><span class="line">      /**</span><br><span class="line">           * Place a new @a service called @a name into the service</span><br><span class="line">           * manager.</span><br><span class="line">           */</span><br><span class="line">      @Override public void addService(java.lang.String name, android.os.IBinder service, boolean allowIsolated, int dumpPriority) throws android.os.RemoteException</span><br><span class="line">      &#123;</span><br><span class="line">        android.os.Parcel _data = android.os.Parcel.obtain();</span><br><span class="line">        android.os.Parcel _reply = android.os.Parcel.obtain();</span><br><span class="line">        try &#123;</span><br><span class="line">          _data.writeInterfaceToken(DESCRIPTOR);</span><br><span class="line">          _data.writeString(name);</span><br><span class="line">          _data.writeStrongBinder(service);</span><br><span class="line">          _data.writeInt(((allowIsolated)?(1):(0)));</span><br><span class="line">          _data.writeInt(dumpPriority);</span><br><span class="line">          boolean _status = mRemote.transact(Stub.TRANSACTION_addService, _data, _reply, 0);</span><br><span class="line">          if (!_status &amp;&amp; getDefaultImpl() != null) &#123;</span><br><span class="line">            getDefaultImpl().addService(name, service, allowIsolated, dumpPriority);</span><br><span class="line">            return;</span><br><span class="line">          &#125;</span><br><span class="line">          _reply.readException();</span><br><span class="line">        &#125;</span><br><span class="line">        finally &#123;</span><br><span class="line">          _reply.recycle();</span><br><span class="line">          _data.recycle();</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      /**</span><br><span class="line">           * Return a list of all currently running services.</span><br><span class="line">           */</span><br><span class="line">      @Override public java.lang.String[] listServices(int dumpPriority) throws android.os.RemoteException</span><br><span class="line">      &#123;</span><br><span class="line">        android.os.Parcel _data = android.os.Parcel.obtain();</span><br><span class="line">        android.os.Parcel _reply = android.os.Parcel.obtain();</span><br><span class="line">        java.lang.String[] _result;</span><br><span class="line">        try &#123;</span><br><span class="line">          _data.writeInterfaceToken(DESCRIPTOR);</span><br><span class="line">          _data.writeInt(dumpPriority);</span><br><span class="line">          boolean _status = mRemote.transact(Stub.TRANSACTION_listServices, _data, _reply, 0);</span><br><span class="line">          if (!_status &amp;&amp; getDefaultImpl() != null) &#123;</span><br><span class="line">            return getDefaultImpl().listServices(dumpPriority);</span><br><span class="line">          &#125;</span><br><span class="line">          _reply.readException();</span><br><span class="line">          _result = _reply.createStringArray();</span><br><span class="line">        &#125;</span><br><span class="line">        finally &#123;</span><br><span class="line">          _reply.recycle();</span><br><span class="line">          _data.recycle();</span><br><span class="line">        &#125;</span><br><span class="line">        return _result;</span><br><span class="line">      &#125;</span><br><span class="line">      /**</span><br><span class="line">           * Request a callback when a service is registered.</span><br><span class="line">           */</span><br><span class="line">      @Override public void registerForNotifications(java.lang.String name, android.os.IServiceCallback callback) throws android.os.RemoteException</span><br><span class="line">      &#123;</span><br><span class="line">        android.os.Parcel _data = android.os.Parcel.obtain();</span><br><span class="line">        android.os.Parcel _reply = android.os.Parcel.obtain();</span><br><span class="line">        try &#123;</span><br><span class="line">          _data.writeInterfaceToken(DESCRIPTOR);</span><br><span class="line">          _data.writeString(name);</span><br><span class="line">          _data.writeStrongBinder((((callback!=null))?(callback.asBinder()):(null)));</span><br><span class="line">          boolean _status = mRemote.transact(Stub.TRANSACTION_registerForNotifications, _data, _reply, 0);</span><br><span class="line">          if (!_status &amp;&amp; getDefaultImpl() != null) &#123;</span><br><span class="line">            getDefaultImpl().registerForNotifications(name, callback);</span><br><span class="line">            return;</span><br><span class="line">          &#125;</span><br><span class="line">          _reply.readException();</span><br><span class="line">        &#125;</span><br><span class="line">        finally &#123;</span><br><span class="line">          _reply.recycle();</span><br><span class="line">          _data.recycle();</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      /**</span><br><span class="line">           * Unregisters all requests for notifications for a specific callback.</span><br><span class="line">           */</span><br><span class="line">      @Override public void unregisterForNotifications(java.lang.String name, android.os.IServiceCallback callback) throws android.os.RemoteException</span><br><span class="line">      &#123;</span><br><span class="line">        android.os.Parcel _data = android.os.Parcel.obtain();</span><br><span class="line">        android.os.Parcel _reply = android.os.Parcel.obtain();</span><br><span class="line">        try &#123;</span><br><span class="line">          _data.writeInterfaceToken(DESCRIPTOR);</span><br><span class="line">          _data.writeString(name);</span><br><span class="line">          _data.writeStrongBinder((((callback!=null))?(callback.asBinder()):(null)));</span><br><span class="line">          boolean _status = mRemote.transact(Stub.TRANSACTION_unregisterForNotifications, _data, _reply, 0);</span><br><span class="line">          if (!_status &amp;&amp; getDefaultImpl() != null) &#123;</span><br><span class="line">            getDefaultImpl().unregisterForNotifications(name, callback);</span><br><span class="line">            return;</span><br><span class="line">          &#125;</span><br><span class="line">          _reply.readException();</span><br><span class="line">        &#125;</span><br><span class="line">        finally &#123;</span><br><span class="line">          _reply.recycle();</span><br><span class="line">          _data.recycle();</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      /**</span><br><span class="line">           * Returns whether a given interface is declared on the device, even if it</span><br><span class="line">           * is not started yet. For instance, this could be a service declared in the VINTF</span><br><span class="line">           * manifest.</span><br><span class="line">           */</span><br><span class="line">      @Override public boolean isDeclared(java.lang.String name) throws android.os.RemoteException</span><br><span class="line">      &#123;</span><br><span class="line">        android.os.Parcel _data = android.os.Parcel.obtain();</span><br><span class="line">        android.os.Parcel _reply = android.os.Parcel.obtain();</span><br><span class="line">        boolean _result;</span><br><span class="line">        try &#123;</span><br><span class="line">          _data.writeInterfaceToken(DESCRIPTOR);</span><br><span class="line">          _data.writeString(name);</span><br><span class="line">          boolean _status = mRemote.transact(Stub.TRANSACTION_isDeclared, _data, _reply, 0);</span><br><span class="line">          if (!_status &amp;&amp; getDefaultImpl() != null) &#123;</span><br><span class="line">            return getDefaultImpl().isDeclared(name);</span><br><span class="line">          &#125;</span><br><span class="line">          _reply.readException();</span><br><span class="line">          _result = (0!=_reply.readInt());</span><br><span class="line">        &#125;</span><br><span class="line">        finally &#123;</span><br><span class="line">          _reply.recycle();</span><br><span class="line">          _data.recycle();</span><br><span class="line">        &#125;</span><br><span class="line">        return _result;</span><br><span class="line">      &#125;</span><br><span class="line">      public static android.os.IServiceManager sDefaultImpl;</span><br><span class="line">    &#125;</span><br><span class="line">    static final int TRANSACTION_getService = (android.os.IBinder.FIRST_CALL_TRANSACTION + 0);</span><br><span class="line">    static final int TRANSACTION_checkService = (android.os.IBinder.FIRST_CALL_TRANSACTION + 1);</span><br><span class="line">    static final int TRANSACTION_addService = (android.os.IBinder.FIRST_CALL_TRANSACTION + 2);</span><br><span class="line">    static final int TRANSACTION_listServices = (android.os.IBinder.FIRST_CALL_TRANSACTION + 3);</span><br><span class="line">    static final int TRANSACTION_registerForNotifications = (android.os.IBinder.FIRST_CALL_TRANSACTION + 4);</span><br><span class="line">    static final int TRANSACTION_unregisterForNotifications = (android.os.IBinder.FIRST_CALL_TRANSACTION + 5);</span><br><span class="line">    static final int TRANSACTION_isDeclared = (android.os.IBinder.FIRST_CALL_TRANSACTION + 6);</span><br><span class="line">    public static boolean setDefaultImpl(android.os.IServiceManager impl) &#123;</span><br><span class="line">      if (Stub.Proxy.sDefaultImpl == null &amp;&amp; impl != null) &#123;</span><br><span class="line">        Stub.Proxy.sDefaultImpl = impl;</span><br><span class="line">        return true;</span><br><span class="line">      &#125;</span><br><span class="line">      return false;</span><br><span class="line">    &#125;</span><br><span class="line">    public static android.os.IServiceManager getDefaultImpl() &#123;</span><br><span class="line">      return Stub.Proxy.sDefaultImpl;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  public static final int DUMP_FLAG_PRIORITY_CRITICAL = 1;</span><br><span class="line">  public static final int DUMP_FLAG_PRIORITY_HIGH = 2;</span><br><span class="line">  public static final int DUMP_FLAG_PRIORITY_NORMAL = 4;</span><br><span class="line">  public static final int DUMP_FLAG_PRIORITY_DEFAULT = 8;</span><br><span class="line">  public static final int DUMP_FLAG_PRIORITY_ALL = 15;</span><br><span class="line">  public static final int DUMP_FLAG_PROTO = 16;</span><br><span class="line">  /**</span><br><span class="line">       * Retrieve an existing service called @a name from the</span><br><span class="line">       * service manager.</span><br><span class="line">       *</span><br><span class="line">       * This is the same as checkService (returns immediately) but</span><br><span class="line">       * exists for legacy purposes.</span><br><span class="line">       *</span><br><span class="line">       * Returns null if the service does not exist.</span><br><span class="line">       */</span><br><span class="line">  @dalvik.annotation.compat.UnsupportedAppUsage(overrideSourcePosition=&quot;frameworks/native/libs/binder/aidl/android/os/IServiceManager.aidl:60:1:60:25&quot;)</span><br><span class="line">  public android.os.IBinder getService(java.lang.String name) throws android.os.RemoteException;</span><br><span class="line">  /**</span><br><span class="line">       * Retrieve an existing service called @a name from the service</span><br><span class="line">       * manager. Non-blocking. Returns null if the service does not</span><br><span class="line">       * exist.</span><br><span class="line">       */</span><br><span class="line">  @dalvik.annotation.compat.UnsupportedAppUsage(overrideSourcePosition=&quot;frameworks/native/libs/binder/aidl/android/os/IServiceManager.aidl:68:1:68:25&quot;)</span><br><span class="line">  public android.os.IBinder checkService(java.lang.String name) throws android.os.RemoteException;</span><br><span class="line">  /**</span><br><span class="line">       * Place a new @a service called @a name into the service</span><br><span class="line">       * manager.</span><br><span class="line">       */</span><br><span class="line">  public void addService(java.lang.String name, android.os.IBinder service, boolean allowIsolated, int dumpPriority) throws android.os.RemoteException;</span><br><span class="line">  /**</span><br><span class="line">       * Return a list of all currently running services.</span><br><span class="line">       */</span><br><span class="line">  public java.lang.String[] listServices(int dumpPriority) throws android.os.RemoteException;</span><br><span class="line">  /**</span><br><span class="line">       * Request a callback when a service is registered.</span><br><span class="line">       */</span><br><span class="line">  public void registerForNotifications(java.lang.String name, android.os.IServiceCallback callback) throws android.os.RemoteException;</span><br><span class="line">  /**</span><br><span class="line">       * Unregisters all requests for notifications for a specific callback.</span><br><span class="line">       */</span><br><span class="line">  public void unregisterForNotifications(java.lang.String name, android.os.IServiceCallback callback) throws android.os.RemoteException;</span><br><span class="line">  /**</span><br><span class="line">       * Returns whether a given interface is declared on the device, even if it</span><br><span class="line">       * is not started yet. For instance, this could be a service declared in the VINTF</span><br><span class="line">       * manifest.</span><br><span class="line">       */</span><br><span class="line">  public boolean isDeclared(java.lang.String name) throws android.os.RemoteException;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2020/01/03/Binder/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/header.jpeg">
-      <meta itemprop="name" content="张潮州">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="张潮州">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/01/03/Binder/" class="post-title-link" itemprop="url">Binder</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2020-01-03 16:05:28 / Modified: 16:06:05" itemprop="dateCreated datePublished" datetime="2020-01-03T16:05:28+08:00">2020-01-03</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">绑定器接口的基类。定义新接口时，必须从IInterface派生它。</span><br><span class="line">检索与此接口关联的绑定器对象。您必须使用这个而不是简单的强制转换，这样代理对象才能返回正确的结果。</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">package android.os;</span><br><span class="line">public interface IInterface</span><br><span class="line">&#123;</span><br><span class="line">    public IBinder asBinder();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2020/01/02/%E7%BC%96%E7%A0%81/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/header.jpeg">
-      <meta itemprop="name" content="张潮州">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="张潮州">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/01/02/%E7%BC%96%E7%A0%81/" class="post-title-link" itemprop="url">编码</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2020-01-02 11:04:44 / Modified: 11:04:45" itemprop="dateCreated datePublished" datetime="2020-01-02T11:04:44+08:00">2020-01-02</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>机器数<br>一个数在计算机中的二进制表示形式，叫做这个数的机器数。机器数是带符号的，在计算机中用一个数的最高位存放符号，正数为0，负数为1。</p>
-<p>形式值<br>因为第一位是符号位，所以机器数的形式值就不等于真正的数值。</p>
-<p>真值<br>将带符号位的机器数对应的真正数值称为机器数的真值。</p>
-<p>原码，反码，补码<br>对于一个数，计算机要使用一定的编码方式进行存储。原码，反码，补码是机器存储一个具体数字的编码方式。</p>
-<p>原码<br>原码就是符号位加上真值的绝对值，即用第一位表示符号，其余位表示值。</p>
-<p>反码<br>正数的反码是其本身。<br>负数的反码是在其原码的基础上，符号位不变，其余各个位取反。</p>
-<p>补码<br>正数的补码是其本身。<br>负数的补码是在其原码的基础上，符号位不变，其余各位取反，最后+1，即在反码的基础上+1。</p>
-<p>机器运算的符号位也参与运算，机器运算只有加法没有减法，减去一个数相当于加上一个负数，计算机内部不使用原码表示一个数，因为原码做减法也就是加上一个负数，其结果是不正确的。</p>
-<p>为了解决原码做减法的问题，出现了反码:<br>用反码计算减法, 结果的真值部分是正确的. 而唯一的问题其实就出现在”0”这个特殊的数值上. 虽然人们理解上+0和-0是一样的, 但是0带符号是没有任何意义的. 而且会有[0000 0000]原和[1000 0000]原两个编码表示0.</p>
-<p>补码的出现，解决了0的符号以及两个编码的问题：<br>这样0用[0000 0000]表示, 而以前出现问题的-0则不存在了.而且可以用[1000 0000]表示-128:</p>
-<p>因为机器使用补码, 所以对于编程中常用到的32位int类型, 可以表示范围是: [-231, 231-1] 因为第一位表示的是符号位.而使用补码表示时又可以多保存一个最小值.</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2019/12/31/Android%20App%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/header.jpeg">
-      <meta itemprop="name" content="张潮州">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="张潮州">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/12/31/Android%20App%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/" class="post-title-link" itemprop="url">Android App启动过程</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-12-31 17:15:37" itemprop="dateCreated datePublished" datetime="2019-12-31T17:15:37+08:00">2019-12-31</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-01-02 11:11:41" itemprop="dateModified" datetime="2020-01-02T11:11:41+08:00">2020-01-02</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="Android-App启动过程"><a href="#Android-App启动过程" class="headerlink" title="Android App启动过程"></a>Android App启动过程</h1><p>ActivityThread.java<br>应用启动入口：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">	//①</span><br><span class="line">    Looper.prepareMainLooper();</span><br><span class="line">    </span><br><span class="line">    //②</span><br><span class="line">    long startSeq = 0;</span><br><span class="line">    ActivityThread thread = new ActivityThread();</span><br><span class="line">    thread.attach(false, startSeq);</span><br><span class="line">    </span><br><span class="line">    //③</span><br><span class="line">    if (sMainThreadHandler == null) &#123;</span><br><span class="line">        sMainThreadHandler = thread.getHandler();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    //④</span><br><span class="line">    Looper.loop();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>ActivityThread.java</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">@UnsupportedAppUsage</span><br><span class="line">private void attach(boolean system, long startSeq) &#123;</span><br><span class="line">    sCurrentActivityThread = this;</span><br><span class="line">    mSystemThread = system;</span><br><span class="line">    if (!system) &#123;</span><br><span class="line">        RuntimeInit.setApplicationObject(mAppThread.asBinder());</span><br><span class="line">        final IActivityManager mgr = ActivityManager.getService();</span><br><span class="line">        try &#123;</span><br><span class="line">        	//⑤</span><br><span class="line">            mgr.attachApplication(mAppThread, startSeq);</span><br><span class="line">        &#125; catch (RemoteException ex) &#123;</span><br><span class="line">            throw ex.rethrowFromSystemServer();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>ActivityManagerService.java</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">public final void attachApplication(IApplicationThread thread, long startSeq) &#123;</span><br><span class="line">    synchronized (this) &#123;</span><br><span class="line">        int callingPid = Binder.getCallingPid();</span><br><span class="line">        final int callingUid = Binder.getCallingUid();</span><br><span class="line">        final long origId = Binder.clearCallingIdentity();</span><br><span class="line">        attachApplicationLocked(thread, callingPid, callingUid, startSeq);</span><br><span class="line">        Binder.restoreCallingIdentity(origId);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2019/12/31/Android%E7%B3%BB%E7%BB%9F%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/header.jpeg">
-      <meta itemprop="name" content="张潮州">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="张潮州">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/12/31/Android%E7%B3%BB%E7%BB%9F%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/" class="post-title-link" itemprop="url">Android系统启动过程</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-12-31 10:25:10" itemprop="dateCreated datePublished" datetime="2019-12-31T10:25:10+08:00">2019-12-31</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-01-02 09:48:37" itemprop="dateModified" datetime="2020-01-02T09:48:37+08:00">2020-01-02</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="Android系统启动过程"><a href="#Android系统启动过程" class="headerlink" title="Android系统启动过程"></a>Android系统启动过程</h1><p>计算机</p>
-<table>
-<thead>
-<tr>
-<th>计算机</th>
-<th>解释</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>计算机硬件</td>
-<td>CPU，内存，硬盘，显卡，显示器，键盘鼠标等其他输入输出设备。</td>
-</tr>
-<tr>
-<td>计算机软件</td>
-<td>操作系统等，存放在硬盘上，程序执行时需要将程序从硬盘上读取到内存中然后加载到 CPU 中来运行。</td>
-</tr>
-</tbody></table>
-<p>计算机启动过程</p>
-<table>
-<thead>
-<tr>
-<th>启动阶段</th>
-<th>解释</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>通电读取BIOS</td>
-<td>BIOS，Basic Input/Output System，基本输入输出系统。主板芯片上的程序，计算机通电后，第一件事就是读取BIOS。</td>
-</tr>
-<tr>
-<td>BIOS硬件自检</td>
-<td>POST，Power-On Self-Test，硬件自检。BIOS 程序首先检查计算机硬件能否满足运行的基本条件，如果硬件出现问题，主板会发出不同含义的蜂鸣，启动中止；如果没有问题，屏幕就会显示出 CPU，内存，硬盘等信息。</td>
-</tr>
-<tr>
-<td>BIOS转交控制</td>
-<td>Boot Sequence，启动排序。BIOS根据启动排序将控制权转交给下一个存储设备，例如硬盘、U盘、光盘。</td>
-</tr>
-<tr>
-<td>主引导记录</td>
-<td>MBR，Master boot record，主引导记录，是位于启动排序中存储设备的第一个扇区/512个节的引导代码。它负责磁盘操作系统对磁盘进行读写时分区合法性的判别、分区引导信息的定位，它由磁盘操作系统在对硬盘进行初始化时产生的。硬盘的主引导记录 MBR 不属于任何一个操作系统，它先于所有的操作系统而被调入内存，并发挥作用，然后才将控制权交给主分区内的操作系统，并用主分区信息表来管理硬盘。如果主引导记录最后两个字节是 0x55 和 0xAA，表明这个设备可以用于启动；如果不是，表明设备不能用于启动，控制权于是被转交给启动排序中的下一个设备。找到可用的 MBR 后，计算机从 MBR 中读取前面 446 字节的机器码之后，不再把控制权转交给某一个分区，而是运行事先安装的启动管理器boot loader，由用户选择启动哪一个操作系统。</td>
-</tr>
-<tr>
-<td>加载内核</td>
-<td>选择完操作系统后，控制权转交给操作系统，操作系统的内核首先被载入内存。以 Linux 系统为例，先载入 /boot 目录下面的 kernel。 内核加载成功后，第一个运行的程序是 /sbin/init。 它根据配置文件（Debian 系统是 /etc/initab ）产生 init 进程。 这是 Linux 启动后的第一个进程，pid 进程编号为 1，其他进程都是它的后代。然后，init 线程加载系统的各个模块，比如：窗口程序和网络程序，直至执行 /bin/login 程序，跳出登录界面，等待用户输入用户名和密码。</td>
-</tr>
-</tbody></table>
-<p>Android的嵌入式Linux系统启动过程</p>
-<table>
-<thead>
-<tr>
-<th>启动阶段</th>
-<th>解释</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>ROM</td>
-<td>在 Android 里没有硬盘，而是 ROM，它类似于硬盘存放操作系统，用户程序等。 ROM 跟硬盘一样也会划分为不同的区域，用于放置不同的程序。</td>
-</tr>
-<tr>
-<td>Bootloader</td>
-<td>系统启动加载器，类似 BIOS，在系统加载前，用以初始化硬件设备，建立内存空间的映像图，为最终调用系统内核准备好环境。当开机通电时首先会加载 Bootloader，Bootloader 会读取 ROM 找到操作系统并将 Linux 内核加载到 RAM 中。</td>
-</tr>
-<tr>
-<td>Kernel</td>
-<td>当 Linux 内核启动后会初始化各种软硬件环境，加载驱动程序，挂载根文件系统，Linux 内核加载的最后阶段会启动执行第一个用户空间进程 init 进程。</td>
-</tr>
-<tr>
-<td>init</td>
-<td>init 是 Linux 系统中用户空间的第一个进程(pid=1)，Kernel 启动后会调用 /system/core/init/Init.cpp 的 main() 方法。首先初始化 Kernel log，创建一块共享的内存空间，加载 /default.prop 文件，解析 init.rc 文件。init.rc 文件是 Android 系统的重要配置文件，位于 /system/core/rootdir/ 目录中。 主要功能是定义了系统启动时需要执行的特定动作、设置环境变量和属性和需要执行的特定 service。init.rc 脚本文件配置了一些重要的服务，init 进程通过创建子进程启动这些服务，这里创建的 service 都属于 native 服务，运行在 Linux 空间，通过 socket 向上层提供特定的服务，并以守护进程的方式运行在后台。</td>
-</tr>
-<tr>
-<td>Zygote</td>
-<td>Zygote 进程孵化了所有的 Android 应用进程，是 Android Framework 的基础，该进程的启动也标志着 Framework 框架初始化启动的开始。</td>
-</tr>
-<tr>
-<td>system_server</td>
-<td>system_server 进程启动后将初始化系统上下文（设置主题），创建系统服务管理 SystemServiceManager，然后启动各种系统服务。所有的服务启动完成后会注册到 ServiceManager。ActivityManagerService 服务启动完成后，会进入 ActivityManagerService.systemReady()，然后启动 SystemUI，WebViewFactory，Watchdog，最后启动桌面 Launcher App。</td>
-</tr>
-</tbody></table>
-<p>ROM分区</p>
-<table>
-<thead>
-<tr>
-<th>分区</th>
-<th>解释</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>/boot</td>
-<td>存放引导程序，包括内核和内存操作程序</td>
-</tr>
-<tr>
-<td>/system</td>
-<td>相当于电脑c盘，存放Android系统及系统应用</td>
-</tr>
-<tr>
-<td>/recovery</td>
-<td>恢复分区，可以进入该分区进行系统恢复</td>
-</tr>
-<tr>
-<td>/data</td>
-<td>用户数据区，包含了用户的数据：联系人、短信、设置、用户安装的程序</td>
-</tr>
-<tr>
-<td>/cache</td>
-<td>安卓系统缓存区，保存系统最常访问的数据和应用程序</td>
-</tr>
-<tr>
-<td>/misc</td>
-<td>包含一些杂项内容，如系统设置和系统功能启用禁用设置</td>
-</tr>
-<tr>
-<td>/sdcard</td>
-<td>用户自己的存储区，可以存放照片，音乐，视频等文件</td>
-</tr>
-</tbody></table>
-<p>通过 init.rc 脚本系统启动的服务</p>
-<table>
-<thead>
-<tr>
-<th>服务</th>
-<th>解释</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>service_manager</td>
-<td>启动 binder IPC，管理所有的 Android 系统服务。ServiceManager 是 Binder IPC 通信过程中的守护进程，本身也是一个 Binder 服务。ServiceManager 进程主要是启动 Binder，提供服务的查询和注册。</td>
-</tr>
-<tr>
-<td>mountd</td>
-<td>设备安装 Daemon，负责设备安装及状态通知</td>
-</tr>
-<tr>
-<td>debugger</td>
-<td>启动 debug system，处理调试进程的请求</td>
-</tr>
-<tr>
-<td>rild</td>
-<td>启动 radio interface layer daemon 服务，处理电话相关的事件和请求</td>
-</tr>
-<tr>
-<td>media_server</td>
-<td>启动 AudioFlinger，MediaPlayerService 和 CameraService，负责多媒体播放相关的功能，包括音视频解码。MediaServer 进程主要是启动 AudioFlinger 音频服务，CameraService 相机服务。负责处理音频解析播放，相机相关的处理。</td>
-</tr>
-<tr>
-<td>surface_flinger</td>
-<td>启动 SurfaceFlinger 负责显示输出。SurfaceFlinger 负责图像绘制，是应用 UI 的核心，其功能是合成所有 Surface 并渲染到显示设备。SurfaceFlinger 进程主要是启动 FrameBuffer，初始化显示系统。</td>
-</tr>
-<tr>
-<td>zygote</td>
-<td>进程孵化器，启动 Android Java VMRuntime 和启动 system_server，负责 Android 应用进程的孵化工作。Zygote 进程孵化了所有的 Android 应用进程，是 Android Framework 的基础，该进程的启动也标志着 Framework 框架初始化启动的开始。</td>
-</tr>
-</tbody></table>
-<p>Zygote 服务进程的主要功能</p>
-<table>
-<thead>
-<tr>
-<th>功能</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>注册底层功能的 JNI 函数到虚拟机</td>
-</tr>
-<tr>
-<td>预加载 Java 类和资源</td>
-</tr>
-<tr>
-<td>fork 并启动 system_server 核心进程</td>
-</tr>
-<tr>
-<td>作为守护进程监听处理孵化新进程的请求</td>
-</tr>
-</tbody></table>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2019/12/30/UML%E7%B1%BB%E5%9B%BE/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/header.jpeg">
-      <meta itemprop="name" content="张潮州">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="张潮州">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/12/30/UML%E7%B1%BB%E5%9B%BE/" class="post-title-link" itemprop="url">UML类图</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-12-30 14:35:37" itemprop="dateCreated datePublished" datetime="2019-12-30T14:35:37+08:00">2019-12-30</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-12-31 09:18:15" itemprop="dateModified" datetime="2019-12-31T09:18:15+08:00">2019-12-31</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="UML类图关系"><a href="#UML类图关系" class="headerlink" title="UML类图关系"></a>UML类图关系</h1><table>
-<thead>
-<tr>
-<th>关系</th>
-<th>英语</th>
-<th>解释</th>
-<th>UML类图</th>
-<th>例子</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>泛化</td>
-<td>Generalization</td>
-<td>继承关系，指定了子类如何特化父类的所有特征和行为。</td>
-<td>带三角箭头的实线，箭头指向父类。</td>
-<td>老虎指向动物。</td>
-</tr>
-<tr>
-<td>实现</td>
-<td>Realization</td>
-<td>类与接口的关系，表示类是接口所有特征和行为的实现。</td>
-<td>带三角箭头的虚线，箭头指向接口。</td>
-<td>笔刷指向刷。</td>
-</tr>
-<tr>
-<td>关联</td>
-<td>Association</td>
-<td>拥有的关系，使一个类知道另一个类的属性和方法。</td>
-<td>带普通箭头的实心线，指向被拥有者。关联可以是双向的，也可以是单向的。双向的关联可以有两个箭头或者没有箭头，单向的关联有一个箭头。</td>
-<td>老师指向学生，学生指向老师，学生指向课程。</td>
-</tr>
-<tr>
-<td>聚合</td>
-<td>Aggregation</td>
-<td>聚合关系，是整体与部分的关系。</td>
-<td>带空心菱形的实心线，菱形指向整体。聚合关系是关联关系的一种，是强的关联关系；关联和聚合在语法上无法区分，必须考察具体的逻辑关系。</td>
-<td>轮胎指向汽车。</td>
-</tr>
-<tr>
-<td>组合</td>
-<td>Composition</td>
-<td>组合关系，是整体与部分的关系。</td>
-<td>带实心菱形的实线，菱形指向整体。组合关系是关联关系的一种，是比聚合关系还要强的关系，它要求普通的聚合关系中代表整体的对象负责代表部分的对象的生命周期。</td>
-<td>部门指向公司。</td>
-</tr>
-<tr>
-<td>依赖</td>
-<td>Dependency</td>
-<td>是一种使用的关系，尽量不使用双向的互相依赖。</td>
-<td>带普通箭头的虚线，指向被使用者。</td>
-<td>计算机指向人类。</td>
-</tr>
-</tbody></table>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2019/12/30/startActivity%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/header.jpeg">
-      <meta itemprop="name" content="张潮州">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="张潮州">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/12/30/startActivity%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" class="post-title-link" itemprop="url">startActivity源码解析</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2019-12-30 14:01:18 / Modified: 16:28:12" itemprop="dateCreated datePublished" datetime="2019-12-30T14:01:18+08:00">2019-12-30</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="startActivity源码解析"><a href="#startActivity源码解析" class="headerlink" title="startActivity源码解析"></a>startActivity源码解析</h1><p>Context是一个抽象类，提供接口，用于访问应用程序运行所需服务，譬如启动Activity、发送广播、接受Intent等。</p>
-<p>Application类继承</p>
-<table>
-<thead>
-<tr>
-<th>类名</th>
-<th>解释</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>MainApplication</td>
-<td>公共类</td>
-</tr>
-<tr>
-<td>android.app.Application</td>
-<td>公共类</td>
-</tr>
-<tr>
-<td>android.content.ContextWrapper</td>
-<td>公共类</td>
-</tr>
-<tr>
-<td>android.content.Context</td>
-<td>公共抽象类</td>
-</tr>
-</tbody></table>
-<p>Activity类继承</p>
-<table>
-<thead>
-<tr>
-<th>类名</th>
-<th>解释</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>MainActivity</td>
-<td>公共类</td>
-</tr>
-<tr>
-<td>androidx.appcompat.app.AppCompatActivity</td>
-<td>公共类</td>
-</tr>
-<tr>
-<td>androidx.fragment.app.FragmentActivity</td>
-<td>公共类</td>
-</tr>
-<tr>
-<td>androidx.activity.ComponentActivity</td>
-<td>公共类</td>
-</tr>
-<tr>
-<td>androidx.core.app.ComponentActivity</td>
-<td>公共类</td>
-</tr>
-<tr>
-<td>android.app.Activity</td>
-<td>公共类</td>
-</tr>
-<tr>
-<td>android.view.ContextThemeWrapper</td>
-<td>公共类</td>
-</tr>
-<tr>
-<td>android.content.ContextWrapper</td>
-<td>公共类</td>
-</tr>
-<tr>
-<td>android.content.Context</td>
-<td>公共抽象类</td>
-</tr>
-</tbody></table>
-<p>Service类继承</p>
-<table>
-<thead>
-<tr>
-<th>类名</th>
-<th>解释</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>MainService</td>
-<td></td>
-</tr>
-<tr>
-<td>android.app.Service</td>
-<td></td>
-</tr>
-<tr>
-<td>android.content.ContextWrapper</td>
-<td></td>
-</tr>
-<tr>
-<td>android.content.Context</td>
-<td></td>
-</tr>
-</tbody></table>
-<p>BroadcastReceiver类继承</p>
-<table>
-<thead>
-<tr>
-<th>类名</th>
-<th>解释</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>MainBroadcastReceiver</td>
-<td></td>
-</tr>
-<tr>
-<td>android.content.BroadcastReceiver</td>
-<td></td>
-</tr>
-</tbody></table>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public abstract void onReceive(Context context, Intent intent);</span><br></pre></td></tr></table></figure>
-
-<p>ContentProvider类继承</p>
-<table>
-<thead>
-<tr>
-<th>类名</th>
-<th>解释</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>MainContentProvider</td>
-<td></td>
-</tr>
-<tr>
-<td>android.content.ContentProvider</td>
-<td></td>
-</tr>
-</tbody></table>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public ContentProvider(</span><br><span class="line">        Context context,</span><br><span class="line">        String readPermission,</span><br><span class="line">        String writePermission,</span><br><span class="line">        PathPermission[] pathPermissions) &#123;</span><br><span class="line">    mContext = context;</span><br><span class="line">    mReadPermission = readPermission;</span><br><span class="line">    mWritePermission = writePermission;</span><br><span class="line">    mPathPermissions = pathPermissions;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<p>startActivityForResult</p>
-<table>
-<thead>
-<tr>
-<th>类型</th>
-<th>参数</th>
-<th>解释</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Intent</td>
-<td>intent</td>
-<td></td>
-</tr>
-<tr>
-<td>Bundle</td>
-<td>options</td>
-<td></td>
-</tr>
-<tr>
-<td>int</td>
-<td>requestCode</td>
-<td></td>
-</tr>
-</tbody></table>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -1341,7 +987,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-count">34</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
