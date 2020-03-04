@@ -187,6 +187,320 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2020/01/14/%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90IntentService/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/header.jpeg">
+      <meta itemprop="name" content="张潮州">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="张潮州">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/01/14/%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90IntentService/" class="post-title-link" itemprop="url">源码解析IntentService</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-01-14 10:05:12 / Modified: 14:05:16" itemprop="dateCreated datePublished" datetime="2020-01-14T10:05:12+08:00">2020-01-14</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2020/01/14/Android%E9%9D%A2%E8%AF%95%E7%9F%A5%E8%AF%86%E6%80%BB%E7%BB%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/header.jpeg">
+      <meta itemprop="name" content="张潮州">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="张潮州">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/01/14/Android%E9%9D%A2%E8%AF%95%E7%9F%A5%E8%AF%86%E6%80%BB%E7%BB%93/" class="post-title-link" itemprop="url">Android面试知识总结</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-01-14 09:39:15 / Modified: 14:05:19" itemprop="dateCreated datePublished" datetime="2020-01-14T09:39:15+08:00">2020-01-14</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="1、简述Handler消息机制"><a href="#1、简述Handler消息机制" class="headerlink" title="1、简述Handler消息机制"></a>1、简述Handler消息机制</h2><p>说一下Handler发送和接收消息的实现，尤其是Message的消息载体的工作流程。</p>
+<h2 id="2、Service和IntentService有什么区别？"><a href="#2、Service和IntentService有什么区别？" class="headerlink" title="2、Service和IntentService有什么区别？"></a>2、Service和IntentService有什么区别？</h2><h2 id="3、Service和Activity之间的通讯怎么实现？"><a href="#3、Service和Activity之间的通讯怎么实现？" class="headerlink" title="3、Service和Activity之间的通讯怎么实现？"></a>3、Service和Activity之间的通讯怎么实现？</h2><p>比如Service里面某个后台任务结束，怎么通知当前活动Activity，并且把结果传递出去？</p>
+<h2 id="4、Context-的sendBroadcast和LocalBroadcastManager-的sendBroadcast有什么区别？"><a href="#4、Context-的sendBroadcast和LocalBroadcastManager-的sendBroadcast有什么区别？" class="headerlink" title="4、Context 的sendBroadcast和LocalBroadcastManager 的sendBroadcast有什么区别？"></a>4、Context 的sendBroadcast和LocalBroadcastManager 的sendBroadcast有什么区别？</h2><p>从MVP、MVVM等流行结构框架问到多线程同步，然后再问点击事件分发，到自定义View，再聊动画效果实现，基础的ArrayList、HashMap底层实现，final static关键字用法，进阶的设计模式里面单例模式和观察者模式的实现，java类加载、内存分配，没用过设计模式，没用过分层框架设计。</p>
+<h2 id="ImageLoader的本地缓存机制是怎么实现的？"><a href="#ImageLoader的本地缓存机制是怎么实现的？" class="headerlink" title="ImageLoader的本地缓存机制是怎么实现的？"></a>ImageLoader的本地缓存机制是怎么实现的？</h2><h2 id="Activity的onStop-函数是否一定会被调用？"><a href="#Activity的onStop-函数是否一定会被调用？" class="headerlink" title="Activity的onStop()函数是否一定会被调用？"></a>Activity的onStop()函数是否一定会被调用？</h2><h2 id="Intent传递数据的限制，数据类型？数据大小？"><a href="#Intent传递数据的限制，数据类型？数据大小？" class="headerlink" title="Intent传递数据的限制，数据类型？数据大小？"></a>Intent传递数据的限制，数据类型？数据大小？</h2><h2 id="服务器正常，App访问服务器失败的原因都有哪些？"><a href="#服务器正常，App访问服务器失败的原因都有哪些？" class="headerlink" title="服务器正常，App访问服务器失败的原因都有哪些？"></a>服务器正常，App访问服务器失败的原因都有哪些？</h2><h2 id="有没有关注Android动态？简单说一下新版本的特性？"><a href="#有没有关注Android动态？简单说一下新版本的特性？" class="headerlink" title="有没有关注Android动态？简单说一下新版本的特性？"></a>有没有关注Android动态？简单说一下新版本的特性？</h2><h2 id="1"><a href="#1" class="headerlink" title="1"></a>1</h2><ol>
+<li>UI 线程是干什么用的？然后顺着这条线开始问 Activity 的启动过程以及启动失败的异常处理。</li>
+<li>事件分发流程。然后沿着这条主线问View实现原理，以及 View和主线程的联系，事件冲突的处理。</li>
+<li>做过什么酷炫的动画？沿着这条线问下动画的基础以及动画和View ，主线程联系。</li>
+<li>用过什么网络框架，各大网络框架的优缺点。顺便考察 HTTP TCP/IP 的基础。如果用过Okhttp，聊聊源码，以及问什么Okhttp比大多数网络库好。</li>
+<li>问问 新技术新理念，比如 RN，Rxjava等。</li>
+<li>聊聊插件化原理和各大实现方案利弊，顺便聊聊路由问题。</li>
+<li>安全，加固。</li>
+</ol>
+<h2 id="Android事件分发机制确实很难，最好的方式边看源码边画流程图。"><a href="#Android事件分发机制确实很难，最好的方式边看源码边画流程图。" class="headerlink" title="Android事件分发机制确实很难，最好的方式边看源码边画流程图。"></a>Android事件分发机制确实很难，最好的方式边看源码边画流程图。</h2><p>Activity生命周期和消息机制必须要熟悉、 Binder, AMS WMS 最好了解下。还有性能优化某一方面，比如内存优化，启动优化，CPU占用优化等。</p>
+<p>Binder机制，Zygote，Android系统启动流程，Android源码中的设计模式，插件化原理，热更新（修复）原理，Android常用GitHub库源码（网络，图片，注入，插件化等方面）</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2020/01/12/Glide%E8%A7%A3%E6%9E%90-(%E5%88%9D%E5%A7%8B%E5%8C%96)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/header.jpeg">
+      <meta itemprop="name" content="张潮州">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="张潮州">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/01/12/Glide%E8%A7%A3%E6%9E%90-(%E5%88%9D%E5%A7%8B%E5%8C%96)/" class="post-title-link" itemprop="url">Glide解析-(初始化)</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-01-12 15:12:03 / Modified: 17:54:47" itemprop="dateCreated datePublished" datetime="2020-01-12T15:12:03+08:00">2020-01-12</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Glide获取RequestManager"><a href="#Glide获取RequestManager" class="headerlink" title="Glide获取RequestManager"></a>Glide获取RequestManager</h1><table>
+<thead>
+<tr>
+<th>方法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Glide.with(Context)</td>
+</tr>
+<tr>
+<td>Glide.with(Activity)</td>
+</tr>
+<tr>
+<td>Glide.with(FragmentActivity)</td>
+</tr>
+<tr>
+<td>Glide.with(androidx.fragment.app.Fragment)</td>
+</tr>
+<tr>
+<td>Glide.with(android.app.Fragment)</td>
+</tr>
+<tr>
+<td>Glide.with(View)</td>
+</tr>
+<tr>
+<td><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@NonNull</span><br><span class="line">public static RequestManager with(@NonNull Context context) &#123;</span><br><span class="line">  return getRetriever(context).get(context);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></td>
+</tr>
+<tr>
+<td>## 1、Glide获取RequestManagerRetriever</td>
+</tr>
+</tbody></table>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@NonNull</span><br><span class="line">private static RequestManagerRetriever getRetriever(@Nullable Context context) &#123;</span><br><span class="line">  return Glide.get(context).getRequestManagerRetriever();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="1-1、Glide获取单例"><a href="#1-1、Glide获取单例" class="headerlink" title="1.1、Glide获取单例"></a>1.1、Glide获取单例</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">@NonNull</span><br><span class="line">public static Glide get(@NonNull Context context) &#123;</span><br><span class="line">  if (glide == null) &#123;</span><br><span class="line">    GeneratedAppGlideModule annotationGeneratedModule =</span><br><span class="line">        getAnnotationGeneratedGlideModules(context.getApplicationContext());</span><br><span class="line">    synchronized (Glide.class) &#123;</span><br><span class="line">      if (glide == null) &#123;</span><br><span class="line">      //检查并初始化Glide</span><br><span class="line">        checkAndInitializeGlide(context, annotationGeneratedModule);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  return glide;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-1-1、Glide获取GeneratedAppGlideModule"><a href="#1-1-1、Glide获取GeneratedAppGlideModule" class="headerlink" title="1.1.1、Glide获取GeneratedAppGlideModule"></a>1.1.1、Glide获取GeneratedAppGlideModule</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@Nullable</span><br><span class="line">@SuppressWarnings(&#123;&quot;unchecked&quot;, &quot;TryWithIdenticalCatches&quot;, &quot;PMD.UnusedFormalParameter&quot;&#125;)</span><br><span class="line">private static GeneratedAppGlideModule getAnnotationGeneratedGlideModules(Context context) &#123;</span><br><span class="line">//获取通过注解动态生成的的AppGlideModule的实现类</span><br><span class="line">Class&lt;GeneratedAppGlideModule&gt; clazz =</span><br><span class="line">        (Class&lt;GeneratedAppGlideModule&gt;)</span><br><span class="line">            Class.forName(&quot;com.bumptech.glide.GeneratedAppGlideModuleImpl&quot;);</span><br><span class="line">GeneratedAppGlideModule result = clazz.getDeclaredConstructor(Context.class).newInstance(context.getApplicationContext());</span><br><span class="line">return result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="1-1-2、初始化Glide"><a href="#1-1-2、初始化Glide" class="headerlink" title="1.1.2、初始化Glide"></a>1.1.2、初始化Glide</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@GuardedBy(&quot;Glide.class&quot;)</span><br><span class="line">private static void initializeGlide(</span><br><span class="line">    @NonNull Context context, @Nullable GeneratedAppGlideModule generatedAppGlideModule) &#123;</span><br><span class="line">  initializeGlide(context, new GlideBuilder(), generatedAppGlideModule);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">@GuardedBy(&quot;Glide.class&quot;)</span><br><span class="line">@SuppressWarnings(&quot;deprecation&quot;)</span><br><span class="line">private static void initializeGlide(</span><br><span class="line">    @NonNull Context context,</span><br><span class="line">    @NonNull GlideBuilder builder,</span><br><span class="line">    @Nullable GeneratedAppGlideModule annotationGeneratedModule) &#123;</span><br><span class="line">  Context applicationContext = context.getApplicationContext();</span><br><span class="line">  //从Manifest获取定义的GlideModule列表，新版本已经废弃</span><br><span class="line">  List&lt;com.bumptech.glide.module.GlideModule&gt; manifestModules = Collections.emptyList();</span><br><span class="line">  if (annotationGeneratedModule == null || annotationGeneratedModule.isManifestParsingEnabled()) &#123;</span><br><span class="line">    manifestModules = new ManifestParser(applicationContext).parse();</span><br><span class="line">  &#125;</span><br><span class="line">  //从注解动态生成的的AppGlideModule的实现类中去掉Manifest定义的GlideMoldue</span><br><span class="line">  if (annotationGeneratedModule != null</span><br><span class="line">      &amp;&amp; !annotationGeneratedModule.getExcludedModuleClasses().isEmpty()) &#123;</span><br><span class="line">    Set&lt;Class&lt;?&gt;&gt; excludedModuleClasses = annotationGeneratedModule.getExcludedModuleClasses();</span><br><span class="line">    Iterator&lt;com.bumptech.glide.module.GlideModule&gt; iterator = manifestModules.iterator();</span><br><span class="line">    while (iterator.hasNext()) &#123;</span><br><span class="line">      com.bumptech.glide.module.GlideModule current = iterator.next();</span><br><span class="line">      if (!excludedModuleClasses.contains(current.getClass())) &#123;</span><br><span class="line">        continue;</span><br><span class="line">      &#125;</span><br><span class="line">      iterator.remove();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  //设置RequestManager的工厂类</span><br><span class="line">  RequestManagerRetriever.RequestManagerFactory factory =</span><br><span class="line">      annotationGeneratedModule != null</span><br><span class="line">          ? annotationGeneratedModule.getRequestManagerFactory()</span><br><span class="line">          : null;</span><br><span class="line">  builder.setRequestManagerFactory(factory);</span><br><span class="line">  //将Manifest定义的GlideModule中的配置选项设置到glideBuilder中</span><br><span class="line">  for (com.bumptech.glide.module.GlideModule module : manifestModules) &#123;</span><br><span class="line">    module.applyOptions(applicationContext, builder);</span><br><span class="line">  &#125;</span><br><span class="line">  //将注解动态生成的的AppGlideModule的实现类中的配置选项设置到glideBuilder中</span><br><span class="line">  if (annotationGeneratedModule != null) &#123;</span><br><span class="line">    annotationGeneratedModule.applyOptions(applicationContext, builder);</span><br><span class="line">  &#125;</span><br><span class="line">  //使用GlideBuilder构建生成Glide</span><br><span class="line">  Glide glide = builder.build(applicationContext);</span><br><span class="line">  for (com.bumptech.glide.module.GlideModule module : manifestModules) &#123;</span><br><span class="line">  //将Manifest定义的GlideModule中定义的Glide组件注册到Glide中</span><br><span class="line">  module.registerComponents(applicationContext, glide, glide.registry);</span><br><span class="line">  //将注解动态生成的的AppGlideModule的实现类中定义的Glide组件注册到Glide中</span><br><span class="line">  if (annotationGeneratedModule != null) &#123;</span><br><span class="line">    annotationGeneratedModule.registerComponents(applicationContext, glide, glide.registry);</span><br><span class="line">  &#125;</span><br><span class="line">  //glide监听Application的组件生命周期</span><br><span class="line">  applicationContext.registerComponentCallbacks(glide);</span><br><span class="line">  Glide.glide = glide;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="1-1-3、GlideBuilder-build构建Glide对象"><a href="#1-1-3、GlideBuilder-build构建Glide对象" class="headerlink" title="1.1.3、GlideBuilder.build构建Glide对象"></a>1.1.3、GlideBuilder.build构建Glide对象</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line">@NonNull</span><br><span class="line">Glide build(@NonNull Context context) &#123;</span><br><span class="line">    if (sourceExecutor == null) &#123;</span><br><span class="line">      //默认不自定义网络加载线程池的情况下，使用默认的网络加载线程池</span><br><span class="line">      //创建网络加载线程池对象</span><br><span class="line">      sourceExecutor = GlideExecutor.newSourceExecutor();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (diskCacheExecutor == null) &#123;</span><br><span class="line">       //默认不自定义磁盘加载线程池的情况下，使用默认的磁盘加载线程池</span><br><span class="line">      //创建磁盘加载线程池对象</span><br><span class="line">      diskCacheExecutor = GlideExecutor.newDiskCacheExecutor();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (animationExecutor == null) &#123;</span><br><span class="line">      //默认不自定义动画加载线程池的情况下，使用默认的动画加载线程池</span><br><span class="line">      //创建动画加载线程池对象</span><br><span class="line">      animationExecutor = GlideExecutor.newAnimationExecutor();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (memorySizeCalculator == null) &#123;</span><br><span class="line">      //创建内存大小计算器</span><br><span class="line">      memorySizeCalculator = new MemorySizeCalculator.Builder(context).build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (connectivityMonitorFactory == null) &#123;</span><br><span class="line">      //创建默认的网络连接监听工厂类</span><br><span class="line">      connectivityMonitorFactory = new DefaultConnectivityMonitorFactory();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (bitmapPool == null) &#123;</span><br><span class="line">      //获取Bitmap池的大小</span><br><span class="line">      int size = memorySizeCalculator.getBitmapPoolSize();</span><br><span class="line">      if (size &gt; 0) &#123;</span><br><span class="line">        //如果Bitmap池的大小大于0，采用LruBitmapPool</span><br><span class="line">        bitmapPool = new LruBitmapPool(size);</span><br><span class="line">      &#125; else &#123;</span><br><span class="line">        //如果Bitmap池的大小于小于或等于0，采用BitmapPoolAdapter</span><br><span class="line">        bitmapPool = new BitmapPoolAdapter();</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (arrayPool == null) &#123;</span><br><span class="line">      //arrayPool是对数组池，主要用于图片解析时存储临时数据用</span><br><span class="line">      //根据数组池的大小创建LruArrayPool</span><br><span class="line">      arrayPool = new LruArrayPool(memorySizeCalculator.getArrayPoolSizeInBytes());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (memoryCache == null) &#123;</span><br><span class="line">      //创建内存缓存实现类</span><br><span class="line">      memoryCache = new LruResourceCache(memorySizeCalculator.getMemoryCacheSize());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (diskCacheFactory == null) &#123;</span><br><span class="line">      //创建磁盘缓存工厂类</span><br><span class="line">      diskCacheFactory = new InternalCacheDiskCacheFactory(context);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (engine == null) &#123;</span><br><span class="line">      //创建图片加载引起对象</span><br><span class="line">      engine =</span><br><span class="line">          new Engine(</span><br><span class="line">              memoryCache,</span><br><span class="line">              diskCacheFactory,</span><br><span class="line">              diskCacheExecutor,</span><br><span class="line">              sourceExecutor,</span><br><span class="line">              GlideExecutor.newUnlimitedSourceExecutor(),</span><br><span class="line">              GlideExecutor.newAnimationExecutor(),</span><br><span class="line">              isActiveResourceRetentionAllowed);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    //创建RequestManagerRetriever对象</span><br><span class="line">    RequestManagerRetriever requestManagerRetriever =</span><br><span class="line">        new RequestManagerRetriever(requestManagerFactory);</span><br><span class="line"></span><br><span class="line">    //创建Glide对象</span><br><span class="line">    return new Glide(</span><br><span class="line">        context,</span><br><span class="line">        engine,</span><br><span class="line">        memoryCache,</span><br><span class="line">        bitmapPool,</span><br><span class="line">        arrayPool,</span><br><span class="line">        requestManagerRetriever,</span><br><span class="line">        connectivityMonitorFactory,</span><br><span class="line">        logLevel,</span><br><span class="line">        defaultRequestOptions.lock(),</span><br><span class="line">        defaultTransitionOptions);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="1-1-4、创建Glide对象"><a href="#1-1-4、创建Glide对象" class="headerlink" title="1.1.4、创建Glide对象"></a>1.1.4、创建Glide对象</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br></pre></td><td class="code"><pre><span class="line">Glide(</span><br><span class="line">      @NonNull Context context,</span><br><span class="line">      @NonNull Engine engine,</span><br><span class="line">      @NonNull MemoryCache memoryCache,</span><br><span class="line">      @NonNull BitmapPool bitmapPool,</span><br><span class="line">      @NonNull ArrayPool arrayPool,</span><br><span class="line">      @NonNull RequestManagerRetriever requestManagerRetriever,</span><br><span class="line">      @NonNull ConnectivityMonitorFactory connectivityMonitorFactory,</span><br><span class="line">      int logLevel,</span><br><span class="line">      @NonNull RequestOptions defaultRequestOptions,</span><br><span class="line">      @NonNull Map&lt;Class&lt;?&gt;, TransitionOptions&lt;?, ?&gt;&gt; defaultTransitionOptions) &#123;</span><br><span class="line">    //设置图片加载引擎</span><br><span class="line">    this.engine = engine;</span><br><span class="line">    //设置bitmap池</span><br><span class="line">    this.bitmapPool = bitmapPool;</span><br><span class="line">    //设置数组池</span><br><span class="line">    this.arrayPool = arrayPool;</span><br><span class="line">    //设置内存缓存</span><br><span class="line">    this.memoryCache = memoryCache;</span><br><span class="line">    //设置requestManagerRetriever </span><br><span class="line">    this.requestManagerRetriever = requestManagerRetriever;</span><br><span class="line">    //设置网络连接监听工厂类</span><br><span class="line">    this.connectivityMonitorFactory = connectivityMonitorFactory;</span><br><span class="line">    //获取图片解码格式</span><br><span class="line">    DecodeFormat decodeFormat = defaultRequestOptions.getOptions().get(Downsampler.DECODE_FORMAT);</span><br><span class="line">    //创建Bitmap预填充对象</span><br><span class="line">    bitmapPreFiller = new BitmapPreFiller(memoryCache, bitmapPool, decodeFormat);</span><br><span class="line">    //获取资源对象</span><br><span class="line">    final Resources resources = context.getResources();</span><br><span class="line">    //创建注册对象</span><br><span class="line">    registry = new Registry();</span><br><span class="line">    // Right now we&apos;re only using this parser for HEIF images, which are only supported on OMR1+.</span><br><span class="line">    // If we need this for other file types, we should consider removing this restriction.</span><br><span class="line">    // Note that order here matters. We want to check the ExifInterface parser first for orientation</span><br><span class="line">    // and then fall back to DefaultImageHeaderParser for other fields.</span><br><span class="line">    if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.O_MR1) &#123;</span><br><span class="line">      //android8.1之后支持heif图片格式，注册ExifInterfaceImageHeaderParser用来解析heif图片的方向信息</span><br><span class="line">      registry.register(new ExifInterfaceImageHeaderParser());</span><br><span class="line">    &#125;</span><br><span class="line">    //注册默认DefaultImageHeaderParser用来解析图片的格式、方向等信息</span><br><span class="line">    registry.register(new DefaultImageHeaderParser());</span><br><span class="line">    //创建图片采样Downsamples，用与解析图片并根据图片的方向进行相应的旋转处理</span><br><span class="line">    Downsampler downsampler = new Downsampler(registry.getImageHeaderParsers(),</span><br><span class="line">        resources.getDisplayMetrics(), bitmapPool, arrayPool);</span><br><span class="line">    //创建gif图片解析器ByteBufferGifDecoder，用于从输入流中解析gif</span><br><span class="line">    ByteBufferGifDecoder byteBufferGifDecoder =</span><br><span class="line">        new ByteBufferGifDecoder(context, registry.getImageHeaderParsers(), bitmapPool, arrayPool);</span><br><span class="line">    //创建视频解析器VideoDecoder，用于将assetfile或parcelfile的视频文件解析成bitmap</span><br><span class="line">    ResourceDecoder&lt;ParcelFileDescriptor, Bitmap&gt; parcelFileDescriptorVideoDecoder =</span><br><span class="line">        VideoDecoder.parcel(bitmapPool);</span><br><span class="line">    //创建字节缓冲图片解析器，用于从字节缓冲中解析出bitmap</span><br><span class="line">    ByteBufferBitmapDecoder byteBufferBitmapDecoder = new ByteBufferBitmapDecoder(downsampler);</span><br><span class="line">    //创建输入流图片解析器，用于从输入流中解析出bitmap</span><br><span class="line">    StreamBitmapDecoder streamBitmapDecoder = new StreamBitmapDecoder(downsampler, arrayPool);</span><br><span class="line">    //创建Drawable图片解析器， 用于从uri中解析出drawable</span><br><span class="line">    ResourceDrawableDecoder resourceDrawableDecoder =</span><br><span class="line">        new ResourceDrawableDecoder(context);</span><br><span class="line">    //创建app资源图片加载器的工厂类，用于创建app资源图片加载器，并指明从资源图片id中加载资源图片的输入流</span><br><span class="line">    ResourceLoader.StreamFactory resourceLoaderStreamFactory =</span><br><span class="line">        new ResourceLoader.StreamFactory(resources);</span><br><span class="line">    //创建app自身资源图片加载器的工厂类，用于创建app资源图片加载器，并指明从资源图片id中加载资源图片的uri</span><br><span class="line">    ResourceLoader.UriFactory resourceLoaderUriFactory =</span><br><span class="line">        new ResourceLoader.UriFactory(resources);</span><br><span class="line">//创建app自身资源图片加载器的工厂类，用于创建app资源图片加载器，并指明从资源图片id中加载资源图片的ParcelFileDescriptor</span><br><span class="line">    ResourceLoader.FileDescriptorFactory resourceLoaderFileDescriptorFactory =</span><br><span class="line">        new ResourceLoader.FileDescriptorFactory(resources);</span><br><span class="line">//创建app自身资源图片加载器的工厂类，用于创建app资源图片加载器，并指明从资源图片id中加载资源图片的AssetFileDescriptor</span><br><span class="line">    ResourceLoader.AssetFileDescriptorFactory resourceLoaderAssetFileDescriptorFactory =</span><br><span class="line">        new ResourceLoader.AssetFileDescriptorFactory(resources);</span><br><span class="line">    //创建bitmap编码器，用于向输出流写bitmap</span><br><span class="line">    BitmapEncoder bitmapEncoder = new BitmapEncoder(arrayPool);</span><br><span class="line">    //创建bitmap转换器，用于将bitmap转换成字节流</span><br><span class="line">    BitmapBytesTranscoder bitmapBytesTranscoder = new BitmapBytesTranscoder();</span><br><span class="line">    //创建gif转换器，用于将gif转换成字节流</span><br><span class="line">    GifDrawableBytesTranscoder gifDrawableBytesTranscoder = new GifDrawableBytesTranscoder();</span><br><span class="line">    </span><br><span class="line">    ContentResolver contentResolver = context.getContentResolver();</span><br><span class="line"></span><br><span class="line">    registry</span><br><span class="line">        //注册基于字节缓冲的图片编码器，用于将字节缓冲写到文件中</span><br><span class="line">        .append(ByteBuffer.class, new ByteBufferEncoder())</span><br><span class="line">        //注册基于输入流的图片编码器，用于将输入流写到磁盘中</span><br><span class="line">        .append(InputStream.class, new StreamEncoder(arrayPool))</span><br><span class="line">        /* Bitmaps */</span><br><span class="line">        //注册将字节缓冲解码成Bitmap的图片解码器</span><br><span class="line">        .append(Registry.BUCKET_BITMAP, ByteBuffer.class, Bitmap.class, byteBufferBitmapDecoder)</span><br><span class="line">        //注册将输入流解码成Bitmap的图片解码器</span><br><span class="line">        .append(Registry.BUCKET_BITMAP, InputStream.class, Bitmap.class, streamBitmapDecoder)</span><br><span class="line">        //注册将ParcelFileDescriptor解码成Bitmap的图片解码器</span><br><span class="line">        .append(</span><br><span class="line">            Registry.BUCKET_BITMAP,</span><br><span class="line">            ParcelFileDescriptor.class,</span><br><span class="line">            Bitmap.class,</span><br><span class="line">            parcelFileDescriptorVideoDecoder)</span><br><span class="line">        //注册将AssetFileDescriptor解码成Bitmap的图片解码器</span><br><span class="line">        .append(</span><br><span class="line">            Registry.BUCKET_BITMAP,</span><br><span class="line">            AssetFileDescriptor.class,</span><br><span class="line">            Bitmap.class,</span><br><span class="line">            VideoDecoder.asset(bitmapPool))</span><br><span class="line">        //注册将Bitmap解码成Bitmap的图片解码器</span><br><span class="line">        .append(Bitmap.class, Bitmap.class, UnitModelLoader.Factory.&lt;Bitmap&gt;getInstance())</span><br><span class="line">        .append(</span><br><span class="line">            Registry.BUCKET_BITMAP, Bitmap.class, Bitmap.class, new UnitBitmapDecoder())</span><br><span class="line">        .append(Bitmap.class, bitmapEncoder)</span><br><span class="line">        /* BitmapDrawables */</span><br><span class="line">        //注册各种转换成BitmapDrawable的图片解码器</span><br><span class="line">        .append(</span><br><span class="line">            Registry.BUCKET_BITMAP_DRAWABLE,</span><br><span class="line">            ByteBuffer.class,</span><br><span class="line">            BitmapDrawable.class,</span><br><span class="line">            new BitmapDrawableDecoder&lt;&gt;(resources, byteBufferBitmapDecoder))</span><br><span class="line">        .append(</span><br><span class="line">            Registry.BUCKET_BITMAP_DRAWABLE,</span><br><span class="line">            InputStream.class,</span><br><span class="line">            BitmapDrawable.class,</span><br><span class="line">            new BitmapDrawableDecoder&lt;&gt;(resources, streamBitmapDecoder))</span><br><span class="line">        .append(</span><br><span class="line">            Registry.BUCKET_BITMAP_DRAWABLE,</span><br><span class="line">            ParcelFileDescriptor.class,</span><br><span class="line">            BitmapDrawable.class,</span><br><span class="line">            new BitmapDrawableDecoder&lt;&gt;(resources, parcelFileDescriptorVideoDecoder))</span><br><span class="line">        .append(BitmapDrawable.class, new BitmapDrawableEncoder(bitmapPool, bitmapEncoder))</span><br><span class="line">        /* GIFs */</span><br><span class="line">        //注册各种转换成gif的图片解码器</span><br><span class="line">        .append(</span><br><span class="line">            Registry.BUCKET_GIF,</span><br><span class="line">            InputStream.class,</span><br><span class="line">            GifDrawable.class,</span><br><span class="line">            new StreamGifDecoder(registry.getImageHeaderParsers(), byteBufferGifDecoder, arrayPool))</span><br><span class="line">        .append(Registry.BUCKET_GIF, ByteBuffer.class, GifDrawable.class, byteBufferGifDecoder)</span><br><span class="line">        .append(GifDrawable.class, new GifDrawableEncoder())</span><br><span class="line">        /* GIF Frames */</span><br><span class="line">        // Compilation with Gradle requires the type to be specified for UnitModelLoader here.</span><br><span class="line">        .append(</span><br><span class="line">            GifDecoder.class, GifDecoder.class, UnitModelLoader.Factory.&lt;GifDecoder&gt;getInstance())</span><br><span class="line">        .append(</span><br><span class="line">            Registry.BUCKET_BITMAP,</span><br><span class="line">            GifDecoder.class,</span><br><span class="line">            Bitmap.class,</span><br><span class="line">            new GifFrameResourceDecoder(bitmapPool))</span><br><span class="line">        /* Drawables */</span><br><span class="line">        .append(Uri.class, Drawable.class, resourceDrawableDecoder)</span><br><span class="line">        .append(</span><br><span class="line">            Uri.class, Bitmap.class, new ResourceBitmapDecoder(resourceDrawableDecoder, bitmapPool))</span><br><span class="line">        /* Files */</span><br><span class="line">        注册各种解析图片文件的图片加载器和图片解码器</span><br><span class="line">        .register(new ByteBufferRewinder.Factory())</span><br><span class="line">        .append(File.class, ByteBuffer.class, new ByteBufferFileLoader.Factory())</span><br><span class="line">        .append(File.class, InputStream.class, new FileLoader.StreamFactory())</span><br><span class="line">        .append(File.class, File.class, new FileDecoder())</span><br><span class="line">        .append(File.class, ParcelFileDescriptor.class, new FileLoader.FileDescriptorFactory())</span><br><span class="line">        // Compilation with Gradle requires the type to be specified for UnitModelLoader here.</span><br><span class="line">        //注册各种图片加载器</span><br><span class="line">        .append(File.class, File.class, UnitModelLoader.Factory.&lt;File&gt;getInstance())</span><br><span class="line">        /* Models */</span><br><span class="line">        .register(new InputStreamRewinder.Factory(arrayPool))</span><br><span class="line">        //注册将Integer转成InputStream的图片加载器工厂类</span><br><span class="line">        .append(int.class, InputStream.class, resourceLoaderStreamFactory)</span><br><span class="line">        //注册将int转成ParcelFileDescriptor的图片加载器工厂类</span><br><span class="line">        .append(</span><br><span class="line">            int.class,</span><br><span class="line">            ParcelFileDescriptor.class,</span><br><span class="line">            resourceLoaderFileDescriptorFactory)</span><br><span class="line">        //注册将Integer转成InputStream的图片加载器工厂类</span><br><span class="line">        .append(Integer.class, InputStream.class, resourceLoaderStreamFactory)</span><br><span class="line">        //注册将Integer转成ParcelFileDescriptor的图片加载器工厂类</span><br><span class="line">        .append(</span><br><span class="line">            Integer.class,</span><br><span class="line">            ParcelFileDescriptor.class,</span><br><span class="line">            resourceLoaderFileDescriptorFactory)</span><br><span class="line">        .append(Integer.class, Uri.class, resourceLoaderUriFactory)</span><br><span class="line">        //注册将int转成AssetFileDescriptor的图片加载器工厂类</span><br><span class="line">        .append(</span><br><span class="line">            int.class,</span><br><span class="line">            AssetFileDescriptor.class,</span><br><span class="line">            resourceLoaderAssetFileDescriptorFactory)</span><br><span class="line">        //注册将Integer转成AssetFileDescriptor的图片加载器工厂类</span><br><span class="line">        .append(</span><br><span class="line">            Integer.class,</span><br><span class="line">            AssetFileDescriptor.class,</span><br><span class="line">            resourceLoaderAssetFileDescriptorFactory)</span><br><span class="line">        //注册将int转成Uri的图片加载器工厂类</span><br><span class="line">        .append(int.class, Uri.class, resourceLoaderUriFactory)</span><br><span class="line">        //注册将String转成输入流的图片加载器工厂类</span><br><span class="line">        .append(String.class, InputStream.class, new DataUrlLoader.StreamFactory&lt;String&gt;())</span><br><span class="line">        //注册将Uri转成输入流的图片加载器工厂类</span><br><span class="line">        .append(Uri.class, InputStream.class, new DataUrlLoader.StreamFactory&lt;Uri&gt;())</span><br><span class="line">        .append(String.class, InputStream.class, new StringLoader.StreamFactory())</span><br><span class="line">        //注册将String转成ParcelFileDescriptor的图片加载器工厂类</span><br><span class="line">        .append(String.class, ParcelFileDescriptor.class, new StringLoader.FileDescriptorFactory())</span><br><span class="line">        //注册将String转成AssetFileDescriptor的图片加载器工厂类</span><br><span class="line">        .append(</span><br><span class="line">            String.class, AssetFileDescriptor.class, new StringLoader.AssetFileDescriptorFactory())</span><br><span class="line">        .append(Uri.class, InputStream.class, new HttpUriLoader.Factory())</span><br><span class="line">        //注册将Uri转成输入流的图片加载器工厂类</span><br><span class="line">        .append(Uri.class, InputStream.class, new AssetUriLoader.StreamFactory(context.getAssets()))</span><br><span class="line">        //注册将Uri转成ParcelFileDescriptor的图片加载器工厂类</span><br><span class="line">        .append(</span><br><span class="line">            Uri.class,</span><br><span class="line">            ParcelFileDescriptor.class,</span><br><span class="line">            new AssetUriLoader.FileDescriptorFactory(context.getAssets()))</span><br><span class="line">        //注册将Uri转成输入流的图片加载器工厂类</span><br><span class="line">        .append(Uri.class, InputStream.class, new MediaStoreImageThumbLoader.Factory(context))</span><br><span class="line">        //注册将Uri转成输入流的图片加载器工厂类</span><br><span class="line">        .append(Uri.class, InputStream.class, new MediaStoreVideoThumbLoader.Factory(context))</span><br><span class="line">        //注册将Uri转成输入流的图片加载器工厂类</span><br><span class="line">        .append(</span><br><span class="line">            Uri.class,</span><br><span class="line">            InputStream.class,</span><br><span class="line">            new UriLoader.StreamFactory(contentResolver))</span><br><span class="line">        //注册将Uri转成ParcelFileDescriptor的图片加载器工厂类</span><br><span class="line">        .append(</span><br><span class="line">            Uri.class,</span><br><span class="line">            ParcelFileDescriptor.class,</span><br><span class="line">             new UriLoader.FileDescriptorFactory(contentResolver))</span><br><span class="line">        //注册将Uri转成AssetFileDescriptor的图片加载器工厂类</span><br><span class="line">        .append(</span><br><span class="line">            Uri.class,</span><br><span class="line">            AssetFileDescriptor.class,</span><br><span class="line">            new UriLoader.AssetFileDescriptorFactory(contentResolver))</span><br><span class="line">        //注册将Uri转成输入流的图片加载器工厂类</span><br><span class="line">        .append(Uri.class, InputStream.class, new UrlUriLoader.StreamFactory())</span><br><span class="line">        //注册将URL转成输入流的图片加载器工厂类</span><br><span class="line">        .append(URL.class, InputStream.class, new UrlLoader.StreamFactory())</span><br><span class="line">        //注册将Uri转成文件的图片加载器工厂类</span><br><span class="line">        .append(Uri.class, File.class, new MediaStoreFileLoader.Factory(context))</span><br><span class="line">        //注册将GlideUrl转成输入流的图片加载器工厂类</span><br><span class="line">        .append(GlideUrl.class, InputStream.class, new HttpGlideUrlLoader.Factory())</span><br><span class="line">        //注册将byte[]转成字节缓冲的图片加载器工厂类</span><br><span class="line">        .append(byte[].class, ByteBuffer.class, new ByteArrayLoader.ByteBufferFactory())</span><br><span class="line">        //注册将byte[]转成输入流的图片加载器工厂类</span><br><span class="line">        .append(byte[].class, InputStream.class, new ByteArrayLoader.StreamFactory())</span><br><span class="line">        //注册将Uri转成Uri的图片加载器工厂类</span><br><span class="line">        .append(Uri.class, Uri.class, UnitModelLoader.Factory.&lt;Uri&gt;getInstance())</span><br><span class="line">        //注册将Drawable转成Drawable的图片加载器工厂类</span><br><span class="line">        .append(Drawable.class, Drawable.class, UnitModelLoader.Factory.&lt;Drawable&gt;getInstance())</span><br><span class="line">        //注册将Drawable转成Drawable的解码器</span><br><span class="line">        .append(Drawable.class, Drawable.class, new UnitDrawableDecoder())</span><br><span class="line">        /* Transcoders */</span><br><span class="line">        //注册将Bitmap转换成BitmapDrawable的转换器</span><br><span class="line">        .register(</span><br><span class="line">            Bitmap.class,</span><br><span class="line">            BitmapDrawable.class,</span><br><span class="line">            new BitmapDrawableTranscoder(resources))</span><br><span class="line">        //注册将bitmap转换成byte[]的转码器</span><br><span class="line">        .register(Bitmap.class, byte[].class, bitmapBytesTranscoder)</span><br><span class="line">        //注册将Drawable转成byte[]的转码器</span><br><span class="line">        .register(</span><br><span class="line">            Drawable.class,</span><br><span class="line">            byte[].class,</span><br><span class="line">            new DrawableBytesTranscoder(</span><br><span class="line">                bitmapPool, bitmapBytesTranscoder, gifDrawableBytesTranscoder))转换器</span><br><span class="line">        //注册将gift转换成byte[]的转码器</span><br><span class="line">        .register(GifDrawable.class, byte[].class, gifDrawableBytesTranscoder);</span><br><span class="line">    //创建ImageView包裹类，主要用于图片加载成功设置图片、获取图片大小等</span><br><span class="line">    ImageViewTargetFactory imageViewTargetFactory = new ImageViewTargetFactory();</span><br><span class="line">    //创建专属Glide的上下文</span><br><span class="line">    glideContext =</span><br><span class="line">        new GlideContext(</span><br><span class="line">            context,</span><br><span class="line">            arrayPool,</span><br><span class="line">            registry,</span><br><span class="line">            imageViewTargetFactory,</span><br><span class="line">            defaultRequestOptions,</span><br><span class="line">            defaultTransitionOptions,</span><br><span class="line">            engine,</span><br><span class="line">            logLevel);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">public GlideContext(</span><br><span class="line">    @NonNull Context context,</span><br><span class="line">    @NonNull ArrayPool arrayPool,</span><br><span class="line">    @NonNull Registry registry,</span><br><span class="line">    @NonNull ImageViewTargetFactory imageViewTargetFactory,</span><br><span class="line">    @NonNull RequestOptionsFactory defaultRequestOptionsFactory,</span><br><span class="line">    @NonNull Map&lt;Class&lt;?&gt;, TransitionOptions&lt;?, ?&gt;&gt; defaultTransitionOptions,</span><br><span class="line">    @NonNull List&lt;RequestListener&lt;Object&gt;&gt; defaultRequestListeners,</span><br><span class="line">    @NonNull Engine engine,</span><br><span class="line">    boolean isLoggingRequestOriginsEnabled,</span><br><span class="line">    int logLevel) &#123;</span><br><span class="line">  super(context.getApplicationContext());</span><br><span class="line">  this.arrayPool = arrayPool;</span><br><span class="line">  this.registry = registry;</span><br><span class="line">  this.imageViewTargetFactory = imageViewTargetFactory;</span><br><span class="line">  this.defaultRequestOptionsFactory = defaultRequestOptionsFactory;</span><br><span class="line">  this.defaultRequestListeners = defaultRequestListeners;</span><br><span class="line">  this.defaultTransitionOptions = defaultTransitionOptions;</span><br><span class="line">  this.engine = engine;</span><br><span class="line">  this.isLoggingRequestOriginsEnabled = isLoggingRequestOriginsEnabled;</span><br><span class="line">  this.logLevel = logLevel;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="2、RequestManagerRetriever获取RequestManager"><a href="#2、RequestManagerRetriever获取RequestManager" class="headerlink" title="2、RequestManagerRetriever获取RequestManager"></a>2、RequestManagerRetriever获取RequestManager</h2><table>
+<thead>
+<tr>
+<th>方法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>get(Context)</td>
+</tr>
+<tr>
+<td>get(Activity)</td>
+</tr>
+<tr>
+<td>get(FragmentActivity)</td>
+</tr>
+<tr>
+<td>get(androidx.fragment.app.Fragment)</td>
+</tr>
+<tr>
+<td>get(android.app.Fragment)</td>
+</tr>
+<tr>
+<td>get(View)</td>
+</tr>
+</tbody></table>
+<p>总结一下Glide初始化的流程：<br>    •    解析注解定义的AppGlideModule或者Manifest定义的GlideModule，将其对应的配置信息设置给GlideBuilder<br>    •    GlideBuilder设置一些默认的配置信息，比如网络线程池、磁盘线程池、动画线程池、内存缓存、磁盘缓存等<br>    •    GlideBuilder构建Glide，在创建Glide时注册了各种用于图片加载、解码、编码的图片加载器、图片解码器、图片编码器等<br>    •    将AppGlideModule和GlideModule自定义的图片加载、解码器、编码器注册到Glide中<br>    •    监听Application的生命周期<br>这里Glide的初始化主要使用单例、构建等设计模式</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2020/01/12/Glide/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/header.jpeg">
+      <meta itemprop="name" content="张潮州">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="张潮州">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/01/12/Glide/" class="post-title-link" itemprop="url">Glide</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-01-12 11:32:18" itemprop="dateCreated datePublished" datetime="2020-01-12T11:32:18+08:00">2020-01-12</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
     <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2020/01/11/%E6%9C%AA%E5%91%BD%E5%90%8D/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -772,679 +1086,6 @@
   
   
 
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2019/12/30/UML%E7%B1%BB%E5%9B%BE/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/header.jpeg">
-      <meta itemprop="name" content="张潮州">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="张潮州">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/12/30/UML%E7%B1%BB%E5%9B%BE/" class="post-title-link" itemprop="url">UML类图</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-12-30 14:35:37" itemprop="dateCreated datePublished" datetime="2019-12-30T14:35:37+08:00">2019-12-30</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-12-31 09:18:15" itemprop="dateModified" datetime="2019-12-31T09:18:15+08:00">2019-12-31</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="UML类图关系"><a href="#UML类图关系" class="headerlink" title="UML类图关系"></a>UML类图关系</h1><table>
-<thead>
-<tr>
-<th>关系</th>
-<th>英语</th>
-<th>解释</th>
-<th>UML类图</th>
-<th>例子</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>泛化</td>
-<td>Generalization</td>
-<td>继承关系，指定了子类如何特化父类的所有特征和行为。</td>
-<td>带三角箭头的实线，箭头指向父类。</td>
-<td>老虎指向动物。</td>
-</tr>
-<tr>
-<td>实现</td>
-<td>Realization</td>
-<td>类与接口的关系，表示类是接口所有特征和行为的实现。</td>
-<td>带三角箭头的虚线，箭头指向接口。</td>
-<td>笔刷指向刷。</td>
-</tr>
-<tr>
-<td>关联</td>
-<td>Association</td>
-<td>拥有的关系，使一个类知道另一个类的属性和方法。</td>
-<td>带普通箭头的实心线，指向被拥有者。关联可以是双向的，也可以是单向的。双向的关联可以有两个箭头或者没有箭头，单向的关联有一个箭头。</td>
-<td>老师指向学生，学生指向老师，学生指向课程。</td>
-</tr>
-<tr>
-<td>聚合</td>
-<td>Aggregation</td>
-<td>聚合关系，是整体与部分的关系。</td>
-<td>带空心菱形的实心线，菱形指向整体。聚合关系是关联关系的一种，是强的关联关系；关联和聚合在语法上无法区分，必须考察具体的逻辑关系。</td>
-<td>轮胎指向汽车。</td>
-</tr>
-<tr>
-<td>组合</td>
-<td>Composition</td>
-<td>组合关系，是整体与部分的关系。</td>
-<td>带实心菱形的实线，菱形指向整体。组合关系是关联关系的一种，是比聚合关系还要强的关系，它要求普通的聚合关系中代表整体的对象负责代表部分的对象的生命周期。</td>
-<td>部门指向公司。</td>
-</tr>
-<tr>
-<td>依赖</td>
-<td>Dependency</td>
-<td>是一种使用的关系，尽量不使用双向的互相依赖。</td>
-<td>带普通箭头的虚线，指向被使用者。</td>
-<td>计算机指向人类。</td>
-</tr>
-</tbody></table>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2019/12/30/startActivity%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/header.jpeg">
-      <meta itemprop="name" content="张潮州">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="张潮州">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/12/30/startActivity%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" class="post-title-link" itemprop="url">startActivity源码解析</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2019-12-30 14:01:18 / Modified: 16:28:12" itemprop="dateCreated datePublished" datetime="2019-12-30T14:01:18+08:00">2019-12-30</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="startActivity源码解析"><a href="#startActivity源码解析" class="headerlink" title="startActivity源码解析"></a>startActivity源码解析</h1><p>Context是一个抽象类，提供接口，用于访问应用程序运行所需服务，譬如启动Activity、发送广播、接受Intent等。</p>
-<p>Application类继承</p>
-<table>
-<thead>
-<tr>
-<th>类名</th>
-<th>解释</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>MainApplication</td>
-<td>公共类</td>
-</tr>
-<tr>
-<td>android.app.Application</td>
-<td>公共类</td>
-</tr>
-<tr>
-<td>android.content.ContextWrapper</td>
-<td>公共类</td>
-</tr>
-<tr>
-<td>android.content.Context</td>
-<td>公共抽象类</td>
-</tr>
-</tbody></table>
-<p>Activity类继承</p>
-<table>
-<thead>
-<tr>
-<th>类名</th>
-<th>解释</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>MainActivity</td>
-<td>公共类</td>
-</tr>
-<tr>
-<td>androidx.appcompat.app.AppCompatActivity</td>
-<td>公共类</td>
-</tr>
-<tr>
-<td>androidx.fragment.app.FragmentActivity</td>
-<td>公共类</td>
-</tr>
-<tr>
-<td>androidx.activity.ComponentActivity</td>
-<td>公共类</td>
-</tr>
-<tr>
-<td>androidx.core.app.ComponentActivity</td>
-<td>公共类</td>
-</tr>
-<tr>
-<td>android.app.Activity</td>
-<td>公共类</td>
-</tr>
-<tr>
-<td>android.view.ContextThemeWrapper</td>
-<td>公共类</td>
-</tr>
-<tr>
-<td>android.content.ContextWrapper</td>
-<td>公共类</td>
-</tr>
-<tr>
-<td>android.content.Context</td>
-<td>公共抽象类</td>
-</tr>
-</tbody></table>
-<p>Service类继承</p>
-<table>
-<thead>
-<tr>
-<th>类名</th>
-<th>解释</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>MainService</td>
-<td></td>
-</tr>
-<tr>
-<td>android.app.Service</td>
-<td></td>
-</tr>
-<tr>
-<td>android.content.ContextWrapper</td>
-<td></td>
-</tr>
-<tr>
-<td>android.content.Context</td>
-<td></td>
-</tr>
-</tbody></table>
-<p>BroadcastReceiver类继承</p>
-<table>
-<thead>
-<tr>
-<th>类名</th>
-<th>解释</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>MainBroadcastReceiver</td>
-<td></td>
-</tr>
-<tr>
-<td>android.content.BroadcastReceiver</td>
-<td></td>
-</tr>
-</tbody></table>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public abstract void onReceive(Context context, Intent intent);</span><br></pre></td></tr></table></figure>
-
-<p>ContentProvider类继承</p>
-<table>
-<thead>
-<tr>
-<th>类名</th>
-<th>解释</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>MainContentProvider</td>
-<td></td>
-</tr>
-<tr>
-<td>android.content.ContentProvider</td>
-<td></td>
-</tr>
-</tbody></table>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public ContentProvider(</span><br><span class="line">        Context context,</span><br><span class="line">        String readPermission,</span><br><span class="line">        String writePermission,</span><br><span class="line">        PathPermission[] pathPermissions) &#123;</span><br><span class="line">    mContext = context;</span><br><span class="line">    mReadPermission = readPermission;</span><br><span class="line">    mWritePermission = writePermission;</span><br><span class="line">    mPathPermissions = pathPermissions;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<p>startActivityForResult</p>
-<table>
-<thead>
-<tr>
-<th>类型</th>
-<th>参数</th>
-<th>解释</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Intent</td>
-<td>intent</td>
-<td></td>
-</tr>
-<tr>
-<td>Bundle</td>
-<td>options</td>
-<td></td>
-</tr>
-<tr>
-<td>int</td>
-<td>requestCode</td>
-<td></td>
-</tr>
-</tbody></table>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2019/12/26/Android%E5%B9%B3%E5%8F%B0%E6%9E%B6%E6%9E%84/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/header.jpeg">
-      <meta itemprop="name" content="张潮州">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="张潮州">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/12/26/Android%E5%B9%B3%E5%8F%B0%E6%9E%B6%E6%9E%84/" class="post-title-link" itemprop="url">Android平台架构</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2019-12-26 13:54:41 / Modified: 13:59:22" itemprop="dateCreated datePublished" datetime="2019-12-26T13:54:41+08:00">2019-12-26</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="Android平台架构"><a href="#Android平台架构" class="headerlink" title="Android平台架构"></a>Android平台架构</h1><table>
-<thead>
-<tr>
-<th>名称</th>
-<th>解释</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Linux内核</td>
-<td>Linux Kernel</td>
-</tr>
-<tr>
-<td>硬件抽象层HAL</td>
-<td>Hardware Abstraction Layer，硬件抽象层提供标准界面，向更高级别的 Java API 框架显示设备硬件功能。HAL 包含多个库模块，其中每个模块都为特定类型的硬件组件实现一个界面，例如相机或蓝牙模块。当框架 API 要求访问设备硬件时，Android 系统将为该硬件组件加载库模块。</td>
-</tr>
-</tbody></table>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2019/12/04/Kotlin%E5%AD%A6%E4%B9%A0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/header.jpeg">
-      <meta itemprop="name" content="张潮州">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="张潮州">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/12/04/Kotlin%E5%AD%A6%E4%B9%A0/" class="post-title-link" itemprop="url">Kotlin学习</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2019-12-04 15:07:10 / Modified: 18:26:34" itemprop="dateCreated datePublished" datetime="2019-12-04T15:07:10+08:00">2019-12-04</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="包"><a href="#包" class="headerlink" title="包"></a>包</h1><p>目录与包的结构无需匹配，源代码可以在文件系统的任意位置。</p>
-<h2 id="包声明"><a href="#包声明" class="headerlink" title="包声明"></a>包声明</h2><p>包的声明应处于源文件顶部。<br>源文件所有内容，无论是类还是函数，都包含在声明的包内。<br>如果没有指明包，该源文件的内容属于无名字的默认包。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">package org.example</span><br></pre></td></tr></table></figure>
-
-<h2 id="包导入"><a href="#包导入" class="headerlink" title="包导入"></a>包导入</h2><h3 id="默认导入"><a href="#默认导入" class="headerlink" title="默认导入"></a>默认导入</h3><p>有多个包会默认导入到每个 Kotlin 源文件中。</p>
-<table>
-<thead>
-<tr>
-<th>包</th>
-<th>解释</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>kotlin.*</td>
-<td>Kotlin</td>
-</tr>
-<tr>
-<td>kotlin.annotation.*</td>
-<td>注解</td>
-</tr>
-<tr>
-<td>kotlin.collections.*</td>
-<td>集合</td>
-</tr>
-<tr>
-<td>kotlin.comparisons.*</td>
-<td>比较</td>
-</tr>
-<tr>
-<td>kotlin.io.*</td>
-<td>输入输入出</td>
-</tr>
-<tr>
-<td>kotlin.ranges.*</td>
-<td>区间</td>
-</tr>
-<tr>
-<td>kotlin.sequences.*</td>
-<td>序列</td>
-</tr>
-<tr>
-<td>kotlin.text.*</td>
-<td>文本</td>
-</tr>
-<tr>
-<td>java.lang.*</td>
-<td>JVM平台额外导入–Java语言</td>
-</tr>
-<tr>
-<td>kotlin.jvm.*</td>
-<td>JVM平台额外导入–JVM</td>
-</tr>
-<tr>
-<td>kotlin.js.*</td>
-<td>JS平台额外导入–JS</td>
-</tr>
-</tbody></table>
-<h3 id="手动导入"><a href="#手动导入" class="headerlink" title="手动导入"></a>手动导入</h3><p>导入单独名称</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import org.example.Message</span><br></pre></td></tr></table></figure>
-<p>导入作用域下所有内容</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import org.example.*</span><br></pre></td></tr></table></figure>
-<p>如果出现导入名称冲突，可以使用 as 关键字在本地重命名冲突项来消歧义</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import org.test.Message as testMessage</span><br></pre></td></tr></table></figure>
-
-<h3 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h3><p>导入声明<br>顶层函数以及属性<br>在对象声明中声明的函数和属性<br>枚举常量</p>
-<p>顶层声明的可见性<br>如果顶层声明是 private 的，它是声明它的文件所私有的</p>
-<h1 id="可见性修饰符"><a href="#可见性修饰符" class="headerlink" title="可见性修饰符"></a>可见性修饰符</h1><h2 id="包-1"><a href="#包-1" class="headerlink" title="包"></a>包</h2><p>函数、属性和类、对象和接口可以在顶层声明，即直接在包内声明</p>
-<table>
-<thead>
-<tr>
-<th>可见性修饰符</th>
-<th>解释</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>private</td>
-<td>只会在声明它的文件内可见</td>
-</tr>
-<tr>
-<td>protected</td>
-<td>不适用于顶层声明</td>
-</tr>
-<tr>
-<td>internal</td>
-<td>会在相同模块内随处可见</td>
-</tr>
-<tr>
-<td>public</td>
-<td>默认可见性，此声明将随处可见</td>
-</tr>
-</tbody></table>
-<h2 id="类和接口"><a href="#类和接口" class="headerlink" title="类和接口"></a>类和接口</h2><p>类内部成员的声明</p>
-<table>
-<thead>
-<tr>
-<th>可见性修饰符</th>
-<th>解释</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>private</td>
-<td>只在这个类内部可见，外部类不能访问内部类的 private 成员</td>
-</tr>
-<tr>
-<td>protected</td>
-<td>只在这个类内部可见，如果覆盖一个 protected 成员并且没有显式指定其可见性，该成员还会是 protected 可见性</td>
-</tr>
-<tr>
-<td>internal</td>
-<td>能见到类声明的 本模块内 的任何客户端都可见其 internal 成员</td>
-</tr>
-<tr>
-<td>public</td>
-<td>能见到类声明的任何客户端都可见其 public 成员</td>
-</tr>
-</tbody></table>
-<h2 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h2><p>指定一个类的的主构造函数的可见性</p>
-<table>
-<thead>
-<tr>
-<th>可见性修饰符</th>
-<th>解释</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>private</td>
-<td>私有的</td>
-</tr>
-<tr>
-<td>protected</td>
-<td>受保护的</td>
-</tr>
-<tr>
-<td>internal</td>
-<td>一个 internal 类的构造函数只能在相同模块内可见</td>
-</tr>
-<tr>
-<td>public</td>
-<td>默认情况下，所有构造函数都是 public，这实际上等于类可见的地方它就可见</td>
-</tr>
-</tbody></table>
-<h2 id="局部声明"><a href="#局部声明" class="headerlink" title="局部声明"></a>局部声明</h2><p>局部变量、函数和类不能有可见性修饰符。</p>
-<h2 id="模块"><a href="#模块" class="headerlink" title="模块"></a>模块</h2><p>可见性修饰符 internal 意味着该成员只在相同模块内可见。<br>更具体地说， 一个模块是编译在一起的一套 Kotlin 文件。</p>
-<h1 id="基本类型"><a href="#基本类型" class="headerlink" title="基本类型"></a>基本类型</h1><h2 id="数字"><a href="#数字" class="headerlink" title="数字"></a>数字</h2><h3 id="整数"><a href="#整数" class="headerlink" title="整数"></a>整数</h3><table>
-<thead>
-<tr>
-<th>类型</th>
-<th>大小（比特数）</th>
-<th>最小值</th>
-<th>最大值</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Byte</td>
-<td>8</td>
-<td>-128</td>
-<td>127</td>
-</tr>
-<tr>
-<td>Short</td>
-<td>16</td>
-<td>-32768</td>
-<td>32767</td>
-</tr>
-<tr>
-<td>Int</td>
-<td>32</td>
-<td>-2,147,483,648 (-2^31)</td>
-<td>2,147,483,647 (2^31 - 1)</td>
-</tr>
-<tr>
-<td>Long</td>
-<td>64</td>
-<td>-9,223,372,036,854,775,808 (-2^63)</td>
-<td>9,223,372,036,854,775,807 (2^63 - 1)</td>
-</tr>
-</tbody></table>
-<p>未超出 Int 最大值的整型值初始化的变量都会推断为 Int 类型。<br>如果初始值超过了其最大值，那么推断为 Long 类型。<br>如需显式指定 Long 型值，请在该值后追加 L 后缀。</p>
-<h3 id="浮点数"><a href="#浮点数" class="headerlink" title="浮点数"></a>浮点数</h3><table>
-<thead>
-<tr>
-<th>类型</th>
-<th>大小（比特数）</th>
-<th>有效数字比特数</th>
-<th>指数比特数</th>
-<th>十进制位数</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Float</td>
-<td>32</td>
-<td>24</td>
-<td>8</td>
-<td>6-7</td>
-</tr>
-<tr>
-<td>Double</td>
-<td>64</td>
-<td>53</td>
-<td>11</td>
-<td>15-16</td>
-</tr>
-</tbody></table>
-<p>Float 反映了 IEEE 754 单精度，而 Double 提供了双精度。</p>
-<p>对于以浮点数初始化的变量，编译器会推断为 Double 类型。 如需将一个值显式指定为 Float 类型，请添加 f 或 F 后缀。 如果这样的值包含多于 6～7 位十进制数，那么会将其舍入。</p>
-<p>Kotlin 中的数字没有隐式拓宽转换。 例如，具有 Double 参数的函数只能对 Double 值调用，而不能对 Float、 Int 或者其他数字值调用。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1495,7 +1136,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">35</span>
+          <span class="site-state-item-count">39</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
