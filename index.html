@@ -187,6 +187,658 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2020/03/11/Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/header.jpeg">
+      <meta itemprop="name" content="张潮州">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="张潮州">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/11/Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" class="post-title-link" itemprop="url">Java虚拟机内存管理</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-03-11 11:51:32 / Modified: 16:55:18" itemprop="dateCreated datePublished" datetime="2020-03-11T11:51:32+08:00">2020-03-11</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Java虚拟机内存管理的运行时数据区域"><a href="#Java虚拟机内存管理的运行时数据区域" class="headerlink" title="Java虚拟机内存管理的运行时数据区域"></a>Java虚拟机内存管理的运行时数据区域</h1><p>Java虚拟机在执行Java程序的过程中，将所管理的内存划分为若干个不同的数据区域，包括方法区、虚拟机栈、本地方法栈、堆、程序计数器。</p>
+<h2 id="程序计数器"><a href="#程序计数器" class="headerlink" title="程序计数器"></a>程序计数器</h2><p>1、程序计数器是线程私有的内存，各条线程之间的程序计数器互不影响，独立存储，程序计数器是当前线程所执行的字节码的行号指示器。</p>
+<p>2、在虚拟机的概念模型里，字节码解释器工作时就是通过改变程序计数器的值来选取下一条需要执行的字节码指令，分支、循环、跳转、异常处理、线程恢复等基础功能都需要依赖这个计数器来完成。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">如果正在执行的是一个Java方法，程序计数器记录的是正在执行的虚拟机字节码指令的地址。</span><br><span class="line">如果正在执行的是一个Native方法，程序计数器的值则为空Undefined。</span><br></pre></td></tr></table></figure>
+
+<p>3、Java虚拟机的多线程是通过线程轮流切换并分配处理器执行时间的方式来实现的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">在一个确定的时刻，一个处理器或者一个多核处理器的内核只会执行一条线程中的指令。</span><br><span class="line">为了线程切换后能恢复到正确的执行位置，每条线程都需要有一个独立的程序计数器。</span><br></pre></td></tr></table></figure>
+<p>4、程序计数器内存区域是唯一一个在Java虚拟机规范中没有规定任何OutOfMemoryError情况的区域。</p>
+<h2 id="Java虚拟机栈"><a href="#Java虚拟机栈" class="headerlink" title="Java虚拟机栈"></a>Java虚拟机栈</h2><p>1、Java虚拟机栈是线程私有的内存，生命周期与线程相同。</p>
+<p>2、Java虚拟机栈描述的是Java方法执行的内存模型。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">每个方法被执行的时候都会同时创建一个栈帧用于存储局部变量表、操作栈、动态链接、方法出口等信息。</span><br><span class="line">每个方法被调用直至执行完成的过程，就对应一个栈帧在虚拟机栈中从入栈到出栈的过程。</span><br></pre></td></tr></table></figure>
+<p>3、虚拟机栈中的局部变量表存放了编译器可知的各种基本数据类型、对象引用、和returnAddress类型。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">基本数据类型：boolean、	byte、char、short、int、float、long、double。</span><br><span class="line">其中64位长度的double和long类型的数据会占用2个局部变量空间，其余的数据类型只占用1个。</span><br><span class="line"></span><br><span class="line">对象引用：reference类型，根据不同的虚拟机实现，可能是一个指向对象起始地址的引用指针、也可能是指向一个代表对象的句柄或者其他与此对象相关的位置。</span><br><span class="line"></span><br><span class="line">returnAddress类型：指向一条字节码指令的地址。</span><br></pre></td></tr></table></figure>
+
+<p>4、局部变量表所需的内存空间在编译期间完成分配，当进入一个方法时，这个方法需要在帧中分配多大的局部变量空间是完全确定的，在方法运行期间不会改变局部变量表的大小。</p>
+<p>5、在Java虚拟机规范中，对Java虚拟机栈内存区域规定了两种异常状况。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">如果线程请求的栈深度大于虚拟机所允许的深度，将抛出StackOverflowError异常。</span><br><span class="line"></span><br><span class="line">如果虚拟机栈可以动态扩展，当扩展时无法申请到足够的内存时会抛出OutOfMemoryError异常。</span><br></pre></td></tr></table></figure>
+
+<h2 id="本地方法栈"><a href="#本地方法栈" class="headerlink" title="本地方法栈"></a>本地方法栈</h2><p>虚拟机栈为Java虚拟机执行Java方法服务。<br>本地方法栈为Java虚拟机执行Native方法服务。<br>Sun HotSpot虚拟机将Java虚拟机栈和本地方法栈合二为一。<br>本地方法栈会抛出StackOverflowError异常和OutOfMemoryError异常。</p>
+<h2 id="Java堆"><a href="#Java堆" class="headerlink" title="Java堆"></a>Java堆</h2><p>Java堆是被所有线程共享的一块内存区域，在Java虚拟机启动时创建，是Java虚拟机所管理的内存中最大的一块。</p>
+<p>Java堆的目的是存放对象实例，几乎所有的对象实例都在Java堆分配内存。</p>
+<p>Java堆/GC堆是垃圾收集器管理的主要区域。<br>从内存回收的角度看，由于现在收集器基本采用分代收集算法，所以Java堆分为新生代和老年代。细致分为Eden空间、From Survivor空间、To Survivor空间等。<br>从内存分配的角度看，线程共享的Java堆中可能划分出多个线程私有的分配缓存区。</p>
+<p>Java虚拟机规范规定，Java堆可以处于物理上不连续的内存空间中，只要逻辑上连续即可，就像磁盘空间一样。</p>
+<p>如果在堆中没有内存完成实例分配，并且堆也无法再扩展时，将会抛出OutOfMemoryError异常。</p>
+<p>Java堆可以选择实现固定大小的，也可以是扩展的。</p>
+<h2 id="方法区"><a href="#方法区" class="headerlink" title="方法区"></a>方法区</h2><p>方法区是各个线程共享的内存区域，用于存储已经被虚拟机加载的类信息、常量、静态变量、即时编译器编译后的代码等数据。</p>
+<p>方法区不需要连续的内存，可以选择固定大小也可以扩展，可以选择不实现垃圾收集。</p>
+<p>方法区比较少出现垃圾收集，方法区的内存回收目标主要是针对常量池的回收和类型的卸载。</p>
+<p>方法区和永久代并不等价，只是HotSpot把GC分代收集扩展至方法区，使用永久代实现方法区而已。</p>
+<p>Java虚拟机规范规定，当方法区无法满足内存分配时，将抛出OutOfMemoryError异常。</p>
+<h2 id="运行时常量池"><a href="#运行时常量池" class="headerlink" title="运行时常量池"></a>运行时常量池</h2><p>运行时常量池是方法区的一部分。</p>
+<p>Class文件中除了版本、字段、方法、接口等描述信息外，还有一项信息是常量池，用于存放编译期生成的各种字面量和符号引用，这部分内容将在类加载后存放到方法区的运行时常量池中。</p>
+<p>Java虚拟机除了在运行时常量池中存储Class文件中描述的符号引用外，还会存储翻译出来的直接引用。</p>
+<p>运行时常量池相对于Class文件常量池的另外一个重要特征是具备动态性，Java语言并不要求常量一定只能在编译器产生，并非预置入Class文件中常量池的内容才能进入方法区的运行时常量池，运行期间也可能将新的常量放入运行时常量池中，例如String类的intern()方法就是利用此特性实现的。</p>
+<p>当常量池无法申请到内存时，将抛出OutOfMemoryError异常。</p>
+<h2 id="直接内存"><a href="#直接内存" class="headerlink" title="直接内存"></a>直接内存</h2><p>直接内存不是虚拟机运行时数据区域的一部分，也不是Java虚拟机规范规定的内存区域。</p>
+<p>JDK1.4中新加入NIO类，引入了一种基于通道与缓冲区的IO方式，可以使用Native函数库直接分配堆外内存，然后通过一个存储在Java堆里面的DirectByBuffer对象作为这块内存的引用进行操作，避免了在Java堆和Native堆来回复制数据，显著提高性能。</p>
+<p>直接内存的分配受到机器总内存包括RAM以及SWAP区域或者分页文件的大小，以及处理器寻址空间的限制。</p>
+<p>直接内存也有可能导致OutOfMemoryError异常。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2020/03/10/Java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/header.jpeg">
+      <meta itemprop="name" content="张潮州">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="张潮州">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/10/Java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/" class="post-title-link" itemprop="url">Java内存模型</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-03-10 15:17:15" itemprop="dateCreated datePublished" datetime="2020-03-10T15:17:15+08:00">2020-03-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-03-11 11:51:25" itemprop="dateModified" datetime="2020-03-11T11:51:25+08:00">2020-03-11</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Java内存模型：<br><a href="https://juejin.im/post/5bf2977751882505d840321d" target="_blank" rel="noopener">https://juejin.im/post/5bf2977751882505d840321d</a></p>
+<p>内存模型描述了程序中各个变量（实例域、静态域和数组元素）之间的关系，以及在实际计算机系统中将变量存储到内存和从内存中取出变量这样的底层细节，对象最终是存储在内存里面的，这点没有错，但是编译器、运行库、处理器或者系统缓存可以有特权在变量指定内存位置存储或者取出变量的值。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2020/03/07/Thread/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/header.jpeg">
+      <meta itemprop="name" content="张潮州">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="张潮州">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/07/Thread/" class="post-title-link" itemprop="url">Thread</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-03-07 16:52:13" itemprop="dateCreated datePublished" datetime="2020-03-07T16:52:13+08:00">2020-03-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-03-11 13:47:15" itemprop="dateModified" datetime="2020-03-11T13:47:15+08:00">2020-03-11</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id=""><a href="#" class="headerlink" title=""></a></h1><p>线程在执行过程中与进程还是有区别的。<br>每个独立的线程有一个程序运行的入口、顺序执行序列和程序的出口。<br>但是线程不能够独立执行，必须依存在应用程序中，由应用程序提供多个线程执行控制。</p>
+<p>线程是进程的一个实体，是CPU调度和分派的基本单位，它是比进程更小的能独立运行的基本单位。线程自己基本上不拥有系统资源，只拥有一点在运行中必不可少的资源（如程序计数器,一组寄存器和栈），但是它可与同属一个进程的其他的线程共享进程所拥有的全部资源。</p>
+<p>线程有自己的堆栈和局部变量，但线程之间没有单独的地址空间，一个线程包含以下内容：</p>
+<p>一个指向当前被执行指令的指令指针；<br>一个栈；<br>一个寄存器值的集合，定义了一部分描述正在执行线程的处理器状态的值<br>一个私有的数据区。</p>
+<p>我们使用Join()方法挂起当前线程，直到调用Join()方法的线程执行完毕。该方法还存在包含参数的重载版本，其中的参数用于指定等待线程结束的最长时间（即超时）所花费的毫秒数。如果线程中的工作在规定的超时时段内结束，该版本的Join()方法将返回一个布尔量True。</p>
+<h1 id="1、构造-gt-NEW-创建态"><a href="#1、构造-gt-NEW-创建态" class="headerlink" title="1、构造-&gt;NEW 创建态"></a>1、构造-&gt;NEW 创建态</h1><table>
+<thead>
+<tr>
+<th>属性</th>
+<th>类型</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>name</td>
+<td>String</td>
+<td>线程名称</td>
+</tr>
+<tr>
+<td>priority</td>
+<td>int</td>
+<td>线程优先级</td>
+</tr>
+<tr>
+<td>daemon</td>
+<td>boolean</td>
+<td>是否是守护进程</td>
+</tr>
+<tr>
+<td>target</td>
+<td>Runnable</td>
+<td>将被执行的目标对象</td>
+</tr>
+<tr>
+<td>group</td>
+<td>ThreadGroup</td>
+<td>当前线程组</td>
+</tr>
+<tr>
+<td>stackSize</td>
+<td>long</td>
+<td>栈大小</td>
+</tr>
+<tr>
+<td>tid</td>
+<td>long</td>
+<td>线程ID</td>
+</tr>
+<tr>
+<td>contextClassLoader</td>
+<td>ClassLoader</td>
+<td>上下文类加载器</td>
+</tr>
+<tr>
+<td>inheritedAccessControlContext</td>
+<td>AccessControlContext</td>
+<td>已继承的访问控制上下文</td>
+</tr>
+<tr>
+<td>inheritableThreadLocals</td>
+<td>ThreadLocal.ThreadLocalMap</td>
+<td>可继承的线程本地映射</td>
+</tr>
+</tbody></table>
+<p>设置线程名称，如果空则抛出空指针异常，若传入为空则设置为：”Thread-“ + 数字，数字从0开始。<br>获取当前所在线程为将启动线程的父线程。<br>如果传入线程组为空，则获取父线程的线程组，在线程组中增加未启动的线程数。<br>设置线程组为父线程的线程组。<br>设置是否守护线程为父线程的是否守护线程。<br>设置优先级为父线程的优先级。<br>设置传入的可运行接口对象。<br>设置传入的栈大小，默认为0。<br>设置线程ID。<br>设置上下文类加载器为父线程的上下文类加载器。<br>设置获取已继承的访问控制上下文。<br>设置可继承的线程本地映射为父线程的可继承的线程本地映射。</p>
+<h1 id="2、启动-gt-RUNNABLE-就绪"><a href="#2、启动-gt-RUNNABLE-就绪" class="headerlink" title="2、启动-&gt;RUNNABLE 就绪"></a>2、启动-&gt;RUNNABLE 就绪</h1><p>如果线程已经启动，抛出不合法的线程状态异常。<br>添加线程到线程组。<br>Android使用nativeCreate(this, stackSize, daemon)方法创建并启动线程，对应Java的方法为start0()。<br>设置线程状态为已启动。<br>如果线程启动失败，线程组移除线程。</p>
+<h1 id="3、执行-gt-RUNNING-运行态"><a href="#3、执行-gt-RUNNING-运行态" class="headerlink" title="3、执行-&gt;RUNNING 运行态"></a>3、执行-&gt;RUNNING 运行态</h1><p>当系统调度，线程CPU时间片时，会自动执行run方法，此run方法为Thread类的run方法，或为扩展线程类的run方法，如果Thread类的可执行接口对象为空，则不执行该对象的run方法。</p>
+<h1 id="4、结束-gt-DEAD-死亡态"><a href="#4、结束-gt-DEAD-死亡态" class="headerlink" title="4、结束-&gt;DEAD 死亡态"></a>4、结束-&gt;DEAD 死亡态</h1><h1 id="4、join"><a href="#4、join" class="headerlink" title="4、join"></a>4、join</h1><p>传入毫秒数。<br>同步lock对象，获得对象锁。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">synchronized</span>(lock)&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果传入毫秒数小于0，抛出异常。<br>如果传入毫秒数为0，如果线程是活着的，线程还没执行完，那就一直等待，直到线程执行完死掉，释放lock对象锁，程序停止执行。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lock.wait(<span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+<p>如果传入毫秒数大于0，如果线程是活着的，线程还没执行完，那就一直等待，直到线程执行完死掉，delay时间后释放lock对象锁，程序停止执行。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lock.wait(delay);</span><br></pre></td></tr></table></figure>
+
+
+<p>synchronized同步方法和同步代码块的区别</p>
+<p>同步方法默认使用this或者当前类做为锁。<br>同步代码块可以选择以什么来加锁，比同步方法更精确，我们可以选择只有会在同步发生同步问题的代码加锁，而并不是整个方法。<br>同步方法使用synchronized修饰，而同步代码块使用synchronized(this){}修饰。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2020/03/07/%E7%96%91%E9%97%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/header.jpeg">
+      <meta itemprop="name" content="张潮州">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="张潮州">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/07/%E7%96%91%E9%97%AE/" class="post-title-link" itemprop="url">疑问</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-03-07 15:37:11 / Modified: 15:56:56" itemprop="dateCreated datePublished" datetime="2020-03-07T15:37:11+08:00">2020-03-07</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="疑问"><a href="#疑问" class="headerlink" title="疑问"></a>疑问</h1><h2 id="1、java-Thread中的run方法在什么时候被调用？"><a href="#1、java-Thread中的run方法在什么时候被调用？" class="headerlink" title="1、java Thread中的run方法在什么时候被调用？"></a>1、java Thread中的run方法在什么时候被调用？</h2><p>android</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">publish class Thread implements Runnable &#123;</span><br><span class="line"> </span><br><span class="line">    private Runnable target;</span><br><span class="line"> </span><br><span class="line">    public synchronized void start() &#123;</span><br><span class="line">         .</span><br><span class="line">         .</span><br><span class="line">         //调用本地方法，本地方式负责创建线程及回调run方法</span><br><span class="line">         nativeCreate(this, stackSize, daemon);</span><br><span class="line">         .</span><br><span class="line">         .</span><br><span class="line">    &#125;</span><br><span class="line">    /**</span><br><span class="line">     *该方法是在本地方法nativeCreate(this, stackSize, daemon)中被调用的</span><br><span class="line">     */</span><br><span class="line">    @Override</span><br><span class="line">    publish void run() &#123;</span><br><span class="line">        if (target != null) &#123;</span><br><span class="line">            target.run();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>java</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">publish class Thread implements Runnable &#123;</span><br><span class="line"> </span><br><span class="line">    private Runnable target;</span><br><span class="line"> </span><br><span class="line">    public synchronized void start() &#123;</span><br><span class="line">         .</span><br><span class="line">         .</span><br><span class="line">         //调用本地方法，本地方式负责创建线程及回调run方法</span><br><span class="line">         start0();</span><br><span class="line">         .</span><br><span class="line">         .</span><br><span class="line">    &#125;</span><br><span class="line">    /**</span><br><span class="line">     *该方法是在本地方法start0()中被调用的</span><br><span class="line">     */</span><br><span class="line">    @Override</span><br><span class="line">    publish void run() &#123;</span><br><span class="line">        if (target != null) &#123;</span><br><span class="line">            target.run();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>调用start()时开启线程，当该线程获取执行资源后就开始执行run方法；就是多线程会竞争资源，谁获得资源谁就执行，就是运行run方法。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2020/03/06/%E5%BA%94%E7%94%A8%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/header.jpeg">
+      <meta itemprop="name" content="张潮州">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="张潮州">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/06/%E5%BA%94%E7%94%A8%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/" class="post-title-link" itemprop="url">应用启动过程</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-03-06 16:17:08 / Modified: 16:54:25" itemprop="dateCreated datePublished" datetime="2020-03-06T16:17:08+08:00">2020-03-06</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="应用启动流程"><a href="#应用启动流程" class="headerlink" title="应用启动流程"></a>应用启动流程</h1><p>ActivityThread</p>
+<h4 id="0、应用入口"><a href="#0、应用入口" class="headerlink" title="0、应用入口"></a>0、应用入口</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 应用入口：ActivityThread的静态方法</span><br><span class="line"> * @param args</span><br><span class="line"> */</span><br><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">    //准备主线程的消息循环器</span><br><span class="line">    Looper.prepareMainLooper();</span><br><span class="line"></span><br><span class="line">    //创建主线程，并绑定到Application中去</span><br><span class="line">    ActivityThread thread = new ActivityThread();</span><br><span class="line">    thread.attach(false);</span><br><span class="line"></span><br><span class="line">    //获取主线程的消息处理器mH</span><br><span class="line">    if (sMainThreadHandler == null) &#123;</span><br><span class="line">        sMainThreadHandler = thread.getHandler();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    //开始循环</span><br><span class="line">    Looper.loop();</span><br><span class="line"></span><br><span class="line">    throw new RuntimeException(&quot;Main thread loop unexpectedly exited&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-0、准备主线程的消息循环器"><a href="#1-0、准备主线程的消息循环器" class="headerlink" title="1.0、准备主线程的消息循环器"></a>1.0、准备主线程的消息循环器</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public static void prepareMainLooper() &#123;</span><br><span class="line">    prepare(false);</span><br><span class="line">    synchronized (Looper.class) &#123;</span><br><span class="line">        if (sMainLooper != null) &#123;</span><br><span class="line">            throw new IllegalStateException(&quot;The main Looper has already been prepared.&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        sMainLooper = myLooper();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="1-1、新建一个消息循环器Looper对象，并存储在Looper的静态变量sThreadLocal中"><a href="#1-1、新建一个消息循环器Looper对象，并存储在Looper的静态变量sThreadLocal中" class="headerlink" title="1.1、新建一个消息循环器Looper对象，并存储在Looper的静态变量sThreadLocal中"></a>1.1、新建一个消息循环器Looper对象，并存储在Looper的静态变量sThreadLocal中</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">private static void prepare(boolean quitAllowed) &#123;</span><br><span class="line">    if (sThreadLocal.get() != null) &#123;</span><br><span class="line">        throw new RuntimeException(&quot;Only one Looper may be created per thread&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    sThreadLocal.set(new Looper(quitAllowed));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="1-2、消息循环器：新建一个消息队列并获取当前线程"><a href="#1-2、消息循环器：新建一个消息队列并获取当前线程" class="headerlink" title="1.2、消息循环器：新建一个消息队列并获取当前线程"></a>1.2、消息循环器：新建一个消息队列并获取当前线程</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">private Looper(boolean quitAllowed) &#123;</span><br><span class="line">    mQueue = new MessageQueue(quitAllowed);</span><br><span class="line">    mThread = Thread.currentThread();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="1-3、消息队列"><a href="#1-3、消息队列" class="headerlink" title="1.3、消息队列"></a>1.3、消息队列</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">MessageQueue(boolean quitAllowed) &#123;</span><br><span class="line">    mQuitAllowed = quitAllowed;</span><br><span class="line">    mPtr = nativeInit();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="2-0、主线程：获取资源管理器"><a href="#2-0、主线程：获取资源管理器" class="headerlink" title="2.0、主线程：获取资源管理器"></a>2.0、主线程：获取资源管理器</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@UnsupportedAppUsage</span><br><span class="line">ActivityThread() &#123;</span><br><span class="line">    mResourcesManager = ResourcesManager.getInstance();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="2-1、"><a href="#2-1、" class="headerlink" title="2.1、"></a>2.1、</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line">@UnsupportedAppUsage</span><br><span class="line">private void attach(boolean system, long startSeq) &#123;</span><br><span class="line">    //当前主线程</span><br><span class="line">    sCurrentActivityThread = this;</span><br><span class="line">    //是否是系统线程</span><br><span class="line">    mSystemThread = system;</span><br><span class="line">    if (!system) &#123;//如果不是系统线程</span><br><span class="line">        android.ddm.DdmHandleAppName.setAppName(&quot;&lt;pre-initialized&gt;&quot;,</span><br><span class="line">                                                UserHandle.myUserId());</span><br><span class="line">        //设置应用对象：应用线程的Binder对象</span><br><span class="line">        RuntimeInit.setApplicationObject(mAppThread.asBinder());</span><br><span class="line">        //获取IActivityManager的实现，也就是ActivityManagerService？</span><br><span class="line">        final IActivityManager mgr = ActivityManager.getService();</span><br><span class="line">        try &#123;</span><br><span class="line">            //触发ActivityManagerService的attachApplication方法</span><br><span class="line">            mgr.attachApplication(mAppThread, startSeq);</span><br><span class="line">        &#125; catch (RemoteException ex) &#123;</span><br><span class="line">            throw ex.rethrowFromSystemServer();</span><br><span class="line">        &#125;</span><br><span class="line">        // Watch for getting close to heap limit.</span><br><span class="line">        // 监听是否接近堆极限</span><br><span class="line">        // 这里添加Gc的监听，如果超过虚拟机分配最大内存的 3/4，那么触发mgr.releaseSomeActivities</span><br><span class="line">        BinderInternal.addGcWatcher(new Runnable() &#123;</span><br><span class="line">            @Override public void run() &#123;</span><br><span class="line">                if (!mSomeActivitiesChanged) &#123;</span><br><span class="line">                    return;</span><br><span class="line">                &#125;</span><br><span class="line">                Runtime runtime = Runtime.getRuntime();</span><br><span class="line">                long dalvikMax = runtime.maxMemory();</span><br><span class="line">                long dalvikUsed = runtime.totalMemory() - runtime.freeMemory();</span><br><span class="line">                if (dalvikUsed &gt; ((3*dalvikMax)/4)) &#123;</span><br><span class="line">                    if (DEBUG_MEMORY_TRIM) Slog.d(TAG, &quot;Dalvik max=&quot; + (dalvikMax/1024)</span><br><span class="line">                            + &quot; total=&quot; + (runtime.totalMemory()/1024)</span><br><span class="line">                            + &quot; used=&quot; + (dalvikUsed/1024));</span><br><span class="line">                    mSomeActivitiesChanged = false;</span><br><span class="line">                    try &#123;</span><br><span class="line">                        ActivityTaskManager.getService().releaseSomeActivities(mAppThread);</span><br><span class="line">                    &#125; catch (RemoteException e) &#123;</span><br><span class="line">                        throw e.rethrowFromSystemServer();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125; else &#123;//如果是系统线程</span><br><span class="line">        // Don&apos;t set application object here -- if the system crashes,</span><br><span class="line">        // we can&apos;t display an alert, we just want to die die die.</span><br><span class="line">        // 不要在这里设置应用程序对象——如果系统崩溃，我们不能显示警报，我们只想死死死。</span><br><span class="line">        android.ddm.DdmHandleAppName.setAppName(&quot;system_process&quot;,</span><br><span class="line">                UserHandle.myUserId());</span><br><span class="line">        try &#123;</span><br><span class="line">            //创建Instrumentation</span><br><span class="line">            mInstrumentation = new Instrumentation();</span><br><span class="line">            mInstrumentation.basicInit(this);</span><br><span class="line">            //获取上下文</span><br><span class="line">            ContextImpl context = ContextImpl.createAppContext(</span><br><span class="line">                    this, getSystemContext().mPackageInfo);</span><br><span class="line">            //获取Application</span><br><span class="line">            mInitialApplication = context.mPackageInfo.makeApplication(true, null);</span><br><span class="line">            //触发Application的onCreate回调</span><br><span class="line">            mInitialApplication.onCreate();</span><br><span class="line">        &#125; catch (Exception e) &#123;</span><br><span class="line">            throw new RuntimeException(</span><br><span class="line">                    &quot;Unable to instantiate Application():&quot; + e.toString(), e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //创建Configuration变化的回调通知</span><br><span class="line">    ViewRootImpl.ConfigChangedCallback configChangedCallback</span><br><span class="line">            = (Configuration globalConfig) -&gt; &#123;</span><br><span class="line">        synchronized (mResourcesManager) &#123;</span><br><span class="line">            // We need to apply this change to the resources immediately, because upon returning</span><br><span class="line">            // the view hierarchy will be informed about it.</span><br><span class="line">            // 我们需要立即将此更改应用于资源，因为在返回视图层次结构时将被告知此更改。</span><br><span class="line">            if (mResourcesManager.applyConfigurationToResourcesLocked(globalConfig,</span><br><span class="line">                    null /* compat */)) &#123;</span><br><span class="line">                updateLocaleListFromAppContext(mInitialApplication.getApplicationContext(),</span><br><span class="line">                        mResourcesManager.getConfiguration().getLocales());</span><br><span class="line">                // This actually changed the resources! Tell everyone about it.</span><br><span class="line">                // 这实际上改变了资源!把这事告诉大家。</span><br><span class="line">                if (mPendingConfiguration == null</span><br><span class="line">                        || mPendingConfiguration.isOtherSeqNewer(globalConfig)) &#123;</span><br><span class="line">                    mPendingConfiguration = globalConfig;</span><br><span class="line">                    // 发送CONFIGURATION_CHANGED的消息</span><br><span class="line">                    sendMessage(H.CONFIGURATION_CHANGED, globalConfig);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    //添加监听Configuration变化的回调通知</span><br><span class="line">    ViewRootImpl.addConfigCallback(configChangedCallback);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2020/03/04/Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E8%A7%84%E8%8C%83(Java%20SE%208%E7%89%88)%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/header.jpeg">
+      <meta itemprop="name" content="张潮州">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="张潮州">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/04/Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E8%A7%84%E8%8C%83(Java%20SE%208%E7%89%88)%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">Java虚拟机规范(Java SE 8版)读书笔记</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-03-04 16:21:14" itemprop="dateCreated datePublished" datetime="2020-03-04T16:21:14+08:00">2020-03-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-03-06 14:46:17" itemprop="dateModified" datetime="2020-03-06T14:46:17+08:00">2020-03-06</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Java虚拟机规范"><a href="#Java虚拟机规范" class="headerlink" title="Java虚拟机规范"></a>Java虚拟机规范</h1><p>Java Virtual Machine Specification</p>
+<p>Java语言特性：在硬件和二进制文件中加入虚拟机层，把编译好的class文件放在虚拟机中执行，而不是直接放在硬件上执行。</p>
+<p>平台无关性：Java虚拟机可以运行在各种平台上。</p>
+<p>语言无关性：<br>除了Java语言外，用Clojure、Scala等语言所写的程序也可以运行在Java虚拟机上；还可以用Java语言实现出的Python、Ruby等语言的解释器，从而将其放在Java虚拟机中执行。</p>
+<p>二进制本地机器码：Native Code<br>字节码：Byte Code    </p>
+<p>Java程序.java使用javac编译器生成字节码.class<br>JRuby程序.rb使用jrubyc编译器生成字节码.class<br>GroovY程序使用groovyc编译器生成字节码.class<br>其他语言程序使用对应的编译器生成字节码.class</p>
+<p>Class文件是一组以8位字节为基础单位的二进制流。<br>当遇到需要占用8位字节以上空间的数据项时，则会按照高位在前的方式分割成若干个8位字节进行存储。</p>
+<p>Class文件格式采用无符号数和表两种数据类型来存储。<br>无符号数属于基本的数据类型，可以用来描述数字、索引引用、数量值、按照UTF-8编码构成的字符串值。u1、u2、u4、u8分别表示1个字节、2个字节、4个字节、8个字节的无符号数。</p>
+<p>表是由多个无符号数或者其他表作为数据项构成的复合数据类型，用于描述有层次关系的复合结构类型，class文件本质上就是一张表。</p>
+<p>无论是无符号数还是表，当需要描述同一类型但数量不定的多个数据时，经常会使用一个前置的容量计数器加若干个连续的数据项的形式，称为某一类型的集合。</p>
+<h2 id="Class文件格式："><a href="#Class文件格式：" class="headerlink" title="Class文件格式："></a>Class文件格式：</h2><table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>数据类型解释</th>
+<th>数据名称</th>
+<th>数据名称解释</th>
+<th>数据数量</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>u4</td>
+<td>4个字节的无法符号数</td>
+<td>magic</td>
+<td>魔数</td>
+<td>1</td>
+</tr>
+<tr>
+<td>u2</td>
+<td>2个字节的无符号数</td>
+<td>minor_version</td>
+<td>次版本号</td>
+<td>1</td>
+</tr>
+<tr>
+<td>u2</td>
+<td>2个字节的无符号数</td>
+<td>major_version</td>
+<td>主版本号</td>
+<td>1</td>
+</tr>
+<tr>
+<td>u2</td>
+<td>2个字节的无符号数</td>
+<td>constant_pool_count</td>
+<td>常量池容量</td>
+<td>1</td>
+</tr>
+<tr>
+<td>cp_info</td>
+<td>常量池表</td>
+<td>constant_pool</td>
+<td>常量池</td>
+<td>constant_pool_count-1</td>
+</tr>
+<tr>
+<td>u2</td>
+<td>2个字节的无符号数</td>
+<td>access_flags</td>
+<td>访问标志</td>
+<td>1</td>
+</tr>
+<tr>
+<td>u2</td>
+<td>2个字节的无符号数</td>
+<td>this_class</td>
+<td>类索引</td>
+<td>1</td>
+</tr>
+<tr>
+<td>u2</td>
+<td>2个字节的无符号数</td>
+<td>super_class</td>
+<td>父类索引</td>
+<td>1</td>
+</tr>
+<tr>
+<td>u2</td>
+<td>2个字节的无符号数</td>
+<td>interfaces_count</td>
+<td>接口索引集合容量</td>
+<td>1</td>
+</tr>
+<tr>
+<td>u2</td>
+<td>2个字节的无符号数</td>
+<td>interfaces</td>
+<td>接口索引集合</td>
+<td>interfaces_count</td>
+</tr>
+<tr>
+<td>u2</td>
+<td>2个字节的无符号数</td>
+<td>fields_count</td>
+<td>字段表集合容量</td>
+<td>1</td>
+</tr>
+<tr>
+<td>field_info</td>
+<td>字段表</td>
+<td>fields</td>
+<td>字段表集合</td>
+<td>fields_count</td>
+</tr>
+<tr>
+<td>u2</td>
+<td>2个字节的无符号数</td>
+<td>methods_count</td>
+<td>方法表集合容量</td>
+<td>1</td>
+</tr>
+<tr>
+<td>method_info</td>
+<td>方法表</td>
+<td>methods</td>
+<td>方法表集合</td>
+<td>methods_count</td>
+</tr>
+<tr>
+<td>u2</td>
+<td>2个字节的无符号数</td>
+<td>attributes_count</td>
+<td>属性表集合容量</td>
+<td>1</td>
+</tr>
+<tr>
+<td>attribute_info</td>
+<td>属性表</td>
+<td>attributes</td>
+<td>属性表集合</td>
+<td>attributes_count</td>
+</tr>
+</tbody></table>
+<h2 id="魔数"><a href="#魔数" class="headerlink" title="魔数"></a>魔数</h2><p>Magic Number ：Class文件的头4个字节称为魔数，作用是确定这个文件是否为一个能被虚拟机接受的Class文件。其值为0xCAFEBABE。</p>
+<h2 id="Class文件的版本号"><a href="#Class文件的版本号" class="headerlink" title="Class文件的版本号"></a>Class文件的版本号</h2><p>Java的版本号是从45开始的，JDK1.1之后的每个JDK大版本发布，主版本号都会向上加1。<br>高版本的JDK只能向下兼容低版本的Class文件，但是不能运行以后版本的Class文件，即使文件格式并未发生变化。<br>次版本号的范围为0~65535。</p>
+<h2 id="常量池"><a href="#常量池" class="headerlink" title="常量池"></a>常量池</h2><p>常量池容量<br>常量池的容量计数是从1开始的，某些指向常量池的索引值的数据在特定情况下不引用任何一个常量池项目，就可以把索引值置为0。<br>常量池主要存放两大类常量：字面量和符号引用。</p>
+<table>
+<thead>
+<tr>
+<th>字面量Literal</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>文本字符串</td>
+</tr>
+<tr>
+<td>被声明为final的常量值</td>
+</tr>
+</tbody></table>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
     <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2020/03/04/Bmob%20iOS%20SDK/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -472,517 +1124,11 @@
   
   
 
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2020/01/15/%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/header.jpeg">
-      <meta itemprop="name" content="张潮州">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="张潮州">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/01/15/%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86/" class="post-title-link" itemprop="url">垃圾收集</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2020-01-15 16:28:04 / Modified: 23:22:34" itemprop="dateCreated datePublished" datetime="2020-01-15T16:28:04+08:00">2020-01-15</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Java和C++的区别：内存动态分配和垃圾收集技术。</span><br><span class="line">排查内存泄露、内存溢出。</span><br><span class="line"></span><br><span class="line">Java内存运行时区域的各个部分，其中程序计数器、虚拟机栈、本地方法栈3个区域随线程而生，随线程而灭；栈中的栈帧随着方法的进入和退出而有条不紊地执行着出栈和入栈操作。每一个栈帧中分配多少内存基本上是在类结构确定下来时就已知的，因此这几个区域的内存分配和回收都具有确定性，在这几个区域内就不需要过多考虑回收的问题，因为方法结束或者线程结束时，内存自然就跟着回收了。</span><br><span class="line"></span><br><span class="line">而Java堆和方法区则不一样，一个接口中的多个实现类需要的内存可能不一样，一个方法中的多个分支需要的内存也可能不一样，我们只有在程序处于运行期间时才能知道会创建哪些对象，这部分内存的分配和回收都是动态的，垃圾收集器所关注的是这部分内存。</span><br></pre></td></tr></table></figure>
-
-
-
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">在堆中存放着Java世界中几乎所有的对象实例，垃圾收集器在对堆进行回收前，第一件事情就是确定这些对象是不是不可能再被任何途径使用的对象。</span><br></pre></td></tr></table></figure>
-
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">引用计数算法：Reference Counting，没有被主流的虚拟机选用来管理内存，最主要的原因就是它很难解决对象之间相互循环引用的问题。</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">可达性分析算法：Reachability Analysis，主流的商用程序语言Java、C#等的实现中，都是通过可达性分析来判定对象是否存活的。基本思路就是通过一系列的称为GC Roots的对象作为起始点，从这些节点开始向下搜索，搜索所走过的路径称为引用链Receference Chain，当一个对象到GC Roots没有任何引用链相连的时候，图论用语就是从GC Roots到这个对象不可达的时候，则证明此对象是不可用的。</span><br></pre></td></tr></table></figure>
-<p>在Java语言中，可作为GC Roots的对象包括：</p>
-<table>
-<thead>
-<tr>
-<th>GC Roots</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>1、虚拟机栈/栈帧中的本地变量表中引用的对象。</td>
-</tr>
-<tr>
-<td>2、方法区中类静态属性引用的对象。</td>
-</tr>
-<tr>
-<td>3、方法区中常量引用的对象。</td>
-</tr>
-<tr>
-<td>4、本地方法栈中JNI/Native方法引用的对象。</td>
-</tr>
-</tbody></table>
-<p>引用：</p>
-<table>
-<thead>
-<tr>
-<th>引用类型</th>
-<th>解释</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>强引用 new</td>
-<td>程序代码中普遍存在的，类似new的引用，只要强引用存在，垃圾收集器永远不会回收掉被引用的对象。</td>
-</tr>
-<tr>
-<td>软引用 SoftReference</td>
-<td>描述有用但非必需的对象，在系统将要发生内存溢出异常之前，将会把软引用对象列进回收范围之中进行第二次回收。如果这次回收还没有足够内存，才会抛出内存溢出异常。</td>
-</tr>
-<tr>
-<td>弱引用 WeakReference</td>
-<td>描述非必需对象，被若引用关联的对象只能生存到下一个垃圾收集发生之前。当垃圾收集发生时，无论当前内存是否足够，都会回收掉只被弱引用关联的对象。</td>
-</tr>
-<tr>
-<td>虚引用 PhantomReference</td>
-<td>一个对象是否有虚引用的存在，完全不会对其生存时间构成影响，也无法通过虚引用来取得一个对象实例。为一个对象设置虚引用关联的唯一目的，就是能在这个对象被收集器回收的时候收到一个系统通知。</td>
-</tr>
-</tbody></table>
-<h1 id="finalize-方法"><a href="#finalize-方法" class="headerlink" title="finalize()方法"></a>finalize()方法</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">如果对象在进行可达性分析后发现没有与GC Roots相连接的引用链，那它将会被第一次标记并且进行第一次筛选，筛选的条件是此对象是否有必要执行finalize()方法。</span><br><span class="line"></span><br><span class="line">当对象没有覆盖finalize()方法，或者finalize()方法已经被虚拟机调用过，则表示没有必要执行。</span><br><span class="line"></span><br><span class="line">如果这个对象被判定为有必要执行finalize()方法，那么这个对象将会放置在一个叫做F-Queue的队列之中，并在稍后由一个由虚拟机自动建立的、低优先级的Finalizer线程去执行finalize()方法，并且任何一个对象的finalize()方法只能被系统自动调用一次。 </span><br><span class="line"></span><br><span class="line">虚拟机会触发finalize()方法，但并不承诺会等待finalize()方法运行结束，原因是如果一个对象在finalize()方法中执行缓慢或者发生了死循环，将很有可能会导致F-Queue队列中其他对象永远处于等待状态，甚至导致整个内存回收系统崩溃。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">执行完finalize()方法之后，GC将对F-Queue中的对象进行第二次小规模标记，如果这时候对象还没有逃脱，那基本上对象就真的被回收了。</span><br><span class="line"></span><br><span class="line">如果对象要在finalize()方法中逃脱，则要重新与引用链中的任何一个对象建立联系，例如将自己this赋值给某个类变量或者对象的成员变量。</span><br><span class="line"></span><br><span class="line">finalize()方法的运行代价高昂，不确定性大，无法保证各个对象的调用顺序，finalize()方法能做的工作，使用try-finally或者其他方式都可以做得更好、更及时，所以不建议使用finalize()方法。</span><br></pre></td></tr></table></figure>
-
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2020/01/15/ThreadLocal%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/header.jpeg">
-      <meta itemprop="name" content="张潮州">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="张潮州">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/01/15/ThreadLocal%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" class="post-title-link" itemprop="url">ThreadLocal源码解析</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2020-01-15 09:39:16 / Modified: 23:22:27" itemprop="dateCreated datePublished" datetime="2020-01-15T09:39:16+08:00">2020-01-15</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="ThreadLocal是什么？"><a href="#ThreadLocal是什么？" class="headerlink" title="ThreadLocal是什么？"></a>ThreadLocal是什么？</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ThreadLocal是用来维护线程中的变量不被其他线程干扰而出现的一个结构，内部包含一个ThreadLocalMap类，该类为Thread类的一个局部变量，该Map存储的key为ThreadLocal对象自身，value为我们要存储的对象，这样一来，在不同线程中，持有的其实都是当前线程的变量副本，与其他线程完全隔离，以此来保证线程执行过程中不受其他线程的影响。</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">一个线程Thread对应一个ThreadLocal.ThreadLocalMap，一个线程Thread也就是一个ThreadLocalMap可以对应多个相同或不同具体类型的ThreadLocal&lt;Loop&gt;或ThreadLocal&lt;String&gt;或ThreadLocal&lt;Integer&gt;等。</span><br></pre></td></tr></table></figure>
-<h1 id="Thread"><a href="#Thread" class="headerlink" title="Thread"></a>Thread</h1><p>一个线程对应一个ThreadLocal.ThreadLocalMap：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/* ThreadLocal values pertaining to this thread. This map is maintained</span><br><span class="line"> * by the ThreadLocal class. </span><br><span class="line"> * 与此线程相关的ThreadLocal值。这个映射由ThreadLocal类维护。</span><br><span class="line"> */</span><br><span class="line">ThreadLocal.ThreadLocalMap threadLocals = null;</span><br></pre></td></tr></table></figure>
-<h1 id="ThreadLocal"><a href="#ThreadLocal" class="headerlink" title="ThreadLocal"></a>ThreadLocal</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * This class provides thread-local variables.  These variables differ from</span><br><span class="line"> * their normal counterparts in that each thread that accesses one (via its</span><br><span class="line"> * &#123;@code get&#125; or &#123;@code set&#125; method) has its own, independently initialized</span><br><span class="line"> * copy of the variable.  &#123;@code ThreadLocal&#125; instances are typically private</span><br><span class="line"> * static fields in classes that wish to associate state with a thread (e.g.,</span><br><span class="line"> * a user ID or Transaction ID).</span><br><span class="line"> * </span><br><span class="line"> * 该类提供线程局部变量。</span><br><span class="line"> * 这些变量与普通的对应变量不同，因为每个访问一个变量的线程(通过它的&#123;@code get&#125;或&#123;@code set&#125;方法)都有自己独立初始化的变量副本。</span><br><span class="line"> * &#123;@code ThreadLocal&#125;实例通常是希望将状态与线程(例如，用户ID或事务ID)关联的类中的私有静态字段。</span><br><span class="line"> * </span><br><span class="line"> * Each thread holds an implicit reference to its copy of a thread-local</span><br><span class="line"> * variable as long as the thread is alive and the &#123;@code ThreadLocal&#125;</span><br><span class="line"> * instance is accessible; after a thread goes away, all of its copies of</span><br><span class="line"> * thread-local instances are subject to garbage collection (unless other</span><br><span class="line"> * references to these copies exist).</span><br><span class="line"> * </span><br><span class="line"> * 只要线程是活动的且&#123;@code ThreadLocal&#125;实例是可访问的，每个线程都持有对其线程局部变量副本的隐式引用;</span><br><span class="line"> * 在一个线程消失后，它的所有线程本地实例副本都要进行垃圾收集(除非存在对这些副本的其他引用)。</span><br><span class="line"> */</span><br></pre></td></tr></table></figure>
-<h2 id="ThreadLocal-Get"><a href="#ThreadLocal-Get" class="headerlink" title="ThreadLocal.Get"></a>ThreadLocal.Get</h2><p>通过具体类型的ThreadLocal<Loop>获取当前线程的本地变量Loop：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Returns the value in the current thread&apos;s copy of this</span><br><span class="line"> * thread-local variable.  If the variable has no value for the</span><br><span class="line"> * current thread, it is first initialized to the value returned</span><br><span class="line"> * by an invocation of the &#123;@link #initialValue&#125; method.</span><br><span class="line"> * </span><br><span class="line"> * 返回当前线程的线程局部变量副本中的值。</span><br><span class="line"> * 如果变量没有当前线程的值，则首先将其初始化为调用initialValue方法返回的值。</span><br><span class="line"> * @return the current thread&apos;s value of this thread-local</span><br><span class="line"> * 			当前线程的线程本地值</span><br><span class="line"> */</span><br><span class="line">public T get() &#123;</span><br><span class="line">    Thread t = Thread.currentThread();</span><br><span class="line">    ThreadLocalMap map = getMap(t);</span><br><span class="line">    if (map != null) &#123;</span><br><span class="line">        ThreadLocalMap.Entry e = map.getEntry(this);</span><br><span class="line">        if (e != null) &#123;</span><br><span class="line">            @SuppressWarnings(&quot;unchecked&quot;)</span><br><span class="line">            T result = (T)e.value;</span><br><span class="line">            return result;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return setInitialValue();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>根据线程获取线程对应的ThreadLocal.ThreadLocalMap：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Get the map associated with a ThreadLocal. Overridden in</span><br><span class="line"> * InheritableThreadLocal.</span><br><span class="line"> * 获取与ThreadLocal关联的映射。InheritableThreadLocal覆盖。</span><br><span class="line"> * @param  t the current thread</span><br><span class="line"> * 当前线程</span><br><span class="line"> * @return the map</span><br><span class="line"> * 映射</span><br><span class="line"> */</span><br><span class="line">ThreadLocalMap getMap(Thread t) &#123;</span><br><span class="line">    return t.threadLocals;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>如果无法获取到当前线程的本地变量，则设置初始值：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Variant of set() to establish initialValue. Used instead</span><br><span class="line"> * of set() in case user has overridden the set() method.</span><br><span class="line"> * set()的变体以建立initialValue。如果用户覆盖了set()方法，则使用此方法而不是set()。</span><br><span class="line"> * @return the initial value</span><br><span class="line"> * 初始值</span><br><span class="line"> */</span><br><span class="line">private T setInitialValue() &#123;</span><br><span class="line">    T value = initialValue();</span><br><span class="line">    Thread t = Thread.currentThread();</span><br><span class="line">    ThreadLocalMap map = getMap(t);</span><br><span class="line">    if (map != null)</span><br><span class="line">        map.set(this, value);</span><br><span class="line">    else</span><br><span class="line">        createMap(t, value);</span><br><span class="line">    return value;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>如果无法获取到当前线程的ThreadLocal.ThreadLocalMap，为线程创建ThreadLocal.ThreadLocalMap：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Create the map associated with a ThreadLocal. Overridden in</span><br><span class="line"> * InheritableThreadLocal.</span><br><span class="line"> * 创建与ThreadLocal关联的映射。InheritableThreadLocal覆盖。</span><br><span class="line"> * @param t the current thread</span><br><span class="line"> * 当前线程</span><br><span class="line"> * @param firstValue value for the initial entry of the map</span><br><span class="line"> * 映射的初始项的值</span><br><span class="line"> */</span><br><span class="line">void createMap(Thread t, T firstValue) &#123;</span><br><span class="line">    t.threadLocals = new ThreadLocalMap(this, firstValue);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="ThreadLocal-Set"><a href="#ThreadLocal-Set" class="headerlink" title="ThreadLocal.Set"></a>ThreadLocal.Set</h2><p>通过获取具体类型ThreadLocal<Loop>设置线程本地变量Loop：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Sets the current thread&apos;s copy of this thread-local variable</span><br><span class="line"> * to the specified value.  Most subclasses will have no need to</span><br><span class="line"> * override this method, relying solely on the &#123;@link #initialValue&#125;</span><br><span class="line"> * method to set the values of thread-locals.</span><br><span class="line"> * </span><br><span class="line"> * 将此线程局部变量的当前线程副本设置为指定的值。</span><br><span class="line"> * 大多数子类将不需要重写这个方法，仅仅依靠initialValue方法来设置线程局部变量的值。</span><br><span class="line"> * @param value the value to be stored in the current thread&apos;s copy of</span><br><span class="line"> *        this thread-local.</span><br><span class="line"> *        要存储在当前线程的线程本地副本中的值。</span><br><span class="line"> */</span><br><span class="line">public void set(T value) &#123;</span><br><span class="line">    Thread t = Thread.currentThread();</span><br><span class="line">    ThreadLocalMap map = getMap(t);</span><br><span class="line">    if (map != null)</span><br><span class="line">        map.set(this, value);</span><br><span class="line">    else</span><br><span class="line">        createMap(t, value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="ThreadLocal-ThreadLocalMap"><a href="#ThreadLocal-ThreadLocalMap" class="headerlink" title="ThreadLocal.ThreadLocalMap"></a>ThreadLocal.ThreadLocalMap</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * ThreadLocalMap is a customized hash map suitable only for</span><br><span class="line"> * maintaining thread local values. No operations are exported</span><br><span class="line"> * outside of the ThreadLocal class. The class is package private to</span><br><span class="line"> * allow declaration of fields in class Thread.  To help deal with</span><br><span class="line"> * very large and long-lived usages, the hash table entries use</span><br><span class="line"> * WeakReferences for keys. However, since reference queues are not</span><br><span class="line"> * used, stale entries are guaranteed to be removed only when</span><br><span class="line"> * the table starts running out of space.</span><br><span class="line"> * </span><br><span class="line"> * ThreadLocalMap是一个定制的散列映射，只适用于维护线程本地值。</span><br><span class="line"> * 没有任何操作被导出到ThreadLocal类之外。类是包私有的，允许在类线程中声明字段。</span><br><span class="line"> * 为了帮助处理非常大且长期存在的用法，哈希表条目对键使用WeakReference。</span><br><span class="line"> * 但是，由于没有使用引用队列，所以只有在表空间不足时才会删除陈旧的条目。</span><br><span class="line"> */</span><br></pre></td></tr></table></figure>
-<h2 id="ThreadLocal-ThreadLocalMap-Entry"><a href="#ThreadLocal-ThreadLocalMap-Entry" class="headerlink" title="ThreadLocal.ThreadLocalMap.Entry"></a>ThreadLocal.ThreadLocalMap.Entry</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * The entries in this hash map extend WeakReference, using</span><br><span class="line"> * its main ref field as the key (which is always a</span><br><span class="line"> * ThreadLocal object).  Note that null keys (i.e. entry.get()</span><br><span class="line"> * == null) mean that the key is no longer referenced, so the</span><br><span class="line"> * entry can be expunged from table.  Such entries are referred to</span><br><span class="line"> * as &quot;stale entries&quot; in the code that follows.</span><br><span class="line"> * </span><br><span class="line"> * 这个散列映射中的条目扩展了WeakReference，使用它的主ref字段作为键(它始终是一个ThreadLocal对象)。</span><br><span class="line"> * 注意，null键(即entry.get() == null)表示不再引用该键，因此可以从表中删除该条目。这样的条目在下面的代码中称为“陈旧的条目”。</span><br><span class="line"> */</span><br><span class="line">static class Entry extends WeakReference&lt;ThreadLocal&lt;?&gt;&gt; &#123;</span><br><span class="line">    /** The value associated with this ThreadLocal. */</span><br><span class="line">    Object value;</span><br><span class="line"></span><br><span class="line">    Entry(ThreadLocal&lt;?&gt; k, Object v) &#123;</span><br><span class="line">        super(k);</span><br><span class="line">        value = v;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>ThreadLocalMap的Entry是继承WeakReference，和HashMap很大的区别是，Entry中没有next字段，所以就不存在链表的情况。</p>
-<h2 id="没有链表结构，那发生hash冲突了怎么办？"><a href="#没有链表结构，那发生hash冲突了怎么办？" class="headerlink" title="没有链表结构，那发生hash冲突了怎么办？"></a>没有链表结构，那发生hash冲突了怎么办？</h2><p>每个ThreadLocal对象都有一个hash值threadLocalHashCode，每初始化一个ThreadLocal对象，hash值就增加一个固定的大小0x61c88647。</p>
-<p>在插入过程中，根据ThreadLocal对象的hash值，定位到table中的位置i，过程如下： 1、如果当前位置是空的，那么正好，就初始化一个Entry对象放在位置i上； 2、不巧，位置i已经有Entry对象了，如果这个Entry对象的key正好是即将设置的key，那么重新设置Entry中的value； 3、很不巧，位置i的Entry对象，和即将设置的key没关系，那么只能找下一个空位置；<br>这样的话，在get的时候，也会根据ThreadLocal对象的hash值，定位到table中的位置，然后判断该位置Entry对象中的key是否和get的key一致，如果不一致，就判断下一个位置<br>可以发现，set和get如果冲突严重的话，效率很低，因为ThreadLoalMap是Thread的一个属性，所以即使在自己的代码中控制了设置的元素个数，但还是不能控制其它代码的行为。</p>
-<h2 id="ThreadLocal可能导致内存泄漏，为什么？"><a href="#ThreadLocal可能导致内存泄漏，为什么？" class="headerlink" title="ThreadLocal可能导致内存泄漏，为什么？"></a>ThreadLocal可能导致内存泄漏，为什么？</h2><p>当使用ThreadLocal保存一个value时，会在ThreadLocalMap中的数组插入一个Entry对象，按理说key-value都应该以强引用保存在Entry对象中，但在ThreadLocalMap的实现中，key被保存到了WeakReference对象中。<br>这就导致了一个问题，ThreadLocal在没有外部强引用时，发生GC时会被回收，如果创建ThreadLocal的线程一直持续运行，那么这个Entry对象中的value就有可能一直得不到回收，发生内存泄露。</p>
-<h2 id="如何避免内存泄露？"><a href="#如何避免内存泄露？" class="headerlink" title="如何避免内存泄露？"></a>如何避免内存泄露？</h2><p>在调用ThreadLocal的get()、set()可能会清除ThreadLocalMap中key为null的Entry对象，这样对应的value就没有GC Roots可达了，下次GC的时候就可以被回收，当然如果调用remove方法，肯定会删除对应的Entry对象。<br>如果使用ThreadLocal的set方法之后，没有显示的调用remove方法，就有可能发生内存泄露，所以养成良好的编程习惯十分重要，使用完ThreadLocal之后，记得调用remove方法。</p>
-<p>ThreadLocal的原理：每个Thread内部维护着一个ThreadLocalMap，它是一个Map。这个映射表的Key是一个弱引用，其实就是ThreadLocal本身，Value是真正存的线程变量Object。<br>也就是说ThreadLocal本身并不真正存储线程的变量值，它只是一个工具，用来维护Thread内部的Map，帮助存和取。注意上图的虚线，它代表一个弱引用类型，而弱引用的生命周期只能存活到下次GC前。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Removes the current thread&apos;s value for this thread-local</span><br><span class="line"> * variable.  If this thread-local variable is subsequently</span><br><span class="line"> * &#123;@linkplain #get read&#125; by the current thread, its value will be</span><br><span class="line"> * reinitialized by invoking its &#123;@link #initialValue&#125; method,</span><br><span class="line"> * unless its value is &#123;@linkplain #set set&#125; by the current thread</span><br><span class="line"> * in the interim.  This may result in multiple invocations of the</span><br><span class="line"> * &#123;@code initialValue&#125; method in the current thread.</span><br><span class="line"> * 删除此线程局部变量的当前线程值。</span><br><span class="line"> * 如果这个线程局部变量随后是当前线程的get，那么它的值将通过调用它的initialValue方法来重新初始化，除非它的值是当前线程在过渡期间的set。这可能导致在当前线程中多次调用initialValue方法。</span><br><span class="line"> * @since 1.5</span><br><span class="line"> */</span><br><span class="line"> public void remove() &#123;</span><br><span class="line">     ThreadLocalMap m = getMap(Thread.currentThread());</span><br><span class="line">     if (m != null)</span><br><span class="line">         m.remove(this);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2020/01/14/%E5%BC%95%E7%94%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/header.jpeg">
-      <meta itemprop="name" content="张潮州">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="张潮州">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/01/14/%E5%BC%95%E7%94%A8/" class="post-title-link" itemprop="url">引用</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2020-01-14 17:22:08 / Modified: 17:22:23" itemprop="dateCreated datePublished" datetime="2020-01-14T17:22:08+08:00">2020-01-14</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Abstract base class for reference objects.  This class defines the operations common to all reference objects.  Because reference objects are implemented in close cooperation with the garbage collector, this class may not be subclassed directly.</span><br><span class="line"></span><br><span class="line">引用对象的抽象基类。这个类定义所有引用对象共有的操作。因为引用对象是在与垃圾收集器密切合作下实现的，所以这个类可能不会被直接子类化。</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2020/01/14/%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%B8%AD%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%88%9B%E5%BB%BA%E8%BF%87%E7%A8%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/header.jpeg">
-      <meta itemprop="name" content="张潮州">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="张潮州">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/01/14/%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%B8%AD%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%88%9B%E5%BB%BA%E8%BF%87%E7%A8%8B/" class="post-title-link" itemprop="url">虚拟机中对象的创建过程</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2020-01-14 17:05:56 / Modified: 17:07:17" itemprop="dateCreated datePublished" datetime="2020-01-14T17:05:56+08:00">2020-01-14</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id=""><a href="#" class="headerlink" title=""></a></h3>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2020/01/14/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Java%E8%99%9A%E6%8B%9F%E6%9C%BA-JVM%E9%AB%98%E7%BA%A7%E7%89%B9%E6%80%A7%E4%B8%8E%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5-%E7%AC%AC2%E7%89%88/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/header.jpeg">
-      <meta itemprop="name" content="张潮州">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="张潮州">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/01/14/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Java%E8%99%9A%E6%8B%9F%E6%9C%BA-JVM%E9%AB%98%E7%BA%A7%E7%89%B9%E6%80%A7%E4%B8%8E%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5-%E7%AC%AC2%E7%89%88/" class="post-title-link" itemprop="url">深入理解Java虚拟机-JVM高级特性与最佳实践-第2版</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2020-01-14 12:38:48 / Modified: 16:56:30" itemprop="dateCreated datePublished" datetime="2020-01-14T12:38:48+08:00">2020-01-14</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="自动内存管理机制"><a href="#自动内存管理机制" class="headerlink" title="自动内存管理机制"></a>自动内存管理机制</h1><h1 id="Java内存区域与内存溢出异常"><a href="#Java内存区域与内存溢出异常" class="headerlink" title="Java内存区域与内存溢出异常"></a>Java内存区域与内存溢出异常</h1><p>Java虚拟机在执行Java程序的过程中，会把它所管理的内存划分为若干个不同的数据区域。</p>
-<p>Java虚拟机运行时数据区</p>
-<table>
-<thead>
-<tr>
-<th>数据区</th>
-<th>解释</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>程序计数器 Program Counter Register</td>
-<td>当前线程所执行的字节码的行号指示器。线程私有。</td>
-</tr>
-<tr>
-<td>Java虚拟机栈 Java Virtual Machine Stacks</td>
-<td>描述了Java方法执行的内存模型。线程私有。</td>
-</tr>
-<tr>
-<td>本地方法栈Native Method Stack</td>
-<td>本地方法栈为虚拟机使用到的Native方法服务，与虚拟机栈为虚拟机执行Java方法服务的作用类似。</td>
-</tr>
-<tr>
-<td>Java堆 Java Heap</td>
-<td>Java堆是被所有线程共享的一块内存区域，在虚拟机启动时创建。次内存区域的唯一目的就是存放对象实例，几乎所有的对象实例都在这里分配内存。</td>
-</tr>
-<tr>
-<td>方法区 Method Area</td>
-<td>方法区是各个线程共享的内存区域，用于存储已经被虚拟机加载的类信息、常量、静态变量、即时编译器编译后的代码等数据。</td>
-</tr>
-</tbody></table>
-<h3 id="程序计数器"><a href="#程序计数器" class="headerlink" title="程序计数器"></a>程序计数器</h3><p>在虚拟机的概念模型里，字节码解释器工作时就是通过改变这个计数器的值来选取下一条需要执行的字节码指令，分支、循环、跳转、异常处理、线程恢复等基础功能都需要依赖程序计数器来完成。<br>由于Java虚拟机的多线程是通过线程轮流切换并分配处理器执行时间的方式来实现的，在任何一个确定的时刻，一个处理器/内核都只会执行一条线程中的指令。因此，为了线程切换后能恢复到正确的执行位置，每条线程都需要有一个独立的程序计数器，各条线程之间计数器互不影响，独立存储，这类内存区域是线程私有的内存。<br>如果线程正在执行的是一个Java方法，则计数器记录的是正在执行的虚拟机字节码指令的地址；如果线程正在执行的是一个Native方法，则计数器值为空（Undifined）。此内存区域是唯一一个在Java虚拟机规范中没有规定任何OutOfMemoryError情况的区域。</p>
-<h3 id="Java虚拟机栈"><a href="#Java虚拟机栈" class="headerlink" title="Java虚拟机栈"></a>Java虚拟机栈</h3><p>Java虚拟机栈的生命周期与线程相同，虚拟机栈描述了Java方法执行的内存模型，每个方法在执行的同时都会创建一个栈帧（Stack Frame）用于存储局部变量表、操作数栈、动态链接、方法出口等信息。每一个方法从调用直至执行完成的过程，就对应着一个栈帧在虚拟机中入栈到出栈的过程。</p>
-<p>局部变量表存放了编译期可知的各种基础数据类型、对象引用和returnAddreass类型。其中64位的long和double类型的数据会占用2个局部变量空间(Slot)，其余的数据类型只占用1个。<br>局部变量表所需的内存空间在编译期间完成分配，当进入一个方法时，这个方法需要在帧中分配多大的局部变量空间是完全确定的，在方法运行期间不会改变局部变量表的大小。</p>
-<p>在Java虚拟机规范中，对Java虚拟机栈规定了两个异常状况：如果线程请求的栈深度大于虚拟机所允许的深度，将抛出StackOverflowError异常；如果虚拟机栈可以动态扩展，如果扩展时候无法申请到足够的内存，就会抛出OutOfMemoryError异常。</p>
-<table>
-<thead>
-<tr>
-<th>类型</th>
-<th>解释</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>基础数据类型</td>
-<td>boolean、byte、char、short、int、float、long、double</td>
-</tr>
-<tr>
-<td>对象引用</td>
-<td>reference类型，不等同于对象本身，可能是一个指向对象起始地址的引用指针，也可能是指向一个代表对象的句柄或其他与此对象相关的位置。</td>
-</tr>
-<tr>
-<td>returnAddress类型</td>
-<td>指向了一条字节码指令的地址。</td>
-</tr>
-</tbody></table>
-<h3 id="本地方法栈"><a href="#本地方法栈" class="headerlink" title="本地方法栈"></a>本地方法栈</h3><p>本地方法栈为虚拟机使用到的Native方法服务，与虚拟机栈为虚拟机执行Java方法服务的作用类似。</p>
-<h3 id="Java堆"><a href="#Java堆" class="headerlink" title="Java堆"></a>Java堆</h3><p>Java堆是垃圾收集器管理的主要区域，所以也叫GC堆Garbage Collected Heap。<br>从内存回收的角度看，由于现在收集器基本都采用分代收集算法，所以Java堆可以细分为新生代和老年代，或者Eden空间、From Survivor空间、To Survivor空间。<br>从内存分配的角度看，Java堆可以划分出多个线程私有的分配缓冲区TLAB Thread Local Allocation Buffer。<br>如果堆中没有内存完成实例分配，并且堆也无法再扩展的时候，将会抛出OutOfMemoryError异常。<br>不需要连续的内存，可以选择固定大小或者可扩展。</p>
-<h3 id="方法区"><a href="#方法区" class="headerlink" title="方法区"></a>方法区</h3><p>不需要连续的内存，可以选择固定大小或者可扩展，可以选择不实现垃圾收集。<br>当方法区无法满足内存分配需求的时候，将抛出OutOfMemoryError异常。</p>
-<h3 id="运行时常量池"><a href="#运行时常量池" class="headerlink" title="运行时常量池"></a>运行时常量池</h3><p>Runtime Constant Pool是方法区的一部分。用于存放编译期生成的各种字面量和符号引用，这部分内容将在类加载后进入方法区的运行时常量池中存放。<br>当常量池无法再申请到内存时，会抛出OutOfMemoryError异常。</p>
-<h3 id="直接内存"><a href="#直接内存" class="headerlink" title="直接内存"></a>直接内存</h3><p>Direct Memory并不是虚拟机运行时数据区的一部分，也不是Java虚拟机规范中定义的内存区域，但是这部分内存也被频繁地使用，而且也可能导致OutOfMemoryError异常出现。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2020/01/14/Java%E5%BC%B1%E5%BC%95%E7%94%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/header.jpeg">
-      <meta itemprop="name" content="张潮州">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="张潮州">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/01/14/Java%E5%BC%B1%E5%BC%95%E7%94%A8/" class="post-title-link" itemprop="url">Java弱引用</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2020-01-14 11:27:14 / Modified: 14:05:14" itemprop="dateCreated datePublished" datetime="2020-01-14T11:27:14+08:00">2020-01-14</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">强引用（Strong Reference）：通常我们通过new来创建一个新对象时返回的引用就是一个强引用，若一个对象通过一系列强引用可到达，它就是强可达的(strongly reachable)，那么它就不被回收。</span><br><span class="line"></span><br><span class="line">弱引用（Weak Reference）：弱引用的对象拥有更短暂的生命周期。在垃圾回收器线程扫描它所管辖的内存区域的过程中，一旦发现了只具有弱引用的对象，不管当前内存空间足够与否，都会回收它的内存。</span><br><span class="line"></span><br><span class="line">软引用（Soft Reference）：软引用和弱引用的区别在于，若一个对象是弱引用可达，无论当前内存是否充足它都会被回收，而软引用可达的对象在内存不充足时才会被回收，因此软引用要比弱引用强一些。</span><br><span class="line"></span><br><span class="line">虚引用（Phantom Reference）：虚引用是Java中最弱的引用，那么它弱到什么程度呢？它是如此脆弱以至于我们通过虚引用甚至无法获取到被引用的对象，虚引用存在的唯一作用就是当它指向的对象被回收后，虚引用本身会被加入到引用队列中，用作记录它指向的对象已被回收。</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Weak reference objects, which do not prevent their referents from being made finalizable, finalized, and then reclaimed.  Weak references are most often used to implement canonicalizing mappings.</span><br><span class="line"></span><br><span class="line">Suppose that the garbage collector determines at a certain point in time that an object is weakly reachable.  At that time it will atomically clear all weak references to that object and all weak references to any other weakly-reachable objects from which that object is reachable through a chain of strong and soft references.  At the same time it will declare all of the formerly weakly-reachable objects to be finalizable.  At the same time or at some later time it will enqueue those newly-cleared weak references that are registered with reference queues.</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">弱引用对象，这并不会阻止它们的被引用对象变得可终结、最终确定，然后被回收。弱引用通常用于实现规范化映射。</span><br><span class="line"></span><br><span class="line">假设垃圾收集器在某一时间点确定对象是弱可及的。此时，它将原子性地清除对该对象的所有弱引用，以及对任何其他弱可及对象的所有弱引用，从这些弱可及对象可以通过强和软引用链访问。同时，它将声明所有以前弱可及的对象都是可终结的。与此同时，或者在以后的某个时候，它将对那些新清除的弱引用进行排队，这些弱引用是用引用队列注册的。</span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">public class WeakReference&lt;T&gt; extends Reference&lt;T&gt; &#123;</span><br><span class="line">    /**</span><br><span class="line">     * Creates a new weak reference that refers to the given object.  The new</span><br><span class="line">     * reference is not registered with any queue.</span><br><span class="line">     * 创建引用给定对象的新弱引用。新引用未在任何队列中注册。</span><br><span class="line">     * @param referent object the new weak reference will refer to</span><br><span class="line">     * 新的弱引用将引用的对象</span><br><span class="line">     */</span><br><span class="line">    public WeakReference(T referent) &#123;</span><br><span class="line">        super(referent);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * Creates a new weak reference that refers to the given object and is</span><br><span class="line">     * registered with the given queue.</span><br><span class="line">     * 创建一个新的弱引用，该引用引用给定的对象，并在给定的队列中注册。</span><br><span class="line">     * @param referent object the new weak reference will refer to</span><br><span class="line">     * 新的弱引用将引用的对象</span><br><span class="line">     * @param q the queue with which the reference is to be registered,</span><br><span class="line">     *          or null if registration is not required</span><br><span class="line">     * 要注册引用的队列，如果不需要注册则为空</span><br><span class="line">     */</span><br><span class="line">    public WeakReference(T referent, ReferenceQueue&lt;? super T&gt; q) &#123;</span><br><span class="line">        super(referent, q);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -1028,7 +1174,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">39</span>
+          <span class="site-state-item-count">45</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
