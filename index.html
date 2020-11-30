@@ -51,9 +51,9 @@
 </script>
 
   <meta property="og:type" content="website">
-<meta property="og:title" content="张潮州">
+<meta property="og:title" content="Android技术堆栈">
 <meta property="og:url" content="https:&#x2F;&#x2F;chaozhouzhang.github.io&#x2F;index.html">
-<meta property="og:site_name" content="张潮州">
+<meta property="og:site_name" content="Android技术堆栈">
 <meta property="og:locale" content="en">
 <meta name="twitter:card" content="summary">
 
@@ -71,7 +71,7 @@
   };
 </script>
 
-  <title>张潮州</title>
+  <title>Android技术堆栈</title>
   
 
 
@@ -117,7 +117,7 @@
     <div>
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">张潮州</span>
+        <span class="site-title">Android技术堆栈</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -187,7 +187,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2020/03/11/Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">
+    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2019/10/24/Hexo%E4%BD%BF%E7%94%A8%E6%96%87%E6%A1%A3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/header.jpeg">
@@ -196,109 +196,12 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="张潮州">
+      <meta itemprop="name" content="Android技术堆栈">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/03/11/Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" class="post-title-link" itemprop="url">Java虚拟机内存管理</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2020-03-11 11:51:32 / Modified: 16:55:18" itemprop="dateCreated datePublished" datetime="2020-03-11T11:51:32+08:00">2020-03-11</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="Java虚拟机内存管理的运行时数据区域"><a href="#Java虚拟机内存管理的运行时数据区域" class="headerlink" title="Java虚拟机内存管理的运行时数据区域"></a>Java虚拟机内存管理的运行时数据区域</h1><p>Java虚拟机在执行Java程序的过程中，将所管理的内存划分为若干个不同的数据区域，包括方法区、虚拟机栈、本地方法栈、堆、程序计数器。</p>
-<h2 id="程序计数器"><a href="#程序计数器" class="headerlink" title="程序计数器"></a>程序计数器</h2><p>1、程序计数器是线程私有的内存，各条线程之间的程序计数器互不影响，独立存储，程序计数器是当前线程所执行的字节码的行号指示器。</p>
-<p>2、在虚拟机的概念模型里，字节码解释器工作时就是通过改变程序计数器的值来选取下一条需要执行的字节码指令，分支、循环、跳转、异常处理、线程恢复等基础功能都需要依赖这个计数器来完成。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">如果正在执行的是一个Java方法，程序计数器记录的是正在执行的虚拟机字节码指令的地址。</span><br><span class="line">如果正在执行的是一个Native方法，程序计数器的值则为空Undefined。</span><br></pre></td></tr></table></figure>
-
-<p>3、Java虚拟机的多线程是通过线程轮流切换并分配处理器执行时间的方式来实现的。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">在一个确定的时刻，一个处理器或者一个多核处理器的内核只会执行一条线程中的指令。</span><br><span class="line">为了线程切换后能恢复到正确的执行位置，每条线程都需要有一个独立的程序计数器。</span><br></pre></td></tr></table></figure>
-<p>4、程序计数器内存区域是唯一一个在Java虚拟机规范中没有规定任何OutOfMemoryError情况的区域。</p>
-<h2 id="Java虚拟机栈"><a href="#Java虚拟机栈" class="headerlink" title="Java虚拟机栈"></a>Java虚拟机栈</h2><p>1、Java虚拟机栈是线程私有的内存，生命周期与线程相同。</p>
-<p>2、Java虚拟机栈描述的是Java方法执行的内存模型。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">每个方法被执行的时候都会同时创建一个栈帧用于存储局部变量表、操作栈、动态链接、方法出口等信息。</span><br><span class="line">每个方法被调用直至执行完成的过程，就对应一个栈帧在虚拟机栈中从入栈到出栈的过程。</span><br></pre></td></tr></table></figure>
-<p>3、虚拟机栈中的局部变量表存放了编译器可知的各种基本数据类型、对象引用、和returnAddress类型。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">基本数据类型：boolean、	byte、char、short、int、float、long、double。</span><br><span class="line">其中64位长度的double和long类型的数据会占用2个局部变量空间，其余的数据类型只占用1个。</span><br><span class="line"></span><br><span class="line">对象引用：reference类型，根据不同的虚拟机实现，可能是一个指向对象起始地址的引用指针、也可能是指向一个代表对象的句柄或者其他与此对象相关的位置。</span><br><span class="line"></span><br><span class="line">returnAddress类型：指向一条字节码指令的地址。</span><br></pre></td></tr></table></figure>
-
-<p>4、局部变量表所需的内存空间在编译期间完成分配，当进入一个方法时，这个方法需要在帧中分配多大的局部变量空间是完全确定的，在方法运行期间不会改变局部变量表的大小。</p>
-<p>5、在Java虚拟机规范中，对Java虚拟机栈内存区域规定了两种异常状况。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">如果线程请求的栈深度大于虚拟机所允许的深度，将抛出StackOverflowError异常。</span><br><span class="line"></span><br><span class="line">如果虚拟机栈可以动态扩展，当扩展时无法申请到足够的内存时会抛出OutOfMemoryError异常。</span><br></pre></td></tr></table></figure>
-
-<h2 id="本地方法栈"><a href="#本地方法栈" class="headerlink" title="本地方法栈"></a>本地方法栈</h2><p>虚拟机栈为Java虚拟机执行Java方法服务。<br>本地方法栈为Java虚拟机执行Native方法服务。<br>Sun HotSpot虚拟机将Java虚拟机栈和本地方法栈合二为一。<br>本地方法栈会抛出StackOverflowError异常和OutOfMemoryError异常。</p>
-<h2 id="Java堆"><a href="#Java堆" class="headerlink" title="Java堆"></a>Java堆</h2><p>Java堆是被所有线程共享的一块内存区域，在Java虚拟机启动时创建，是Java虚拟机所管理的内存中最大的一块。</p>
-<p>Java堆的目的是存放对象实例，几乎所有的对象实例都在Java堆分配内存。</p>
-<p>Java堆/GC堆是垃圾收集器管理的主要区域。<br>从内存回收的角度看，由于现在收集器基本采用分代收集算法，所以Java堆分为新生代和老年代。细致分为Eden空间、From Survivor空间、To Survivor空间等。<br>从内存分配的角度看，线程共享的Java堆中可能划分出多个线程私有的分配缓存区。</p>
-<p>Java虚拟机规范规定，Java堆可以处于物理上不连续的内存空间中，只要逻辑上连续即可，就像磁盘空间一样。</p>
-<p>如果在堆中没有内存完成实例分配，并且堆也无法再扩展时，将会抛出OutOfMemoryError异常。</p>
-<p>Java堆可以选择实现固定大小的，也可以是扩展的。</p>
-<h2 id="方法区"><a href="#方法区" class="headerlink" title="方法区"></a>方法区</h2><p>方法区是各个线程共享的内存区域，用于存储已经被虚拟机加载的类信息、常量、静态变量、即时编译器编译后的代码等数据。</p>
-<p>方法区不需要连续的内存，可以选择固定大小也可以扩展，可以选择不实现垃圾收集。</p>
-<p>方法区比较少出现垃圾收集，方法区的内存回收目标主要是针对常量池的回收和类型的卸载。</p>
-<p>方法区和永久代并不等价，只是HotSpot把GC分代收集扩展至方法区，使用永久代实现方法区而已。</p>
-<p>Java虚拟机规范规定，当方法区无法满足内存分配时，将抛出OutOfMemoryError异常。</p>
-<h2 id="运行时常量池"><a href="#运行时常量池" class="headerlink" title="运行时常量池"></a>运行时常量池</h2><p>运行时常量池是方法区的一部分。</p>
-<p>Class文件中除了版本、字段、方法、接口等描述信息外，还有一项信息是常量池，用于存放编译期生成的各种字面量和符号引用，这部分内容将在类加载后存放到方法区的运行时常量池中。</p>
-<p>Java虚拟机除了在运行时常量池中存储Class文件中描述的符号引用外，还会存储翻译出来的直接引用。</p>
-<p>运行时常量池相对于Class文件常量池的另外一个重要特征是具备动态性，Java语言并不要求常量一定只能在编译器产生，并非预置入Class文件中常量池的内容才能进入方法区的运行时常量池，运行期间也可能将新的常量放入运行时常量池中，例如String类的intern()方法就是利用此特性实现的。</p>
-<p>当常量池无法申请到内存时，将抛出OutOfMemoryError异常。</p>
-<h2 id="直接内存"><a href="#直接内存" class="headerlink" title="直接内存"></a>直接内存</h2><p>直接内存不是虚拟机运行时数据区域的一部分，也不是Java虚拟机规范规定的内存区域。</p>
-<p>JDK1.4中新加入NIO类，引入了一种基于通道与缓冲区的IO方式，可以使用Native函数库直接分配堆外内存，然后通过一个存储在Java堆里面的DirectByBuffer对象作为这块内存的引用进行操作，避免了在Java堆和Native堆来回复制数据，显著提高性能。</p>
-<p>直接内存的分配受到机器总内存包括RAM以及SWAP区域或者分页文件的大小，以及处理器寻址空间的限制。</p>
-<p>直接内存也有可能导致OutOfMemoryError异常。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2020/03/10/Java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/header.jpeg">
-      <meta itemprop="name" content="张潮州">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="张潮州">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/03/10/Java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/" class="post-title-link" itemprop="url">Java内存模型</a>
+            <a href="/2019/10/24/Hexo%E4%BD%BF%E7%94%A8%E6%96%87%E6%A1%A3/" class="post-title-link" itemprop="url">Hexo使用文档</a>
         </h1>
 
         <div class="post-meta">
@@ -308,215 +211,25 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2020-03-10 15:17:15" itemprop="dateCreated datePublished" datetime="2020-03-10T15:17:15+08:00">2020-03-10</time>
+              <time title="Created: 2019-10-24 14:59:57" itemprop="dateCreated datePublished" datetime="2019-10-24T14:59:57+08:00">2019-10-24</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-03-11 11:51:25" itemprop="dateModified" datetime="2020-03-11T11:51:25+08:00">2020-03-11</time>
+                <time title="Modified: 2019-12-03 19:30:45" itemprop="dateModified" datetime="2019-12-03T19:30:45+08:00">2019-12-03</time>
               </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Java内存模型：<br><a href="https://juejin.im/post/5bf2977751882505d840321d" target="_blank" rel="noopener">https://juejin.im/post/5bf2977751882505d840321d</a></p>
-<p>内存模型描述了程序中各个变量（实例域、静态域和数组元素）之间的关系，以及在实际计算机系统中将变量存储到内存和从内存中取出变量这样的底层细节，对象最终是存储在内存里面的，这点没有错，但是编译器、运行库、处理器或者系统缓存可以有特权在变量指定内存位置存储或者取出变量的值。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2020/03/07/Thread/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/header.jpeg">
-      <meta itemprop="name" content="张潮州">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="张潮州">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/03/07/Thread/" class="post-title-link" itemprop="url">Thread</a>
-        </h1>
-
-        <div class="post-meta">
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
+                <i class="fa fa-folder-o"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-03-07 16:52:13" itemprop="dateCreated datePublished" datetime="2020-03-07T16:52:13+08:00">2020-03-07</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hexo/" itemprop="url" rel="index">
+                    <span itemprop="name">Hexo</span>
+                  </a>
                 </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-03-11 13:47:15" itemprop="dateModified" datetime="2020-03-11T13:47:15+08:00">2020-03-11</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id=""><a href="#" class="headerlink" title=""></a></h1><p>线程在执行过程中与进程还是有区别的。<br>每个独立的线程有一个程序运行的入口、顺序执行序列和程序的出口。<br>但是线程不能够独立执行，必须依存在应用程序中，由应用程序提供多个线程执行控制。</p>
-<p>线程是进程的一个实体，是CPU调度和分派的基本单位，它是比进程更小的能独立运行的基本单位。线程自己基本上不拥有系统资源，只拥有一点在运行中必不可少的资源（如程序计数器,一组寄存器和栈），但是它可与同属一个进程的其他的线程共享进程所拥有的全部资源。</p>
-<p>线程有自己的堆栈和局部变量，但线程之间没有单独的地址空间，一个线程包含以下内容：</p>
-<p>一个指向当前被执行指令的指令指针；<br>一个栈；<br>一个寄存器值的集合，定义了一部分描述正在执行线程的处理器状态的值<br>一个私有的数据区。</p>
-<p>我们使用Join()方法挂起当前线程，直到调用Join()方法的线程执行完毕。该方法还存在包含参数的重载版本，其中的参数用于指定等待线程结束的最长时间（即超时）所花费的毫秒数。如果线程中的工作在规定的超时时段内结束，该版本的Join()方法将返回一个布尔量True。</p>
-<h1 id="1、构造-gt-NEW-创建态"><a href="#1、构造-gt-NEW-创建态" class="headerlink" title="1、构造-&gt;NEW 创建态"></a>1、构造-&gt;NEW 创建态</h1><table>
-<thead>
-<tr>
-<th>属性</th>
-<th>类型</th>
-<th>解释</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>name</td>
-<td>String</td>
-<td>线程名称</td>
-</tr>
-<tr>
-<td>priority</td>
-<td>int</td>
-<td>线程优先级</td>
-</tr>
-<tr>
-<td>daemon</td>
-<td>boolean</td>
-<td>是否是守护进程</td>
-</tr>
-<tr>
-<td>target</td>
-<td>Runnable</td>
-<td>将被执行的目标对象</td>
-</tr>
-<tr>
-<td>group</td>
-<td>ThreadGroup</td>
-<td>当前线程组</td>
-</tr>
-<tr>
-<td>stackSize</td>
-<td>long</td>
-<td>栈大小</td>
-</tr>
-<tr>
-<td>tid</td>
-<td>long</td>
-<td>线程ID</td>
-</tr>
-<tr>
-<td>contextClassLoader</td>
-<td>ClassLoader</td>
-<td>上下文类加载器</td>
-</tr>
-<tr>
-<td>inheritedAccessControlContext</td>
-<td>AccessControlContext</td>
-<td>已继承的访问控制上下文</td>
-</tr>
-<tr>
-<td>inheritableThreadLocals</td>
-<td>ThreadLocal.ThreadLocalMap</td>
-<td>可继承的线程本地映射</td>
-</tr>
-</tbody></table>
-<p>设置线程名称，如果空则抛出空指针异常，若传入为空则设置为：”Thread-“ + 数字，数字从0开始。<br>获取当前所在线程为将启动线程的父线程。<br>如果传入线程组为空，则获取父线程的线程组，在线程组中增加未启动的线程数。<br>设置线程组为父线程的线程组。<br>设置是否守护线程为父线程的是否守护线程。<br>设置优先级为父线程的优先级。<br>设置传入的可运行接口对象。<br>设置传入的栈大小，默认为0。<br>设置线程ID。<br>设置上下文类加载器为父线程的上下文类加载器。<br>设置获取已继承的访问控制上下文。<br>设置可继承的线程本地映射为父线程的可继承的线程本地映射。</p>
-<h1 id="2、启动-gt-RUNNABLE-就绪"><a href="#2、启动-gt-RUNNABLE-就绪" class="headerlink" title="2、启动-&gt;RUNNABLE 就绪"></a>2、启动-&gt;RUNNABLE 就绪</h1><p>如果线程已经启动，抛出不合法的线程状态异常。<br>添加线程到线程组。<br>Android使用nativeCreate(this, stackSize, daemon)方法创建并启动线程，对应Java的方法为start0()。<br>设置线程状态为已启动。<br>如果线程启动失败，线程组移除线程。</p>
-<h1 id="3、执行-gt-RUNNING-运行态"><a href="#3、执行-gt-RUNNING-运行态" class="headerlink" title="3、执行-&gt;RUNNING 运行态"></a>3、执行-&gt;RUNNING 运行态</h1><p>当系统调度，线程CPU时间片时，会自动执行run方法，此run方法为Thread类的run方法，或为扩展线程类的run方法，如果Thread类的可执行接口对象为空，则不执行该对象的run方法。</p>
-<h1 id="4、结束-gt-DEAD-死亡态"><a href="#4、结束-gt-DEAD-死亡态" class="headerlink" title="4、结束-&gt;DEAD 死亡态"></a>4、结束-&gt;DEAD 死亡态</h1><h1 id="4、join"><a href="#4、join" class="headerlink" title="4、join"></a>4、join</h1><p>传入毫秒数。<br>同步lock对象，获得对象锁。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">synchronized</span>(lock)&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>如果传入毫秒数小于0，抛出异常。<br>如果传入毫秒数为0，如果线程是活着的，线程还没执行完，那就一直等待，直到线程执行完死掉，释放lock对象锁，程序停止执行。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lock.wait(<span class="number">0</span>);</span><br></pre></td></tr></table></figure>
-<p>如果传入毫秒数大于0，如果线程是活着的，线程还没执行完，那就一直等待，直到线程执行完死掉，delay时间后释放lock对象锁，程序停止执行。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lock.wait(delay);</span><br></pre></td></tr></table></figure>
-
-
-<p>synchronized同步方法和同步代码块的区别</p>
-<p>同步方法默认使用this或者当前类做为锁。<br>同步代码块可以选择以什么来加锁，比同步方法更精确，我们可以选择只有会在同步发生同步问题的代码加锁，而并不是整个方法。<br>同步方法使用synchronized修饰，而同步代码块使用synchronized(this){}修饰。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2020/03/07/%E7%96%91%E9%97%AE/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/header.jpeg">
-      <meta itemprop="name" content="张潮州">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="张潮州">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/03/07/%E7%96%91%E9%97%AE/" class="post-title-link" itemprop="url">疑问</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2020-03-07 15:37:11 / Modified: 15:56:56" itemprop="dateCreated datePublished" datetime="2020-03-07T15:37:11+08:00">2020-03-07</time>
             </span>
 
           
@@ -530,585 +243,20 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="疑问"><a href="#疑问" class="headerlink" title="疑问"></a>疑问</h1><h2 id="1、java-Thread中的run方法在什么时候被调用？"><a href="#1、java-Thread中的run方法在什么时候被调用？" class="headerlink" title="1、java Thread中的run方法在什么时候被调用？"></a>1、java Thread中的run方法在什么时候被调用？</h2><p>android</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">publish class Thread implements Runnable &#123;</span><br><span class="line"> </span><br><span class="line">    private Runnable target;</span><br><span class="line"> </span><br><span class="line">    public synchronized void start() &#123;</span><br><span class="line">         .</span><br><span class="line">         .</span><br><span class="line">         //调用本地方法，本地方式负责创建线程及回调run方法</span><br><span class="line">         nativeCreate(this, stackSize, daemon);</span><br><span class="line">         .</span><br><span class="line">         .</span><br><span class="line">    &#125;</span><br><span class="line">    /**</span><br><span class="line">     *该方法是在本地方法nativeCreate(this, stackSize, daemon)中被调用的</span><br><span class="line">     */</span><br><span class="line">    @Override</span><br><span class="line">    publish void run() &#123;</span><br><span class="line">        if (target != null) &#123;</span><br><span class="line">            target.run();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>java</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">publish class Thread implements Runnable &#123;</span><br><span class="line"> </span><br><span class="line">    private Runnable target;</span><br><span class="line"> </span><br><span class="line">    public synchronized void start() &#123;</span><br><span class="line">         .</span><br><span class="line">         .</span><br><span class="line">         //调用本地方法，本地方式负责创建线程及回调run方法</span><br><span class="line">         start0();</span><br><span class="line">         .</span><br><span class="line">         .</span><br><span class="line">    &#125;</span><br><span class="line">    /**</span><br><span class="line">     *该方法是在本地方法start0()中被调用的</span><br><span class="line">     */</span><br><span class="line">    @Override</span><br><span class="line">    publish void run() &#123;</span><br><span class="line">        if (target != null) &#123;</span><br><span class="line">            target.run();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>调用start()时开启线程，当该线程获取执行资源后就开始执行run方法；就是多线程会竞争资源，谁获得资源谁就执行，就是运行run方法。</p>
+          <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
 
-      
-    </div>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
 
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
 
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2020/03/06/%E5%BA%94%E7%94%A8%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/">
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/header.jpeg">
-      <meta itemprop="name" content="张潮州">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="张潮州">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/03/06/%E5%BA%94%E7%94%A8%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/" class="post-title-link" itemprop="url">应用启动过程</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2020-03-06 16:17:08 / Modified: 16:54:25" itemprop="dateCreated datePublished" datetime="2020-03-06T16:17:08+08:00">2020-03-06</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="应用启动流程"><a href="#应用启动流程" class="headerlink" title="应用启动流程"></a>应用启动流程</h1><p>ActivityThread</p>
-<h4 id="0、应用入口"><a href="#0、应用入口" class="headerlink" title="0、应用入口"></a>0、应用入口</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 应用入口：ActivityThread的静态方法</span><br><span class="line"> * @param args</span><br><span class="line"> */</span><br><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">    //准备主线程的消息循环器</span><br><span class="line">    Looper.prepareMainLooper();</span><br><span class="line"></span><br><span class="line">    //创建主线程，并绑定到Application中去</span><br><span class="line">    ActivityThread thread = new ActivityThread();</span><br><span class="line">    thread.attach(false);</span><br><span class="line"></span><br><span class="line">    //获取主线程的消息处理器mH</span><br><span class="line">    if (sMainThreadHandler == null) &#123;</span><br><span class="line">        sMainThreadHandler = thread.getHandler();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    //开始循环</span><br><span class="line">    Looper.loop();</span><br><span class="line"></span><br><span class="line">    throw new RuntimeException(&quot;Main thread loop unexpectedly exited&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="1-0、准备主线程的消息循环器"><a href="#1-0、准备主线程的消息循环器" class="headerlink" title="1.0、准备主线程的消息循环器"></a>1.0、准备主线程的消息循环器</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public static void prepareMainLooper() &#123;</span><br><span class="line">    prepare(false);</span><br><span class="line">    synchronized (Looper.class) &#123;</span><br><span class="line">        if (sMainLooper != null) &#123;</span><br><span class="line">            throw new IllegalStateException(&quot;The main Looper has already been prepared.&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        sMainLooper = myLooper();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="1-1、新建一个消息循环器Looper对象，并存储在Looper的静态变量sThreadLocal中"><a href="#1-1、新建一个消息循环器Looper对象，并存储在Looper的静态变量sThreadLocal中" class="headerlink" title="1.1、新建一个消息循环器Looper对象，并存储在Looper的静态变量sThreadLocal中"></a>1.1、新建一个消息循环器Looper对象，并存储在Looper的静态变量sThreadLocal中</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">private static void prepare(boolean quitAllowed) &#123;</span><br><span class="line">    if (sThreadLocal.get() != null) &#123;</span><br><span class="line">        throw new RuntimeException(&quot;Only one Looper may be created per thread&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    sThreadLocal.set(new Looper(quitAllowed));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="1-2、消息循环器：新建一个消息队列并获取当前线程"><a href="#1-2、消息循环器：新建一个消息队列并获取当前线程" class="headerlink" title="1.2、消息循环器：新建一个消息队列并获取当前线程"></a>1.2、消息循环器：新建一个消息队列并获取当前线程</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">private Looper(boolean quitAllowed) &#123;</span><br><span class="line">    mQueue = new MessageQueue(quitAllowed);</span><br><span class="line">    mThread = Thread.currentThread();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="1-3、消息队列"><a href="#1-3、消息队列" class="headerlink" title="1.3、消息队列"></a>1.3、消息队列</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">MessageQueue(boolean quitAllowed) &#123;</span><br><span class="line">    mQuitAllowed = quitAllowed;</span><br><span class="line">    mPtr = nativeInit();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<h4 id="2-0、主线程：获取资源管理器"><a href="#2-0、主线程：获取资源管理器" class="headerlink" title="2.0、主线程：获取资源管理器"></a>2.0、主线程：获取资源管理器</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@UnsupportedAppUsage</span><br><span class="line">ActivityThread() &#123;</span><br><span class="line">    mResourcesManager = ResourcesManager.getInstance();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<h4 id="2-1、"><a href="#2-1、" class="headerlink" title="2.1、"></a>2.1、</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line">@UnsupportedAppUsage</span><br><span class="line">private void attach(boolean system, long startSeq) &#123;</span><br><span class="line">    //当前主线程</span><br><span class="line">    sCurrentActivityThread = this;</span><br><span class="line">    //是否是系统线程</span><br><span class="line">    mSystemThread = system;</span><br><span class="line">    if (!system) &#123;//如果不是系统线程</span><br><span class="line">        android.ddm.DdmHandleAppName.setAppName(&quot;&lt;pre-initialized&gt;&quot;,</span><br><span class="line">                                                UserHandle.myUserId());</span><br><span class="line">        //设置应用对象：应用线程的Binder对象</span><br><span class="line">        RuntimeInit.setApplicationObject(mAppThread.asBinder());</span><br><span class="line">        //获取IActivityManager的实现，也就是ActivityManagerService？</span><br><span class="line">        final IActivityManager mgr = ActivityManager.getService();</span><br><span class="line">        try &#123;</span><br><span class="line">            //触发ActivityManagerService的attachApplication方法</span><br><span class="line">            mgr.attachApplication(mAppThread, startSeq);</span><br><span class="line">        &#125; catch (RemoteException ex) &#123;</span><br><span class="line">            throw ex.rethrowFromSystemServer();</span><br><span class="line">        &#125;</span><br><span class="line">        // Watch for getting close to heap limit.</span><br><span class="line">        // 监听是否接近堆极限</span><br><span class="line">        // 这里添加Gc的监听，如果超过虚拟机分配最大内存的 3/4，那么触发mgr.releaseSomeActivities</span><br><span class="line">        BinderInternal.addGcWatcher(new Runnable() &#123;</span><br><span class="line">            @Override public void run() &#123;</span><br><span class="line">                if (!mSomeActivitiesChanged) &#123;</span><br><span class="line">                    return;</span><br><span class="line">                &#125;</span><br><span class="line">                Runtime runtime = Runtime.getRuntime();</span><br><span class="line">                long dalvikMax = runtime.maxMemory();</span><br><span class="line">                long dalvikUsed = runtime.totalMemory() - runtime.freeMemory();</span><br><span class="line">                if (dalvikUsed &gt; ((3*dalvikMax)/4)) &#123;</span><br><span class="line">                    if (DEBUG_MEMORY_TRIM) Slog.d(TAG, &quot;Dalvik max=&quot; + (dalvikMax/1024)</span><br><span class="line">                            + &quot; total=&quot; + (runtime.totalMemory()/1024)</span><br><span class="line">                            + &quot; used=&quot; + (dalvikUsed/1024));</span><br><span class="line">                    mSomeActivitiesChanged = false;</span><br><span class="line">                    try &#123;</span><br><span class="line">                        ActivityTaskManager.getService().releaseSomeActivities(mAppThread);</span><br><span class="line">                    &#125; catch (RemoteException e) &#123;</span><br><span class="line">                        throw e.rethrowFromSystemServer();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125; else &#123;//如果是系统线程</span><br><span class="line">        // Don&apos;t set application object here -- if the system crashes,</span><br><span class="line">        // we can&apos;t display an alert, we just want to die die die.</span><br><span class="line">        // 不要在这里设置应用程序对象——如果系统崩溃，我们不能显示警报，我们只想死死死。</span><br><span class="line">        android.ddm.DdmHandleAppName.setAppName(&quot;system_process&quot;,</span><br><span class="line">                UserHandle.myUserId());</span><br><span class="line">        try &#123;</span><br><span class="line">            //创建Instrumentation</span><br><span class="line">            mInstrumentation = new Instrumentation();</span><br><span class="line">            mInstrumentation.basicInit(this);</span><br><span class="line">            //获取上下文</span><br><span class="line">            ContextImpl context = ContextImpl.createAppContext(</span><br><span class="line">                    this, getSystemContext().mPackageInfo);</span><br><span class="line">            //获取Application</span><br><span class="line">            mInitialApplication = context.mPackageInfo.makeApplication(true, null);</span><br><span class="line">            //触发Application的onCreate回调</span><br><span class="line">            mInitialApplication.onCreate();</span><br><span class="line">        &#125; catch (Exception e) &#123;</span><br><span class="line">            throw new RuntimeException(</span><br><span class="line">                    &quot;Unable to instantiate Application():&quot; + e.toString(), e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //创建Configuration变化的回调通知</span><br><span class="line">    ViewRootImpl.ConfigChangedCallback configChangedCallback</span><br><span class="line">            = (Configuration globalConfig) -&gt; &#123;</span><br><span class="line">        synchronized (mResourcesManager) &#123;</span><br><span class="line">            // We need to apply this change to the resources immediately, because upon returning</span><br><span class="line">            // the view hierarchy will be informed about it.</span><br><span class="line">            // 我们需要立即将此更改应用于资源，因为在返回视图层次结构时将被告知此更改。</span><br><span class="line">            if (mResourcesManager.applyConfigurationToResourcesLocked(globalConfig,</span><br><span class="line">                    null /* compat */)) &#123;</span><br><span class="line">                updateLocaleListFromAppContext(mInitialApplication.getApplicationContext(),</span><br><span class="line">                        mResourcesManager.getConfiguration().getLocales());</span><br><span class="line">                // This actually changed the resources! Tell everyone about it.</span><br><span class="line">                // 这实际上改变了资源!把这事告诉大家。</span><br><span class="line">                if (mPendingConfiguration == null</span><br><span class="line">                        || mPendingConfiguration.isOtherSeqNewer(globalConfig)) &#123;</span><br><span class="line">                    mPendingConfiguration = globalConfig;</span><br><span class="line">                    // 发送CONFIGURATION_CHANGED的消息</span><br><span class="line">                    sendMessage(H.CONFIGURATION_CHANGED, globalConfig);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    //添加监听Configuration变化的回调通知</span><br><span class="line">    ViewRootImpl.addConfigCallback(configChangedCallback);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2020/03/04/Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E8%A7%84%E8%8C%83(Java%20SE%208%E7%89%88)%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/header.jpeg">
-      <meta itemprop="name" content="张潮州">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="张潮州">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/03/04/Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E8%A7%84%E8%8C%83(Java%20SE%208%E7%89%88)%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">Java虚拟机规范(Java SE 8版)读书笔记</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-03-04 16:21:14" itemprop="dateCreated datePublished" datetime="2020-03-04T16:21:14+08:00">2020-03-04</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-03-06 14:46:17" itemprop="dateModified" datetime="2020-03-06T14:46:17+08:00">2020-03-06</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="Java虚拟机规范"><a href="#Java虚拟机规范" class="headerlink" title="Java虚拟机规范"></a>Java虚拟机规范</h1><p>Java Virtual Machine Specification</p>
-<p>Java语言特性：在硬件和二进制文件中加入虚拟机层，把编译好的class文件放在虚拟机中执行，而不是直接放在硬件上执行。</p>
-<p>平台无关性：Java虚拟机可以运行在各种平台上。</p>
-<p>语言无关性：<br>除了Java语言外，用Clojure、Scala等语言所写的程序也可以运行在Java虚拟机上；还可以用Java语言实现出的Python、Ruby等语言的解释器，从而将其放在Java虚拟机中执行。</p>
-<p>二进制本地机器码：Native Code<br>字节码：Byte Code    </p>
-<p>Java程序.java使用javac编译器生成字节码.class<br>JRuby程序.rb使用jrubyc编译器生成字节码.class<br>GroovY程序使用groovyc编译器生成字节码.class<br>其他语言程序使用对应的编译器生成字节码.class</p>
-<p>Class文件是一组以8位字节为基础单位的二进制流。<br>当遇到需要占用8位字节以上空间的数据项时，则会按照高位在前的方式分割成若干个8位字节进行存储。</p>
-<p>Class文件格式采用无符号数和表两种数据类型来存储。<br>无符号数属于基本的数据类型，可以用来描述数字、索引引用、数量值、按照UTF-8编码构成的字符串值。u1、u2、u4、u8分别表示1个字节、2个字节、4个字节、8个字节的无符号数。</p>
-<p>表是由多个无符号数或者其他表作为数据项构成的复合数据类型，用于描述有层次关系的复合结构类型，class文件本质上就是一张表。</p>
-<p>无论是无符号数还是表，当需要描述同一类型但数量不定的多个数据时，经常会使用一个前置的容量计数器加若干个连续的数据项的形式，称为某一类型的集合。</p>
-<h2 id="Class文件格式："><a href="#Class文件格式：" class="headerlink" title="Class文件格式："></a>Class文件格式：</h2><table>
-<thead>
-<tr>
-<th>数据类型</th>
-<th>数据类型解释</th>
-<th>数据名称</th>
-<th>数据名称解释</th>
-<th>数据数量</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>u4</td>
-<td>4个字节的无法符号数</td>
-<td>magic</td>
-<td>魔数</td>
-<td>1</td>
-</tr>
-<tr>
-<td>u2</td>
-<td>2个字节的无符号数</td>
-<td>minor_version</td>
-<td>次版本号</td>
-<td>1</td>
-</tr>
-<tr>
-<td>u2</td>
-<td>2个字节的无符号数</td>
-<td>major_version</td>
-<td>主版本号</td>
-<td>1</td>
-</tr>
-<tr>
-<td>u2</td>
-<td>2个字节的无符号数</td>
-<td>constant_pool_count</td>
-<td>常量池容量</td>
-<td>1</td>
-</tr>
-<tr>
-<td>cp_info</td>
-<td>常量池表</td>
-<td>constant_pool</td>
-<td>常量池</td>
-<td>constant_pool_count-1</td>
-</tr>
-<tr>
-<td>u2</td>
-<td>2个字节的无符号数</td>
-<td>access_flags</td>
-<td>访问标志</td>
-<td>1</td>
-</tr>
-<tr>
-<td>u2</td>
-<td>2个字节的无符号数</td>
-<td>this_class</td>
-<td>类索引</td>
-<td>1</td>
-</tr>
-<tr>
-<td>u2</td>
-<td>2个字节的无符号数</td>
-<td>super_class</td>
-<td>父类索引</td>
-<td>1</td>
-</tr>
-<tr>
-<td>u2</td>
-<td>2个字节的无符号数</td>
-<td>interfaces_count</td>
-<td>接口索引集合容量</td>
-<td>1</td>
-</tr>
-<tr>
-<td>u2</td>
-<td>2个字节的无符号数</td>
-<td>interfaces</td>
-<td>接口索引集合</td>
-<td>interfaces_count</td>
-</tr>
-<tr>
-<td>u2</td>
-<td>2个字节的无符号数</td>
-<td>fields_count</td>
-<td>字段表集合容量</td>
-<td>1</td>
-</tr>
-<tr>
-<td>field_info</td>
-<td>字段表</td>
-<td>fields</td>
-<td>字段表集合</td>
-<td>fields_count</td>
-</tr>
-<tr>
-<td>u2</td>
-<td>2个字节的无符号数</td>
-<td>methods_count</td>
-<td>方法表集合容量</td>
-<td>1</td>
-</tr>
-<tr>
-<td>method_info</td>
-<td>方法表</td>
-<td>methods</td>
-<td>方法表集合</td>
-<td>methods_count</td>
-</tr>
-<tr>
-<td>u2</td>
-<td>2个字节的无符号数</td>
-<td>attributes_count</td>
-<td>属性表集合容量</td>
-<td>1</td>
-</tr>
-<tr>
-<td>attribute_info</td>
-<td>属性表</td>
-<td>attributes</td>
-<td>属性表集合</td>
-<td>attributes_count</td>
-</tr>
-</tbody></table>
-<h2 id="魔数"><a href="#魔数" class="headerlink" title="魔数"></a>魔数</h2><p>Magic Number ：Class文件的头4个字节称为魔数，作用是确定这个文件是否为一个能被虚拟机接受的Class文件。其值为0xCAFEBABE。</p>
-<h2 id="Class文件的版本号"><a href="#Class文件的版本号" class="headerlink" title="Class文件的版本号"></a>Class文件的版本号</h2><p>Java的版本号是从45开始的，JDK1.1之后的每个JDK大版本发布，主版本号都会向上加1。<br>高版本的JDK只能向下兼容低版本的Class文件，但是不能运行以后版本的Class文件，即使文件格式并未发生变化。<br>次版本号的范围为0~65535。</p>
-<h2 id="常量池"><a href="#常量池" class="headerlink" title="常量池"></a>常量池</h2><p>常量池容量<br>常量池的容量计数是从1开始的，某些指向常量池的索引值的数据在特定情况下不引用任何一个常量池项目，就可以把索引值置为0。<br>常量池主要存放两大类常量：字面量和符号引用。</p>
-<table>
-<thead>
-<tr>
-<th>字面量Literal</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>文本字符串</td>
-</tr>
-<tr>
-<td>被声明为final的常量值</td>
-</tr>
-</tbody></table>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2020/03/04/Bmob%20iOS%20SDK/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/header.jpeg">
-      <meta itemprop="name" content="张潮州">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="张潮州">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/03/04/Bmob%20iOS%20SDK/" class="post-title-link" itemprop="url">Bmob iOS SDK</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2020-03-04 11:38:41 / Modified: 14:27:36" itemprop="dateCreated datePublished" datetime="2020-03-04T11:38:41+08:00">2020-03-04</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="Bmob-iOS-SDK"><a href="#Bmob-iOS-SDK" class="headerlink" title="Bmob iOS SDK"></a>Bmob iOS SDK</h1><h2 id="集成"><a href="#集成" class="headerlink" title="集成"></a>集成</h2><h4 id="1、在工程目录创建Podfile文件，并在文件中指定依赖的BmobSDK版本"><a href="#1、在工程目录创建Podfile文件，并在文件中指定依赖的BmobSDK版本" class="headerlink" title="1、在工程目录创建Podfile文件，并在文件中指定依赖的BmobSDK版本"></a>1、在工程目录创建Podfile文件，并在文件中指定依赖的BmobSDK版本</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">project ‘medium.xcodeproj&apos;</span><br><span class="line">platform :ios, &apos;8.0&apos;</span><br><span class="line">target ‘medium&apos; do</span><br><span class="line"></span><br><span class="line">pod &apos;BmobSDK&apos;, &apos;~&gt; 2.4.1&apos;</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
-
-<h4 id="2、使用终端，在工程目录使用命令安装依赖"><a href="#2、使用终端，在工程目录使用命令安装依赖" class="headerlink" title="2、使用终端，在工程目录使用命令安装依赖"></a>2、使用终端，在工程目录使用命令安装依赖</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod install</span><br></pre></td></tr></table></figure>
-
-<h4 id="3、使用Xcode，通过File-gt-Open-gt-medium-xcworkspace-gt-Open打开项目"><a href="#3、使用Xcode，通过File-gt-Open-gt-medium-xcworkspace-gt-Open打开项目" class="headerlink" title="3、使用Xcode，通过File-&gt;Open-&gt;medium.xcworkspace-&gt;Open打开项目"></a>3、使用Xcode，通过File-&gt;Open-&gt;medium.xcworkspace-&gt;Open打开项目</h4><h2 id="使用-OC"><a href="#使用-OC" class="headerlink" title="使用(OC)"></a>使用(OC)</h2><h3 id="1、设置AppId"><a href="#1、设置AppId" class="headerlink" title="1、设置AppId"></a>1、设置AppId</h3><h4 id="1-1、可以在AppDelegate-m中设置AppId"><a href="#1-1、可以在AppDelegate-m中设置AppId" class="headerlink" title="1.1、可以在AppDelegate.m中设置AppId"></a>1.1、可以在AppDelegate.m中设置AppId</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;BmobSDK/Bmob.h&gt;</span><br><span class="line"></span><br><span class="line">- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions&#123;</span><br><span class="line">    [Bmob registerWithAppKey:@&quot;申请的Application ID&quot;];</span><br><span class="line">    return YES;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="1-2-可以在main-m中设置AppId"><a href="#1-2-可以在main-m中设置AppId" class="headerlink" title="1.2 可以在main.m中设置AppId"></a>1.2 可以在main.m中设置AppId</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;BmobSDK/Bmob.h&gt;</span><br><span class="line"></span><br><span class="line">int main(int argc, char * argv[])</span><br><span class="line">&#123;</span><br><span class="line">    @autoreleasepool &#123;</span><br><span class="line">       [Bmob registerWithAppKey:@&quot;申请的Application ID&quot;];</span><br><span class="line">       return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate                     class]));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<h2 id="使用-Swift"><a href="#使用-Swift" class="headerlink" title="使用(Swift)"></a>使用(Swift)</h2><h4 id="1、在项目主目录新建桥接文件：mediumswift-Bridging-Header-h，并导入Bmob-SDK的依赖"><a href="#1、在项目主目录新建桥接文件：mediumswift-Bridging-Header-h，并导入Bmob-SDK的依赖" class="headerlink" title="1、在项目主目录新建桥接文件：mediumswift-Bridging-Header.h，并导入Bmob SDK的依赖"></a>1、在项目主目录新建桥接文件：mediumswift-Bridging-Header.h，并导入Bmob SDK的依赖</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;BmobSDK/Bmob.h&gt;</span><br></pre></td></tr></table></figure>
-
-<h4 id="2、在AppDelegate-swift中设置AppId"><a href="#2、在AppDelegate-swift中设置AppId" class="headerlink" title="2、在AppDelegate.swift中设置AppId"></a>2、在AppDelegate.swift中设置AppId</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -&gt; Bool &#123;</span><br><span class="line">    // Override point for customization after application launch.</span><br><span class="line">    Bmob.register(withAppKey: &quot;申请的Application ID&quot;)</span><br><span class="line">    return true</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2020/01/17/ViewRootImpl/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/header.jpeg">
-      <meta itemprop="name" content="张潮州">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="张潮州">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/01/17/ViewRootImpl/" class="post-title-link" itemprop="url">ViewRootImpl</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-01-17 23:45:07" itemprop="dateCreated datePublished" datetime="2020-01-17T23:45:07+08:00">2020-01-17</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="ViewRootImpl"><a href="#ViewRootImpl" class="headerlink" title="ViewRootImpl"></a>ViewRootImpl</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">The top of a view hierarchy, implementing the needed protocol between View and the WindowManager.  This is for the most part an internal implementation detail of  WindowManagerGlobal.</span><br><span class="line"></span><br><span class="line">视图层次结构的顶部，实现视图和WindowManager之间所需的协议。这在很大程度上是WindowManagerGlobal的内部实现细节。</span><br></pre></td></tr></table></figure>
-
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2020/01/17/Android%E6%8E%A7%E4%BB%B6%E7%9A%84%E5%B1%8F%E5%B9%95%E8%A7%A6%E6%91%B8%E4%BA%8B%E4%BB%B6%E4%BC%A0%E9%80%92%E6%9C%BA%E5%88%B6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/header.jpeg">
-      <meta itemprop="name" content="张潮州">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="张潮州">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/01/17/Android%E6%8E%A7%E4%BB%B6%E7%9A%84%E5%B1%8F%E5%B9%95%E8%A7%A6%E6%91%B8%E4%BA%8B%E4%BB%B6%E4%BC%A0%E9%80%92%E6%9C%BA%E5%88%B6/" class="post-title-link" itemprop="url">Android控件的屏幕触摸事件传递机制</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2020-01-17 16:54:50 / Modified: 17:14:59" itemprop="dateCreated datePublished" datetime="2020-01-17T16:54:50+08:00">2020-01-17</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="Android控件的屏幕触摸事件传递机制"><a href="#Android控件的屏幕触摸事件传递机制" class="headerlink" title="Android控件的屏幕触摸事件传递机制"></a>Android控件的屏幕触摸事件传递机制</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Android控件的屏幕触摸事件触发顺序是先触发onTouch，其次是onClick。</span><br><span class="line">如果控件的onTouch返回true，将会阻止事件继续传递，onClick不会被触发；返回false，则事件会继续传递，onClick会被触发。</span><br></pre></td></tr></table></figure>
-
-<p>onTouch的MotionEvent的Action类型：event.getAction()</p>
-<table>
-<thead>
-<tr>
-<th>名称</th>
-<th>类型</th>
-<th>解释</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>ACTION_DOWN</td>
-<td>0</td>
-<td>手指按下</td>
-</tr>
-<tr>
-<td>ACTION_UP</td>
-<td>1</td>
-<td>手指抬起</td>
-</tr>
-<tr>
-<td>ACTION_MOVE</td>
-<td>2</td>
-<td>手指滑动</td>
-</tr>
-</tbody></table>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Pass the touch screen motion event down to the target view, or this view if it is the target.</span><br><span class="line">将触摸屏运动事件向下传递到目标视图，如果是目标视图，则传递到该视图。</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2020/01/15/%E3%80%8AJava%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%BC%96%E7%A8%8B%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/header.jpeg">
-      <meta itemprop="name" content="张潮州">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="张潮州">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/01/15/%E3%80%8AJava%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%BC%96%E7%A8%8B%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">《Java多线程编程核心技术》读书笔记</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-01-15 23:23:40" itemprop="dateCreated datePublished" datetime="2020-01-15T23:23:40+08:00">2020-01-15</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-01-16 10:04:16" itemprop="dateModified" datetime="2020-01-16T10:04:16+08:00">2020-01-16</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">进程是操作系统管理的基本运行单元。</span><br></pre></td></tr></table></figure>
-<h1 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">线程是进程中独立运行的子任务。</span><br></pre></td></tr></table></figure>
-
-
-<h2 id="实现线程"><a href="#实现线程" class="headerlink" title="实现线程"></a>实现线程</h2><p>实现多线程编程的两种方式：<br>1、继承Thread类<br>2、实现Runnable接口</p>
-<p>Thread类实现了Runnable接口，他们之间具有多态关系。</p>
-<h3 id="线程调用的随机性"><a href="#线程调用的随机性" class="headerlink" title="线程调用的随机性"></a>线程调用的随机性</h3><p>在使用多线程技术时，代码的运行结果与代码执行顺序或调用顺序是无关的，线程是一个子任务，CPU以随机的时间来调用线程中的run方法。</p>
-<p>如果多次调用start方法，则会出现异常</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo d -g</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
 
       
     </div>
@@ -1127,9 +275,6 @@
   </div>
 
   
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
-  </nav>
 
 
 
@@ -1174,20 +319,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-count">1</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">1</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">2</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
