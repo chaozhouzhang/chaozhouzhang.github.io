@@ -58,7 +58,7 @@
 <meta property="og:site_name" content="Android技术堆栈">
 <meta property="og:description" content="第一章 绪论1、C++与C语言的关系 1234C++是一种面向对象的语言，实现了继承、抽象、多态和封装等概念。C++支持类，而类包含成员数据以及操作成员数据的成员方法。很多C++编译器都支持C语言。学习C++等面向对象编程语言，并不需要先学习C语言等过程性语言，不要求具备C语言编程方面的知识和经验。 2、C++的优点 1C++是一种中级编程语言，既可以高级编程方式编写应用程序，又可以低级编程方式编">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-12-04T15:51:28.244Z">
+<meta property="og:updated_time" content="2020-12-05T03:58:56.354Z">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="https://chaozhouzhang.github.io/2020/12/03/21%E5%A4%A9%E5%AD%A6%E9%80%9AC++%E7%AC%AC1%E5%A4%A9/">
@@ -221,7 +221,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-12-04 23:51:28" itemprop="dateModified" datetime="2020-12-04T23:51:28+08:00">2020-12-04</time>
+                <time title="Modified: 2020-12-05 11:58:56" itemprop="dateModified" datetime="2020-12-05T11:58:56+08:00">2020-12-05</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -273,6 +273,18 @@
 <p>8、C/C++ 程序编译过程<br>源代码（source coprede）→预处理器（processor）→编译器（compiler）→汇编程序（assembler）→目标程序（object code）→链接器（Linker）→可执行程序（executables）</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://www.sunistudio.com/cppfaq/</span><br></pre></td></tr></table></figure>
 
+<h1 id="第二章"><a href="#第二章" class="headerlink" title="第二章"></a>第二章</h1><p>C++程序被组织成类，而类由成员函数和成员变量组成。 </p>
+<p>以#打头的预处理器编译指令以及以 int main( )打头的程序 主体。 </p>
+<p>预处理器是一个在编译前运行的工具。预处理器编译指令是向预处理器发出的命令， 总是以字符#打头。 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;filename&gt;让预处理器获取指定文件的内容，并将它们放在编译指令所处的位置。</span><br></pre></td></tr></table></figure>
+<p>std<br>standard</p>
+<p>cout是在名称空间std中定义的一个控制台流，使用流插入运算符&lt;&lt;将文本放入这个流中，std::endl是将回车插入这个流中，cout将会把内容显示到控制台中。<br>类似的，fstream是在名称空间std中定义个一个文件流，使用流插入运算符&lt;&lt;可将文本插入流中，fstream将会把内容存储到磁盘的文件中。</p>
+<p>这个整数值被返回给操作系统，根据应用程序的性质，这可能很有用，因为大多数操作系 统都提供了查询功能，让您能够获悉正常终止的应用程序的返回值。在很多情况下，一个应用程序被 另一个应用程序启动，而父应用程序(启动者)想知道子应用程序(被启动者)是否成功地完成了其 任务。程序员可使用 main( )的返回值向父应用程序传递成功或错误状态。 </p>
+<p>根据约定，程序员在程序运行成功时返回 0，并在出现错误时返回−1。然而，返回值为 整数，程序员可利用整个整数范围，指出众多不同的成功或失败状态。 </p>
+<p>使用命名空间，严谨版本，没有包含整个名称空间，而只包含要使用的元素。 </p>
+<p>务必添加注释，对程序中复杂算法和复杂部分 的工作原理进行解释。<br>务必以其他程序员能够理解的方式编写注释。<br>不要使用注释来解释显而易见的代码。<br>别忘了，不要因为可以添加注释，就编写晦涩 难懂的代码。<br>别忘了，修改代码时，可能需要相应地更新 注释。 </p>
+<p>变量让程序员能够将数据临时存储一段时间，而常量让程序员能够定义不允许修改的东西。 </p>
+<p>所有计算机、智能手机及其他可编程设备都包含微处理器和一定数量的临时存储空间，这种临时 存储器被称为随机存取存储器(RAM)。另外，很多设备还让您能够将数据永久性地存储到硬盘等存 储设备中。微处理器负责执行应用程序，在此过程中，它从 RAM 中获取要执行的应用程序二进制码 以及相关联的数据，这包括显示到屏幕上的数据以及用户输入的数据。 </p>
 
     </div>
 
@@ -297,6 +309,9 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
+                <a href="/2020/12/07/SVN/" rel="prev" title="SVN">
+                  SVN <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
       </footer>
@@ -335,7 +350,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第一章-绪论"><span class="nav-number">1.</span> <span class="nav-text">第一章 绪论</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第一章-绪论"><span class="nav-number">1.</span> <span class="nav-text">第一章 绪论</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第二章"><span class="nav-number">2.</span> <span class="nav-text">第二章</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -351,7 +366,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-count">8</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -364,7 +379,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -389,7 +404,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

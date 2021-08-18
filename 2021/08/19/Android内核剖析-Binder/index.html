@@ -50,14 +50,18 @@
   };
 </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Android技术堆栈">
-<meta property="og:url" content="https:&#x2F;&#x2F;chaozhouzhang.github.io&#x2F;archives&#x2F;2020&#x2F;12&#x2F;index.html">
+  <meta name="description" content="《Android内核剖析》内核篇读书笔记-Binder">
+<meta name="keywords" content="Android内核剖析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android内核剖析-Framework">
+<meta property="og:url" content="https:&#x2F;&#x2F;chaozhouzhang.github.io&#x2F;2021&#x2F;08&#x2F;19&#x2F;Android%E5%86%85%E6%A0%B8%E5%89%96%E6%9E%90-Binder&#x2F;index.html">
 <meta property="og:site_name" content="Android技术堆栈">
+<meta property="og:description" content="《Android内核剖析》内核篇读书笔记-Binder">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2021-08-18T16:34:07.885Z">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://chaozhouzhang.github.io/archives/2020/12/">
+<link rel="canonical" href="https://chaozhouzhang.github.io/2021/08/19/Android%E5%86%85%E6%A0%B8%E5%89%96%E6%9E%90-Binder/">
 
 
 <script id="page-configurations">
@@ -65,13 +69,13 @@
   CONFIG.page = {
     sidebar: "",
     isHome: false,
-    isPost: false,
+    isPost: true,
     isPage: false,
-    isArchive: true
+    isArchive: false
   };
 </script>
 
-  <title>Archive | Android技术堆栈</title>
+  <title>Android内核剖析-Framework | Android技术堆栈</title>
   
 
 
@@ -182,69 +186,86 @@
           <div class="content">
             
 
+  <div class="posts-expand">
+      
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <span class="collection-header">Um..! 8 posts in total. Keep on posting.</span>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2021/08/19/Android%E5%86%85%E6%A0%B8%E5%89%96%E6%9E%90-Binder/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/header.jpeg">
+      <meta itemprop="name" content="张潮州">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Android技术堆栈">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Android内核剖析-Framework
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-08-19 00:25:58 / Modified: 00:34:07" itemprop="dateCreated datePublished" datetime="2021-08-19T00:25:58+08:00">2021-08-19</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <h1 class="collection-header">2020</h1>
+        <h1 id="《Android内核剖析》内核篇读书笔记-Binder"><a href="#《Android内核剖析》内核篇读书笔记-Binder" class="headerlink" title="《Android内核剖析》内核篇读书笔记-Binder"></a>《Android内核剖析》内核篇读书笔记-Binder</h1>
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+    
+    
+    
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-12-07T16:24:20+08:00"
-              content="2020-12-07">
-          12-07
-        </time>
-      </div>
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Android%E5%86%85%E6%A0%B8%E5%89%96%E6%9E%90/" rel="tag"># Android内核剖析</a>
+          </div>
 
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2020/12/07/SVN/" itemprop="url">
-            <span itemprop="name">SVN</span>
-          </a>
-      </h2>
+        
 
-    </header>
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2021/02/04/%E4%BD%BF%E7%94%A8%C2%A0APP_ABI%C2%A0%E8%AE%BE%E7%BD%AE%E4%B8%BA%E7%89%B9%E5%AE%9A%20ABI%20%E7%94%9F%E6%88%90%E4%BB%A3%E7%A0%81%EF%BC%9A/" rel="next" title="使用 APP_ABI 设置为特定 ABI 生成代码：">
+                  <i class="fa fa-chevron-left"></i> 使用 APP_ABI 设置为特定 ABI 生成代码：
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2021/08/19/Android%E5%86%85%E6%A0%B8%E5%89%96%E6%9E%90-Framework/" rel="prev" title="Android内核剖析-Framework">
+                  Android内核剖析-Framework <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
   </article>
+  
+  
+  
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-12-03T23:18:04+08:00"
-              content="2020-12-03">
-          12-03
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2020/12/03/21%E5%A4%A9%E5%AD%A6%E9%80%9AC++%E7%AC%AC1%E5%A4%A9/" itemprop="url">
-            <span itemprop="name">21天学通C++第1天</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-
-    </div>
   </div>
-  
-  
-  
-
-  
-
 
 
           </div>
@@ -273,6 +294,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#《Android内核剖析》内核篇读书笔记-Binder"><span class="nav-number">1.</span> <span class="nav-text">《Android内核剖析》内核篇读书笔记-Binder</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
