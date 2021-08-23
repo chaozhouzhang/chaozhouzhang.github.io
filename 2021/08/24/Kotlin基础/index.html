@@ -50,18 +50,18 @@
   };
 </script>
 
-  <meta name="description" content="1、官方介绍Android NDK 是一个工具集，可让开发者使用 C 和 C++ 等语言以原生代码实现应用的各个部分。对于特定类型的应用，这可以帮助开发者重复使用以这些语言编写的代码库。 1https:&#x2F;&#x2F;developer.android.google.cn&#x2F;ndk  123456class MyActivity : Activity() &amp;#123;  &#x2F;**   * Native metho">
-<meta name="keywords" content="NDK">
+  <meta name="description" content="1、变量声明var用于声明值从不更改的变量。val用于声明值可以更改的变量。 2、类型推断为变量赋予初始值后，Kotlin编译器可以根据所赋值的类型来推断其变量类型。 3、null安全在变量类型后面加上 ? 后缀，可将变量指定为 null。 4、条件语句Kotlin 的条件语句彰显了智能类型转换功能。if-else 表达式。when 表达式。 5、函数fun关键字声明函数。函数返回单个表达式的结果">
+<meta name="keywords" content="Kotlin">
 <meta property="og:type" content="article">
-<meta property="og:title" content="NDK">
-<meta property="og:url" content="https:&#x2F;&#x2F;chaozhouzhang.github.io&#x2F;2020&#x2F;11&#x2F;30&#x2F;NDK&#x2F;index.html">
+<meta property="og:title" content="Kotlin基础">
+<meta property="og:url" content="https:&#x2F;&#x2F;chaozhouzhang.github.io&#x2F;2021&#x2F;08&#x2F;24&#x2F;Kotlin%E5%9F%BA%E7%A1%80&#x2F;index.html">
 <meta property="og:site_name" content="Android技术堆栈">
-<meta property="og:description" content="1、官方介绍Android NDK 是一个工具集，可让开发者使用 C 和 C++ 等语言以原生代码实现应用的各个部分。对于特定类型的应用，这可以帮助开发者重复使用以这些语言编写的代码库。 1https:&#x2F;&#x2F;developer.android.google.cn&#x2F;ndk  123456class MyActivity : Activity() &amp;#123;  &#x2F;**   * Native metho">
+<meta property="og:description" content="1、变量声明var用于声明值从不更改的变量。val用于声明值可以更改的变量。 2、类型推断为变量赋予初始值后，Kotlin编译器可以根据所赋值的类型来推断其变量类型。 3、null安全在变量类型后面加上 ? 后缀，可将变量指定为 null。 4、条件语句Kotlin 的条件语句彰显了智能类型转换功能。if-else 表达式。when 表达式。 5、函数fun关键字声明函数。函数返回单个表达式的结果">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-11-30T03:58:02.298Z">
+<meta property="og:updated_time" content="2021-08-23T16:49:47.816Z">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://chaozhouzhang.github.io/2020/11/30/NDK/">
+<link rel="canonical" href="https://chaozhouzhang.github.io/2021/08/24/Kotlin%E5%9F%BA%E7%A1%80/">
 
 
 <script id="page-configurations">
@@ -75,7 +75,7 @@
   };
 </script>
 
-  <title>NDK | Android技术堆栈</title>
+  <title>Kotlin基础 | Android技术堆栈</title>
   
 
 
@@ -191,7 +191,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
-    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2020/11/30/NDK/">
+    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2021/08/24/Kotlin%E5%9F%BA%E7%A1%80/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/header.jpeg">
@@ -204,7 +204,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          NDK
+          Kotlin基础
         </h1>
 
         <div class="post-meta">
@@ -215,18 +215,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2020-11-30 11:08:51 / Modified: 11:58:02" itemprop="dateCreated datePublished" datetime="2020-11-30T11:08:51+08:00">2020-11-30</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/NDK/" itemprop="url" rel="index">
-                    <span itemprop="name">NDK</span>
-                  </a>
-                </span>
+              <time title="Created: 2021-08-24 00:23:24 / Modified: 00:49:47" itemprop="dateCreated datePublished" datetime="2021-08-24T00:23:24+08:00">2021-08-24</time>
             </span>
 
           
@@ -240,11 +229,24 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="1、官方介绍"><a href="#1、官方介绍" class="headerlink" title="1、官方介绍"></a>1、官方介绍</h1><p>Android NDK 是一个工具集，可让开发者使用 C 和 C++ 等语言以原生代码实现应用的各个部分。对于特定类型的应用，这可以帮助开发者重复使用以这些语言编写的代码库。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://developer.android.google.cn/ndk</span><br></pre></td></tr></table></figure>
+        <h3 id="1、变量声明"><a href="#1、变量声明" class="headerlink" title="1、变量声明"></a>1、变量声明</h3><p>var用于声明值从不更改的变量。<br>val用于声明值可以更改的变量。</p>
+<h3 id="2、类型推断"><a href="#2、类型推断" class="headerlink" title="2、类型推断"></a>2、类型推断</h3><p>为变量赋予初始值后，Kotlin编译器可以根据所赋值的类型来推断其变量类型。</p>
+<h3 id="3、null安全"><a href="#3、null安全" class="headerlink" title="3、null安全"></a>3、null安全</h3><p>在变量类型后面加上 ? 后缀，可将变量指定为 null。</p>
+<h3 id="4、条件语句"><a href="#4、条件语句" class="headerlink" title="4、条件语句"></a>4、条件语句</h3><p>Kotlin 的条件语句彰显了智能类型转换功能。<br>if-else 表达式。<br>when 表达式。</p>
+<h3 id="5、函数"><a href="#5、函数" class="headerlink" title="5、函数"></a>5、函数</h3><p>fun关键字声明函数。<br>函数返回单个表达式的结果时，可以通过直接返回函数中包含的 if-else 表达式的结果来跳过声明局部变量。</p>
+<h3 id="6、匿名函数"><a href="#6、匿名函数" class="headerlink" title="6、匿名函数"></a>6、匿名函数</h3><p>匿名函数不需要名称，通过输入和输出更直接地进行标识。<br>可以保留对某个匿名函数的引用，以便日后使用此引用来调用该匿名函数。<br>与其他引用类型一样，也可以在应用中传递引用<br>变量：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(参数类型)-&gt;返回值类型</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">val stringLengthFunc: (String) -&gt; Int = &#123; input -&gt;</span><br><span class="line">    input.length</span><br><span class="line">&#125;</span><br><span class="line">val stringLength: Int = stringLengthFunc(&quot;Android&quot;)</span><br></pre></td></tr></table></figure>
+<h3 id="7、高阶函数"><a href="#7、高阶函数" class="headerlink" title="7、高阶函数"></a>7、高阶函数</h3><p>将其他函数用作参数的函数称为高阶函数。此模式对组件之间的通信（其方式与在 Java 中使用回调接口相同）很有用。<br>参数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(参数类型)-&gt;返回值类型</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fun stringMapper(str: String, mapper: (String) -&gt; Int): Int &#123;</span><br><span class="line">    return mapper(str)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果匿名函数是在某个函数上定义的最后一个参数，则可以在用于调用该函数的圆括号之外传递它。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">stringMapper(&quot;Android&quot;) &#123; input -&gt;</span><br><span class="line">    input.length</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyActivity</span> : <span class="type">Activity</span></span>() &#123;</span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * Native method implemented in C/C++</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="keyword">external</span> <span class="function"><span class="keyword">fun</span> <span class="title">computeFoo</span><span class="params">()</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<h3 id="8、类"><a href="#8、类" class="headerlink" title="8、类"></a>8、类</h3><p>class关键字定义类。</p>
+<h3 id="9、属性"><a href="#9、属性" class="headerlink" title="9、属性"></a>9、属性</h3><p>类使用属性来表示状态。</p>
+<h3 id="10、类函数和封装"><a href="#10、类函数和封装" class="headerlink" title="10、类函数和封装"></a>10、类函数和封装</h3><p>类使用函数对行为建模。<br>函数可以修改状态，从而只公开希望公开的数据。<br>这种访问控制机制属于一个面向对象的封装。</p>
+<h3 id="11、互操作性"><a href="#11、互操作性" class="headerlink" title="11、互操作性"></a>11、互操作性</h3><p>由于 Kotlin 代码可编译为 JVM 字节码，因此 Kotlin 代码可直接调用 Java 代码，反之亦然。</p>
 
     </div>
 
@@ -254,24 +256,21 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/NDK/" rel="tag"># NDK</a>
+              <a href="/tags/Kotlin/" rel="tag"># Kotlin</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
-                <a href="/2019/10/24/Hexo%E4%BD%BF%E7%94%A8%E6%96%87%E6%A1%A3/" rel="next" title="Hexo使用文档">
-                  <i class="fa fa-chevron-left"></i> Hexo使用文档
+                <a href="/2021/08/19/Android%E5%86%85%E6%A0%B8%E5%89%96%E6%9E%90-Framework/" rel="next" title="Android内核剖析-Framework">
+                  <i class="fa fa-chevron-left"></i> Android内核剖析-Framework
                 </a>
             </div>
 
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-                <a href="/2020/11/30/ConstraintLayout/" rel="prev" title="ConstraintLayout常用技巧">
-                  ConstraintLayout常用技巧 <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
       </footer>
@@ -310,7 +309,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1、官方介绍"><span class="nav-number">1.</span> <span class="nav-text">1、官方介绍</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、变量声明"><span class="nav-number">1.</span> <span class="nav-text">1、变量声明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、类型推断"><span class="nav-number">2.</span> <span class="nav-text">2、类型推断</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、null安全"><span class="nav-number">3.</span> <span class="nav-text">3、null安全</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、条件语句"><span class="nav-number">4.</span> <span class="nav-text">4、条件语句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、函数"><span class="nav-number">5.</span> <span class="nav-text">5、函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6、匿名函数"><span class="nav-number">6.</span> <span class="nav-text">6、匿名函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7、高阶函数"><span class="nav-number">7.</span> <span class="nav-text">7、高阶函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8、类"><span class="nav-number">8.</span> <span class="nav-text">8、类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9、属性"><span class="nav-number">9.</span> <span class="nav-text">9、属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10、类函数和封装"><span class="nav-number">10.</span> <span class="nav-text">10、类函数和封装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11、互操作性"><span class="nav-number">11.</span> <span class="nav-text">11、互操作性</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

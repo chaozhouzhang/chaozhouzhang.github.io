@@ -187,6 +187,82 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2021/08/24/Kotlin%E5%9F%BA%E7%A1%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/header.jpeg">
+      <meta itemprop="name" content="张潮州">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Android技术堆栈">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/08/24/Kotlin%E5%9F%BA%E7%A1%80/" class="post-title-link" itemprop="url">Kotlin基础</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-08-24 00:23:24 / Modified: 00:49:47" itemprop="dateCreated datePublished" datetime="2021-08-24T00:23:24+08:00">2021-08-24</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="1、变量声明"><a href="#1、变量声明" class="headerlink" title="1、变量声明"></a>1、变量声明</h3><p>var用于声明值从不更改的变量。<br>val用于声明值可以更改的变量。</p>
+<h3 id="2、类型推断"><a href="#2、类型推断" class="headerlink" title="2、类型推断"></a>2、类型推断</h3><p>为变量赋予初始值后，Kotlin编译器可以根据所赋值的类型来推断其变量类型。</p>
+<h3 id="3、null安全"><a href="#3、null安全" class="headerlink" title="3、null安全"></a>3、null安全</h3><p>在变量类型后面加上 ? 后缀，可将变量指定为 null。</p>
+<h3 id="4、条件语句"><a href="#4、条件语句" class="headerlink" title="4、条件语句"></a>4、条件语句</h3><p>Kotlin 的条件语句彰显了智能类型转换功能。<br>if-else 表达式。<br>when 表达式。</p>
+<h3 id="5、函数"><a href="#5、函数" class="headerlink" title="5、函数"></a>5、函数</h3><p>fun关键字声明函数。<br>函数返回单个表达式的结果时，可以通过直接返回函数中包含的 if-else 表达式的结果来跳过声明局部变量。</p>
+<h3 id="6、匿名函数"><a href="#6、匿名函数" class="headerlink" title="6、匿名函数"></a>6、匿名函数</h3><p>匿名函数不需要名称，通过输入和输出更直接地进行标识。<br>可以保留对某个匿名函数的引用，以便日后使用此引用来调用该匿名函数。<br>与其他引用类型一样，也可以在应用中传递引用<br>变量：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(参数类型)-&gt;返回值类型</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">val stringLengthFunc: (String) -&gt; Int = &#123; input -&gt;</span><br><span class="line">    input.length</span><br><span class="line">&#125;</span><br><span class="line">val stringLength: Int = stringLengthFunc(&quot;Android&quot;)</span><br></pre></td></tr></table></figure>
+<h3 id="7、高阶函数"><a href="#7、高阶函数" class="headerlink" title="7、高阶函数"></a>7、高阶函数</h3><p>将其他函数用作参数的函数称为高阶函数。此模式对组件之间的通信（其方式与在 Java 中使用回调接口相同）很有用。<br>参数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(参数类型)-&gt;返回值类型</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fun stringMapper(str: String, mapper: (String) -&gt; Int): Int &#123;</span><br><span class="line">    return mapper(str)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果匿名函数是在某个函数上定义的最后一个参数，则可以在用于调用该函数的圆括号之外传递它。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">stringMapper(&quot;Android&quot;) &#123; input -&gt;</span><br><span class="line">    input.length</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="8、类"><a href="#8、类" class="headerlink" title="8、类"></a>8、类</h3><p>class关键字定义类。</p>
+<h3 id="9、属性"><a href="#9、属性" class="headerlink" title="9、属性"></a>9、属性</h3><p>类使用属性来表示状态。</p>
+<h3 id="10、类函数和封装"><a href="#10、类函数和封装" class="headerlink" title="10、类函数和封装"></a>10、类函数和封装</h3><p>类使用函数对行为建模。<br>函数可以修改状态，从而只公开希望公开的数据。<br>这种访问控制机制属于一个面向对象的封装。</p>
+<h3 id="11、互操作性"><a href="#11、互操作性" class="headerlink" title="11、互操作性"></a>11、互操作性</h3><p>由于 Kotlin 代码可编译为 JVM 字节码，因此 Kotlin 代码可直接调用 Java 代码，反之亦然。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
     <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2021/08/19/Android%E5%86%85%E6%A0%B8%E5%89%96%E6%9E%90-Framework/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -814,7 +890,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-count">9</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -827,7 +903,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
