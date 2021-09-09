@@ -187,6 +187,84 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2021/09/09/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/header.jpeg">
+      <meta itemprop="name" content="张潮州">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Android技术堆栈">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/09/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/" class="post-title-link" itemprop="url">Java多线程</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-09-09 22:31:55" itemprop="dateCreated datePublished" datetime="2021-09-09T22:31:55+08:00">2021-09-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-09-10 00:58:52" itemprop="dateModified" datetime="2021-09-10T00:58:52+08:00">2021-09-10</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h1><h1 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h1><h3 id="继承Thread类创建线程类"><a href="#继承Thread类创建线程类" class="headerlink" title="继承Thread类创建线程类"></a>继承Thread类创建线程类</h3><p>1、定义Thread子类，重写线程执行体也就是run方法。<br>2、创建Thread子类的实例，也就是线程对象。<br>3、调用线程对象的start方法来启动该线程，也就是run方法中的代码。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public class StackThread extends Thread &#123;</span><br><span class="line">    private int mNum = 0;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void run() &#123;</span><br><span class="line">        super.run();//有无均可，此时Thread中target肯定是空的。</span><br><span class="line">        mNum++;</span><br><span class="line">        System.out.println(mNum);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        StackThread stackThread = new StackThread();</span><br><span class="line">        stackThread.start();</span><br><span class="line">        StackThread stackThread1 = new StackThread();</span><br><span class="line">        stackThread1.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
+<p>使用继承Thread类的方法创建线程类时，多个线程之间无法共享线程类的实例变量。</p>
+<h3 id="实现Runnable接口创建线程类"><a href="#实现Runnable接口创建线程类" class="headerlink" title="实现Runnable接口创建线程类"></a>实现Runnable接口创建线程类</h3><p>1、定义Runnable接口的实现类，重写该接口的run方法。<br>2、创建Runnable实现类的实例，将实例作为Thread的target属性来创建线程对象。<br>3、调用线程对象的start方法来启动线程。<br>使用Callable和Future创建线程</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">public class StackRunnable implements Runnable&#123;</span><br><span class="line">    private int mNum=0;</span><br><span class="line">    @Override</span><br><span class="line">    public void run() &#123;</span><br><span class="line">        mNum++;</span><br><span class="line">        System.out.println(mNum);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        StackRunnable stackRunnable = new StackRunnable();</span><br><span class="line">        Thread thread = new Thread(stackRunnable);//此处的stackRunnable就是Thread中的target</span><br><span class="line">        thread.start();</span><br><span class="line">        Thread thread1 = new Thread(stackRunnable);</span><br><span class="line">        thread1.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td></tr></table></figure>
+<p>使用Runnable接口的方式，创建多个使用共同target的线程时，多个线程共享Runnable实现类的变量。</p>
+<h3 id="Thread与Runnable的关系"><a href="#Thread与Runnable的关系" class="headerlink" title="Thread与Runnable的关系"></a>Thread与Runnable的关系</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public class Thread implements Runnable &#123;</span><br><span class="line"></span><br><span class="line">	@Override</span><br><span class="line">	public void run() &#123;</span><br><span class="line">    	if (target != null) &#123;</span><br><span class="line">        	target.run();</span><br><span class="line">    	&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Thread类实现了Runnable接口，并且拥有Runnable类型的属性变量target。<br>所以若是以Thread子类的方式实现，则执行的是Thread子类的run方法；<br>若是以实现Runnable接口的方式实现，则执行的是Thread类中run方法，继而执行的是Runnable实现类中的run方法。<br>不存在既有Thread子类实现、又有Runnable接口实现的方式，Thread子类不能传入Runnable实现类实例作为构造参数来创建线程。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public class StackThreadRunnable &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        StackRunnable stackRunnable = new StackRunnable();</span><br><span class="line">        StackThread thread = new StackThread(stackRunnable);//无法编译成功</span><br><span class="line">        thread.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
     <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2021/08/28/OpenGL-ES-3-0-%E7%BC%96%E7%A8%8B%E6%8C%87%E5%8D%97%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -212,7 +290,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-08-28 16:24:49 / Modified: 16:58:47" itemprop="dateCreated datePublished" datetime="2021-08-28T16:24:49+08:00">2021-08-28</time>
+              <time title="Created: 2021-08-28 16:24:49 / Modified: 17:58:39" itemprop="dateCreated datePublished" datetime="2021-08-28T16:24:49+08:00">2021-08-28</time>
             </span>
 
           
@@ -226,10 +304,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>OpenGL ES，Open Graphics Library for Embedded Systems，嵌入式系统的开放图形库。<br>OpenGL ES支持的平台有iOS、Android、BlackBerry、Linux、Windows，还是基于浏览器的3D图形Web标准WebGL的基础。<br>OpenGL ES规范有OpenGL ES 1.0、OpenGL ES 1.1、OpenGL ES2.0、OpenGL ES 3.0。<br>OpenGL ES 1.0和1.1采用固定功能管线，2.0采用可编程图形管线，3.0采用阴影贴图、体渲染、基于GPU的粒子动画、几何形状实例化、纹理压缩和伽马校正等技术。</p>
-<p>OpenGL ES 3.0实现了具有可编程着色功能的图形管线，由OpenGL ES3.0API规范和OpenGL ES着色语言3.0规范也就是OpenGL ES SL组成。</p>
+          <h1 id="第一章、简介"><a href="#第一章、简介" class="headerlink" title="第一章、简介"></a>第一章、简介</h1><h2 id="0、OpenGL-ES"><a href="#0、OpenGL-ES" class="headerlink" title="0、OpenGL ES"></a>0、OpenGL ES</h2><p>OpenGL ES，Open Graphics Library for Embedded Systems，嵌入式系统的开放图形库。<br>OpenGL ES支持的平台有iOS、Android、BlackBerry、Linux、Windows，且是基于浏览器的3D图形Web标准WebGL的基础。<br>OpenGL ES规范有OpenGL ES 1.0、OpenGL ES 1.1、OpenGL ES2.0、OpenGL ES 3.0。<br>OpenGL ES 1.0和1.1采用固定功能管线，2.0采用可编程图形管线，3.0采用阴影贴图、体渲染、基于GPU的粒子动画、几何形状实例化、纹理压缩和伽马校正等技术。</p>
+<h2 id="1-1、OpenGL-ES-3-0"><a href="#1-1、OpenGL-ES-3-0" class="headerlink" title="1.1、OpenGL ES 3.0"></a>1.1、OpenGL ES 3.0</h2><p>OpenGL ES 3.0实现了具有可编程着色功能的图形管线，由OpenGL ES3.0API规范和OpenGL ES着色语言3.0规范也就是OpenGL ES SL组成。</p>
 <p>在OpenGL ES3.0图形管线的各个阶段中，顶点着色器和片段着色器是管线的可编程阶段。</p>
 <p><img src="https://chaozhouzhang.github.io/images/OpenGL-ES-Graphics-Pipeline.png" alt="OpenGL ES3.0图形管线的各个阶段"></p>
+<h3 id="1-1-1、顶点着色器"><a href="#1-1-1、顶点着色器" class="headerlink" title="1.1.1、顶点着色器"></a>1.1.1、顶点着色器</h3><p>顶点着色器实现了顶点操作的通用可编程方法。</p>
 
       
     </div>
@@ -272,10 +351,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2021-08-24 00:23:24 / Modified: 00:49:47" itemprop="dateCreated datePublished" datetime="2021-08-24T00:23:24+08:00">2021-08-24</time>
+              <time title="Created: 2021-08-24 00:23:24" itemprop="dateCreated datePublished" datetime="2021-08-24T00:23:24+08:00">2021-08-24</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-08-28 16:53:10" itemprop="dateModified" datetime="2021-08-28T16:53:10+08:00">2021-08-28</time>
+              </span>
 
           
 
@@ -816,98 +901,12 @@
   
   
 
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2019/10/24/Hexo%E4%BD%BF%E7%94%A8%E6%96%87%E6%A1%A3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/header.jpeg">
-      <meta itemprop="name" content="张潮州">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Android技术堆栈">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/10/24/Hexo%E4%BD%BF%E7%94%A8%E6%96%87%E6%A1%A3/" class="post-title-link" itemprop="url">Hexo使用文档</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-10-24 14:59:57" itemprop="dateCreated datePublished" datetime="2019-10-24T14:59:57+08:00">2019-10-24</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-12-03 19:30:45" itemprop="dateModified" datetime="2019-12-03T19:30:45+08:00">2019-12-03</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Hexo/" itemprop="url" rel="index">
-                    <span itemprop="name">Hexo</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo d -g</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
 
 
 
@@ -952,7 +951,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-count">11</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

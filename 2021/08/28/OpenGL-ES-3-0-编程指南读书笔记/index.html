@@ -50,16 +50,16 @@
   };
 </script>
 
-  <meta name="description" content="OpenGL ES，Open Graphics Library for Embedded Systems，嵌入式系统的开放图形库。OpenGL ES支持的平台有iOS、Android、BlackBerry、Linux、Windows，还是基于浏览器的3D图形Web标准WebGL的基础。OpenGL ES规范有OpenGL ES 1.0、OpenGL ES 1.1、OpenGL ES2.0、Open">
+  <meta name="description" content="第一章、简介0、OpenGL ESOpenGL ES，Open Graphics Library for Embedded Systems，嵌入式系统的开放图形库。OpenGL ES支持的平台有iOS、Android、BlackBerry、Linux、Windows，且是基于浏览器的3D图形Web标准WebGL的基础。OpenGL ES规范有OpenGL ES 1.0、OpenGL ES 1.1、">
 <meta name="keywords" content="OpenGL ES">
 <meta property="og:type" content="article">
 <meta property="og:title" content="OpenGL ES 3.0 编程指南读书笔记">
 <meta property="og:url" content="https:&#x2F;&#x2F;chaozhouzhang.github.io&#x2F;2021&#x2F;08&#x2F;28&#x2F;OpenGL-ES-3-0-%E7%BC%96%E7%A8%8B%E6%8C%87%E5%8D%97%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0&#x2F;index.html">
 <meta property="og:site_name" content="Android技术堆栈">
-<meta property="og:description" content="OpenGL ES，Open Graphics Library for Embedded Systems，嵌入式系统的开放图形库。OpenGL ES支持的平台有iOS、Android、BlackBerry、Linux、Windows，还是基于浏览器的3D图形Web标准WebGL的基础。OpenGL ES规范有OpenGL ES 1.0、OpenGL ES 1.1、OpenGL ES2.0、Open">
+<meta property="og:description" content="第一章、简介0、OpenGL ESOpenGL ES，Open Graphics Library for Embedded Systems，嵌入式系统的开放图形库。OpenGL ES支持的平台有iOS、Android、BlackBerry、Linux、Windows，且是基于浏览器的3D图形Web标准WebGL的基础。OpenGL ES规范有OpenGL ES 1.0、OpenGL ES 1.1、">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https:&#x2F;&#x2F;chaozhouzhang.github.io&#x2F;images&#x2F;OpenGL-ES-Graphics-Pipeline.png">
-<meta property="og:updated_time" content="2021-08-28T08:58:47.516Z">
+<meta property="og:updated_time" content="2021-08-28T09:58:39.309Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https:&#x2F;&#x2F;chaozhouzhang.github.io&#x2F;images&#x2F;OpenGL-ES-Graphics-Pipeline.png">
 
@@ -217,7 +217,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-08-28 16:24:49 / Modified: 16:58:47" itemprop="dateCreated datePublished" datetime="2021-08-28T16:24:49+08:00">2021-08-28</time>
+              <time title="Created: 2021-08-28 16:24:49 / Modified: 17:58:39" itemprop="dateCreated datePublished" datetime="2021-08-28T16:24:49+08:00">2021-08-28</time>
             </span>
 
           
@@ -231,10 +231,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>OpenGL ES，Open Graphics Library for Embedded Systems，嵌入式系统的开放图形库。<br>OpenGL ES支持的平台有iOS、Android、BlackBerry、Linux、Windows，还是基于浏览器的3D图形Web标准WebGL的基础。<br>OpenGL ES规范有OpenGL ES 1.0、OpenGL ES 1.1、OpenGL ES2.0、OpenGL ES 3.0。<br>OpenGL ES 1.0和1.1采用固定功能管线，2.0采用可编程图形管线，3.0采用阴影贴图、体渲染、基于GPU的粒子动画、几何形状实例化、纹理压缩和伽马校正等技术。</p>
-<p>OpenGL ES 3.0实现了具有可编程着色功能的图形管线，由OpenGL ES3.0API规范和OpenGL ES着色语言3.0规范也就是OpenGL ES SL组成。</p>
+        <h1 id="第一章、简介"><a href="#第一章、简介" class="headerlink" title="第一章、简介"></a>第一章、简介</h1><h2 id="0、OpenGL-ES"><a href="#0、OpenGL-ES" class="headerlink" title="0、OpenGL ES"></a>0、OpenGL ES</h2><p>OpenGL ES，Open Graphics Library for Embedded Systems，嵌入式系统的开放图形库。<br>OpenGL ES支持的平台有iOS、Android、BlackBerry、Linux、Windows，且是基于浏览器的3D图形Web标准WebGL的基础。<br>OpenGL ES规范有OpenGL ES 1.0、OpenGL ES 1.1、OpenGL ES2.0、OpenGL ES 3.0。<br>OpenGL ES 1.0和1.1采用固定功能管线，2.0采用可编程图形管线，3.0采用阴影贴图、体渲染、基于GPU的粒子动画、几何形状实例化、纹理压缩和伽马校正等技术。</p>
+<h2 id="1-1、OpenGL-ES-3-0"><a href="#1-1、OpenGL-ES-3-0" class="headerlink" title="1.1、OpenGL ES 3.0"></a>1.1、OpenGL ES 3.0</h2><p>OpenGL ES 3.0实现了具有可编程着色功能的图形管线，由OpenGL ES3.0API规范和OpenGL ES着色语言3.0规范也就是OpenGL ES SL组成。</p>
 <p>在OpenGL ES3.0图形管线的各个阶段中，顶点着色器和片段着色器是管线的可编程阶段。</p>
 <p><img src="https://chaozhouzhang.github.io/images/OpenGL-ES-Graphics-Pipeline.png" alt="OpenGL ES3.0图形管线的各个阶段"></p>
+<h3 id="1-1-1、顶点着色器"><a href="#1-1-1、顶点着色器" class="headerlink" title="1.1.1、顶点着色器"></a>1.1.1、顶点着色器</h3><p>顶点着色器实现了顶点操作的通用可编程方法。</p>
 
     </div>
 
@@ -259,6 +260,9 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
+                <a href="/2021/09/09/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/" rel="prev" title="Java多线程">
+                  Java多线程 <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
       </footer>
@@ -297,6 +301,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第一章、简介"><span class="nav-number">1.</span> <span class="nav-text">第一章、简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#0、OpenGL-ES"><span class="nav-number">1.1.</span> <span class="nav-text">0、OpenGL ES</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1、OpenGL-ES-3-0"><span class="nav-number">1.2.</span> <span class="nav-text">1.1、OpenGL ES 3.0</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-1、顶点着色器"><span class="nav-number">1.2.1.</span> <span class="nav-text">1.1.1、顶点着色器</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -312,7 +317,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-count">11</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
