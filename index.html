@@ -218,7 +218,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-09-11 11:27:26" itemprop="dateModified" datetime="2021-09-11T11:27:26+08:00">2021-09-11</time>
+                <time title="Modified: 2021-09-12 19:06:04" itemprop="dateModified" datetime="2021-09-12T19:06:04+08:00">2021-09-12</time>
               </span>
 
           
@@ -259,6 +259,10 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public FutureTask(Callable&lt;V&gt; callable) &#123;</span><br><span class="line">    if (callable == null)</span><br><span class="line">        throw new NullPointerException();</span><br><span class="line">    this.callable = callable;</span><br><span class="line">    this.state = NEW;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>Runnable和返回值构造函数：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public FutureTask(Runnable runnable, V result) &#123;</span><br><span class="line">    this.callable = Executors.callable(runnable, result);</span><br><span class="line">    this.state = NEW;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过Executors的callable方法将Runnable和结果值生成Callable对象：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public static &lt;T&gt; Callable&lt;T&gt; callable(Runnable task, T result) &#123;</span><br><span class="line">    if (task == null)</span><br><span class="line">        throw new NullPointerException();</span><br><span class="line">    return new RunnableAdapter&lt;T&gt;(task, result);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Runnable适配器实现了Callable接口，并包含Runnable属性，实现的call方法中调用Runnable的run方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">private static final class RunnableAdapter&lt;T&gt; implements Callable&lt;T&gt; &#123;</span><br><span class="line">    private final Runnable task;</span><br><span class="line">    private final T result;</span><br><span class="line">    RunnableAdapter(Runnable task, T result) &#123;</span><br><span class="line">        this.task = task;</span><br><span class="line">        this.result = result;</span><br><span class="line">    &#125;</span><br><span class="line">    public T call() &#123;</span><br><span class="line">        task.run();</span><br><span class="line">        return result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>状态：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">private static final int NEW          = 0;//新建</span><br><span class="line">private static final int COMPLETING   = 1;//计算中</span><br><span class="line">private static final int NORMAL       = 2;//正常</span><br><span class="line">private static final int EXCEPTIONAL  = 3;//异常</span><br><span class="line">private static final int CANCELLED    = 4;//已取消</span><br><span class="line">private static final int INTERRUPTING = 5;//中断中</span><br><span class="line">private static final int INTERRUPTED  = 6;//已中断</span><br></pre></td></tr></table></figure>
 <p>属性：</p>
@@ -275,9 +279,26 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">    FutureTask futureTask = new FutureTask&lt;Integer&gt;(new Runnable() &#123;</span><br><span class="line">        @Override</span><br><span class="line">        public void run() &#123;</span><br><span class="line">            System.out.println();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;, 0);</span><br><span class="line">    Thread thread = new Thread(futureTask);</span><br><span class="line">    thread.start();</span><br><span class="line">    try &#123;</span><br><span class="line">        Integer result = (Integer) futureTask.get();</span><br><span class="line">        System.out.println(result);</span><br><span class="line">    &#125; catch (Exception exception) &#123;</span><br><span class="line">        System.out.println(exception.getMessage());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>结果：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0</span><br></pre></td></tr></table></figure>
-
-
-
+<h2 id="线程的生命周期"><a href="#线程的生命周期" class="headerlink" title="线程的生命周期"></a>线程的生命周期</h2><p>1、新建状态。<br>新建一个线程，Java虚拟机为其分配内存，并初始化其成员变量的值。<br>2、就绪状态。<br>当线程对象调用了start方法，线程处于就绪状态，Java虚拟机会为该线程创建方法调用栈和程序计数器，表示可以运行，什么时候运行取决于Java虚拟机里线程调度器的调度。<br>只能对处于新建状态的线程调用start方法，否则会抛出IllegalThreadStateException异常。<br>3、运行状态。<br>如果处于就绪状态的线程获得了CPU的时间，开始执行run方法的线程执行体，则该线程处于运行状态，多处理器的机器上将会有多个线程并行parallel执行。<br>4、阻塞状态。<br>除非线程的执行体够短，瞬间被执行结束，否则线程不会一直处于运行状态，线程在运行过程中会被中断，剥夺该线程所占用的资源，目的是使其他线程获得执行的机会。<br>抢占式调度。系统给每个线程一个时间片段执行，用完后执行其他线程，且会考虑线程的优先级。<br>协作式调度。线程主动调用了sleep或yeild方法后才会放弃所占用的资源。</p>
+<p>线程将会进入阻塞状态：<br>线程调用sleep方法主动放弃所占用的处理器资源。<br>线程调用了一个阻塞式IO方法，在方法返回之前线程会被阻塞。<br>线程视图获取同步监视器，但该同步监视器正在被其他线程所持有。<br>线程在等待某个通知notify。<br>线程被调用了suspend方法被挂起。但suspend方法容易发生死锁，应该尽量避免使用。</p>
+<p>当前正在执行的线程被阻塞后，其他就绪的线程将会获得执行的机会，之后在合适的时候被阻塞的线程将会重新进入就绪状态，等待系统调度器再次调度该线程。</p>
+<p>解除阻塞，进入就绪状态：<br>调用sleep方法的线程进过了指定时间。<br>线程调用的阻塞式IO方法已经返回。<br>线程成功地获取了试图获取的同步监视器。<br>线程正在等待某个通知时，其他线程发送了一个通知。<br>处于挂起状态的线程被调用了resume恢复方法。</p>
+<p>线程从阻塞状态只能进入就绪状态，无法直接进入运行状态。<br>就绪状态线程获取处理器资源后进入运行状态，运行状态线程失去处理器资源后进入就绪状态，由系统线程调度决定。<br>调用yield方法可以让运行状态线程进入就绪状态。</p>
+<p>5、死亡状态。<br>run方法或call方法执行完成，线程正常结束。<br>线程抛出一个未捕获的异常exception或错误error。<br>直接调用线程的stop方法结束线程，容易导致死锁，不建议使用。<br>线程的isAlive方法，判断线程是否存活，线程处于就绪、运行、阻塞状态返回true，线程处于新建、死亡状态返回false。</p>
+<h2 id="控制线程"><a href="#控制线程" class="headerlink" title="控制线程"></a>控制线程</h2><p>join线程：<br>在当前线程调用某线程的join方法，当前线程将被阻塞，直到某线程执行完成为止。</p>
+<p>后台/守护/精灵/Daemon线程：<br>Java垃圾回收线程就是典型的后台线程。<br>如果所有的前台线程都死亡，那么后台线程会自动死亡。<br>调用线程的setDaemon(true)方法可以将线程设置为后台线程，但必须在start方法之前设置，否则会抛出IllegalThreadStateException异常。<br>线程的isDaemon方法判断方法是否是后台线程。</p>
+<p>线程睡眠sleep：<br>调用线程的sleep方法，让正在执行的线程暂停一段时间，并进入阻塞状态，在其睡眠时间内，该线程不会获得执行的机会。</p>
+<p>线程的yield方法只是让线程暂停一下，但不会让线程进入阻塞状态，而是让线程进入就绪状态，并让系统的线程调度重新调度，有可能又重新将该线程调度出来执行，具体哪个线程被调度到，需要看线程的优先级。</p>
+<p>sleep方法声明了InterruptedException异常，yield方法没有，不建议使用yield方法控制并发线程的执行。</p>
+<h2 id="线程优先级"><a href="#线程优先级" class="headerlink" title="线程优先级"></a>线程优先级</h2><p>线程默认优先级与创建它的父线程优先级相同。<br>线程通过setPriority(int newPriority)、getPriority设置和获取线程的优先级。<br>MAX_PRIORITY 10<br>MIN__PRIORITY 1<br>NORMAL_PRIORITY 5</p>
+<h2 id="线程同步"><a href="#线程同步" class="headerlink" title="线程同步"></a>线程同步</h2><p>同步代码块。<br>线程的run方法不具备同步安全性，为了解决这个问题，Java的多线程引入了同步监视器，使用同步监视器的通用方法就是同步代码块。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">synchronized(obj)&#123;</span><br><span class="line">	//同步代码块</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>obj就是同步监视器，线程开始执行同步代码块之前，必须先获得对同步监视器的锁定。<br>任何时刻只能有一个线程可以获得对同步监视器的锁定，当同步代码执行完成后，该线程会释放对同步监视器的锁定。<br>同步监视器的目的：<br>阻止两个线程对同一个共享资源的并发访问，推荐使用可能被并发访问的共享资源充当同步监视器。</p>
+<p>同步方法。<br>synchronized修饰的非静态实例方法，同步监视器是this，也就是调用该方法的对象。</p>
+<p>线程安全的类：<br>该类的对象可以被多个线程安全地访问。<br>每个线程调用该对象的任意方法之后都将得到正确的结果。<br>每个线程调用该对象的任意方法之后，该对象的状态依然保持合理状态。</p>
+<p>可变类的线程安全是以降低程序的运行效率作为代价的，所以只对会改变竞争资源的方法同步，且提供单线程和多线程两种版本，例如单线程使用StringBuilder保证性能，多线程使用StringBuffer保证多线程安全。</p>
+<p>线程释放对同步监视器的锁定：<br>线程的同步方法、同步代码快执行结束，释放同步监视器。<br>线程的同步代码块、同步方法中遇到未处理的error和exception结束，释放同步监视器。<br>线程的同步代码块、同步方法中遇到break、return终止，释放同步监视器。<br>线程的同步代码块、同步方法执行的同时，程序执行了同步监视器对象的wait方法，当前线程暂停，释放同步监视器。而调用线程sleep方法和yield方法，其他线程调用该线程的suspend方法都不会释放同步监视器。</p>
+<h2 id="同步锁"><a href="#同步锁" class="headerlink" title="同步锁"></a>同步锁</h2>
       
     </div>
 
