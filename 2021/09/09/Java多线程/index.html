@@ -57,7 +57,7 @@
 <meta property="og:site_name" content="Android技术堆栈">
 <meta property="og:description" content="进程线程继承Thread类创建线程类1、定义Thread子类，重写线程执行体也就是run方法。2、创建Thread子类的实例，也就是线程对象。3、调用线程对象的start方法来启动该线程，也就是run方法中的代码。 1234567891011121314151617public class StackThread extends Thread &amp;#123;    private int mNum">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2021-09-12T15:33:13.781Z">
+<meta property="og:updated_time" content="2021-09-14T16:02:52.792Z">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="https://chaozhouzhang.github.io/2021/09/09/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/">
@@ -220,7 +220,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-09-12 23:33:13" itemprop="dateModified" datetime="2021-09-12T23:33:13+08:00">2021-09-12</time>
+                <time title="Modified: 2021-09-15 00:02:52" itemprop="dateModified" datetime="2021-09-15T00:02:52+08:00">2021-09-15</time>
               </span>
 
           
@@ -303,7 +303,11 @@
 <h2 id="同步锁"><a href="#同步锁" class="headerlink" title="同步锁"></a>同步锁</h2><p>通过显式定义同步锁Lock对象来实现同步，同步锁提供了对共享资源的独占访问，每次只能有一个线程对Lock对象加锁，线程开始访问共享资源之前应该先获得Lock对象。</p>
 <p>读写锁：ReadWriteLock。<br>可重入锁：ReentrantLock，显式加锁、释放锁。<br>可重入性：线程可以对已被加锁的ReentrantLock锁对象再次加锁，ReentrantLock对象会维持一个计数器追踪lock方法的嵌套调用，线程每次调用lock加锁后，必须显式地调用unlock来释放锁，所以一段被锁保护的代码可以调用另一个被锁保护的代码。<br>可重入读写锁：ReentrantReadWriteLock。<br>StampedLock：是为了优化可重入读写锁性能的一个锁实现工具。<br>Lock显式地使用Lock对象作为同步锁，同步方法/块是系统隐式地使用当前对象作为同步监视器。<br>使用finally块，确保在必要时释放锁。</p>
 <h2 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h2><p>线程互相等待对方释放同步监视器，就会发生死锁，所有线程处于阻塞状态，无法继续。<br>Thread类的suspend方法容易产生死锁，不建议使用。</p>
-<h1 id="线程通信"><a href="#线程通信" class="headerlink" title="线程通信"></a>线程通信</h1>
+<h1 id="线程通信"><a href="#线程通信" class="headerlink" title="线程通信"></a>线程通信</h1><p>Object类的wait、notify、notifyAll方法，由同步监视器对象来调用进行线程通信。</p>
+<p>为什么wait，notify，notifyAll这些跟线程有关的方法是封装在Object中而不线程的Thread类呢？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">因为可以把任意的对象作为锁资源进行竞争，所以任意对象都可以调用wait()和notify()，而Object是所有类的父类，所以wait和notify属于Object。</span><br></pre></td></tr></table></figure>
+<p>notify：唤醒在此对象监视器上等待的单个线程。<br>notifyAll：唤醒在此对象监视器上等待的所有线程。<br>wait：导致当前的线程等待，直到其他线程调用此对象的notify方法或notifyAll方法。<br>wait(long timeout)：导致当前的线程等待，直到其他线程调用此对象的notify方法或notifyAll方法，或者超过指定的时间量。<br>wait(long timeout, int nanos)：导致当前的线程等待，直到其他线程调用此对象的notify方法或notifyAll方法，或者其他某个线程中断当前线程，或者已超过某个实际时间量。</p>
+
     </div>
 
     
@@ -324,6 +328,9 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
+                <a href="/2021/09/19/%E8%A7%86%E9%9F%B3%E9%A2%91%E6%8A%80%E6%9C%AF/" rel="prev" title="视音频技术">
+                  视音频技术 <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
       </footer>
@@ -378,7 +385,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-count">12</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

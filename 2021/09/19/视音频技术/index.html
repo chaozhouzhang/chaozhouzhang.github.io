@@ -50,18 +50,17 @@
   };
 </script>
 
-  <meta name="description" content="《Android内核剖析》内核篇读书笔记-Binder">
-<meta name="keywords" content="Android内核剖析">
+  <meta name="description" content="视频播放原理 播放器视音频技术包括流媒体协议技术、封装技术、视音频压缩编码技术。    播放器    Media Player Classic - HC   MPlayer   FFPlay   XBMC   流媒体协议视音频采用各种流媒体协议，在网络上传输视音频数据的同时，也会传输信令数据，包括对播放的控制或者对网络状态的描述等。    流媒体协议    HTTP   RTMP   MMS">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android内核剖析-Framework">
-<meta property="og:url" content="https:&#x2F;&#x2F;chaozhouzhang.github.io&#x2F;2021&#x2F;08&#x2F;19&#x2F;Android%E5%86%85%E6%A0%B8%E5%89%96%E6%9E%90-Binder&#x2F;index.html">
+<meta property="og:title" content="视音频技术">
+<meta property="og:url" content="https:&#x2F;&#x2F;chaozhouzhang.github.io&#x2F;2021&#x2F;09&#x2F;19&#x2F;%E8%A7%86%E9%9F%B3%E9%A2%91%E6%8A%80%E6%9C%AF&#x2F;index.html">
 <meta property="og:site_name" content="Android技术堆栈">
-<meta property="og:description" content="《Android内核剖析》内核篇读书笔记-Binder">
+<meta property="og:description" content="视频播放原理 播放器视音频技术包括流媒体协议技术、封装技术、视音频压缩编码技术。    播放器    Media Player Classic - HC   MPlayer   FFPlay   XBMC   流媒体协议视音频采用各种流媒体协议，在网络上传输视音频数据的同时，也会传输信令数据，包括对播放的控制或者对网络状态的描述等。    流媒体协议    HTTP   RTMP   MMS">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2021-08-18T16:34:07.885Z">
+<meta property="og:updated_time" content="2021-09-19T09:23:07.311Z">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://chaozhouzhang.github.io/2021/08/19/Android%E5%86%85%E6%A0%B8%E5%89%96%E6%9E%90-Binder/">
+<link rel="canonical" href="https://chaozhouzhang.github.io/2021/09/19/%E8%A7%86%E9%9F%B3%E9%A2%91%E6%8A%80%E6%9C%AF/">
 
 
 <script id="page-configurations">
@@ -75,7 +74,7 @@
   };
 </script>
 
-  <title>Android内核剖析-Framework | Android技术堆栈</title>
+  <title>视音频技术 | Android技术堆栈</title>
   
 
 
@@ -191,7 +190,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
-    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2021/08/19/Android%E5%86%85%E6%A0%B8%E5%89%96%E6%9E%90-Binder/">
+    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2021/09/19/%E8%A7%86%E9%9F%B3%E9%A2%91%E6%8A%80%E6%9C%AF/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/header.jpeg">
@@ -204,7 +203,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Android内核剖析-Framework
+          视音频技术
         </h1>
 
         <div class="post-meta">
@@ -215,7 +214,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-08-19 00:25:58 / Modified: 00:34:07" itemprop="dateCreated datePublished" datetime="2021-08-19T00:25:58+08:00">2021-08-19</time>
+              <time title="Created: 2021-09-19 12:28:18 / Modified: 17:23:07" itemprop="dateCreated datePublished" datetime="2021-09-19T12:28:18+08:00">2021-09-19</time>
             </span>
 
           
@@ -229,7 +228,110 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="《Android内核剖析》内核篇读书笔记-Binder"><a href="#《Android内核剖析》内核篇读书笔记-Binder" class="headerlink" title="《Android内核剖析》内核篇读书笔记-Binder"></a>《Android内核剖析》内核篇读书笔记-Binder</h1>
+        <h2 id="视频播放原理"><a href="#视频播放原理" class="headerlink" title="视频播放原理"></a>视频播放原理</h2><p><img src="" alt="视频播放原理"></p>
+<h3 id="播放器"><a href="#播放器" class="headerlink" title="播放器"></a>播放器</h3><p>视音频技术包括流媒体协议技术、封装技术、视音频压缩编码技术。</p>
+<table>
+<thead>
+<tr>
+<th>播放器</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Media Player Classic - HC</td>
+</tr>
+<tr>
+<td>MPlayer</td>
+</tr>
+<tr>
+<td>FFPlay</td>
+</tr>
+<tr>
+<td>XBMC</td>
+</tr>
+</tbody></table>
+<h3 id="流媒体协议"><a href="#流媒体协议" class="headerlink" title="流媒体协议"></a>流媒体协议</h3><p>视音频采用各种流媒体协议，在网络上传输视音频数据的同时，也会传输信令数据，包括对播放的控制或者对网络状态的描述等。</p>
+<table>
+<thead>
+<tr>
+<th>流媒体协议</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>HTTP</td>
+</tr>
+<tr>
+<td>RTMP</td>
+</tr>
+<tr>
+<td>MMS</td>
+</tr>
+</tbody></table>
+<h2 id="解协议"><a href="#解协议" class="headerlink" title="解协议"></a>解协议</h2><p>将流媒体协议的数据，解析为标准的相应的封装格式数据。<br>解协议的过程中会去除掉信令数据而只保留视音频数据。<br>例如，采用RTMP协议传输的数据，经过解协议操作后，输出FLV格式的数据。</p>
+<h3 id="封装格式"><a href="#封装格式" class="headerlink" title="封装格式"></a>封装格式</h3><p>将已经压缩编码的视频数据和音频数据按照一定的格式放到一起。<br>有些封装格式支持的视音频编码标准十分广泛，算比较优秀的封装格式，比如MKV；<br>而有些封装格式支持的视音频编码标准很少，属于落后的封装格式，比如RMVB。</p>
+<table>
+<thead>
+<tr>
+<th>封装格式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>MP4</td>
+</tr>
+<tr>
+<td>RMVB</td>
+</tr>
+<tr>
+<td>AVI</td>
+</tr>
+<tr>
+<td>FLV</td>
+</tr>
+<tr>
+<td>MKV</td>
+</tr>
+<tr>
+<td>MOV</td>
+</tr>
+<tr>
+<td>TS</td>
+</tr>
+</tbody></table>
+<h3 id="解封装"><a href="#解封装" class="headerlink" title="解封装"></a>解封装</h3><p>将输入的封装格式数据，分离成音频流压缩编码数据和视频流压缩编码数据。<br>例如，FLV格式的数据，经过解封装操作后，输出H.264编码的视频码流和AAC编码的音频码流。</p>
+<h3 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h3><table>
+<thead>
+<tr>
+<th>音频压缩编码标准</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>AAC</td>
+</tr>
+<tr>
+<td>MP3</td>
+</tr>
+<tr>
+<td>AC-3</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>视频压缩编码标准</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>H.264</td>
+</tr>
+<tr>
+<td>MPEG2</td>
+</tr>
+<tr>
+<td>VC-1</td>
+</tr>
+</tbody></table>
+<h3 id="解码"><a href="#解码" class="headerlink" title="解码"></a>解码</h3><p>将视频/音频压缩编码数据，解码成为非压缩的视频/音频原始数据。<br>通过解码，压缩编码的视频数据输出成为非压缩的颜色数据，例如YUV420P、RGB等等；<br>压缩编码的音频数据输出成为非压缩的音频抽样数据，例如PCM数据。</p>
+<h3 id="视音频同步"><a href="#视音频同步" class="headerlink" title="视音频同步"></a>视音频同步</h3><p>根据解封装模块处理过程中获取到的参数信息，同步解码出来的视频和音频数据，并将视频音频数据送至系统的显卡和声卡播放出来。</p>
+
     </div>
 
     
@@ -237,25 +339,19 @@
     
 
       <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/Android%E5%86%85%E6%A0%B8%E5%89%96%E6%9E%90/" rel="tag"># Android内核剖析</a>
-          </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
-                <a href="/2021/02/04/%E4%BD%BF%E7%94%A8%C2%A0APP_ABI%C2%A0%E8%AE%BE%E7%BD%AE%E4%B8%BA%E7%89%B9%E5%AE%9A%20ABI%20%E7%94%9F%E6%88%90%E4%BB%A3%E7%A0%81%EF%BC%9A/" rel="next" title="使用 APP_ABI 设置为特定 ABI 生成代码：">
-                  <i class="fa fa-chevron-left"></i> 使用 APP_ABI 设置为特定 ABI 生成代码：
+                <a href="/2021/09/09/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/" rel="next" title="Java多线程">
+                  <i class="fa fa-chevron-left"></i> Java多线程
                 </a>
             </div>
 
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-                <a href="/2021/08/19/Android%E5%86%85%E6%A0%B8%E5%89%96%E6%9E%90-Framework/" rel="prev" title="Android内核剖析-Framework">
-                  Android内核剖析-Framework <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
       </footer>
@@ -294,7 +390,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#《Android内核剖析》内核篇读书笔记-Binder"><span class="nav-number">1.</span> <span class="nav-text">《Android内核剖析》内核篇读书笔记-Binder</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#视频播放原理"><span class="nav-number">1.</span> <span class="nav-text">视频播放原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#播放器"><span class="nav-number">1.1.</span> <span class="nav-text">播放器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#流媒体协议"><span class="nav-number">1.2.</span> <span class="nav-text">流媒体协议</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解协议"><span class="nav-number">2.</span> <span class="nav-text">解协议</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#封装格式"><span class="nav-number">2.1.</span> <span class="nav-text">封装格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解封装"><span class="nav-number">2.2.</span> <span class="nav-text">解封装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编码"><span class="nav-number">2.3.</span> <span class="nav-text">编码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解码"><span class="nav-number">2.4.</span> <span class="nav-text">解码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#视音频同步"><span class="nav-number">2.5.</span> <span class="nav-text">视音频同步</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
