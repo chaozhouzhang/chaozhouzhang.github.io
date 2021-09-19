@@ -212,7 +212,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-09-19 12:28:18 / Modified: 17:23:07" itemprop="dateCreated datePublished" datetime="2021-09-19T12:28:18+08:00">2021-09-19</time>
+              <time title="Created: 2021-09-19 12:28:18 / Modified: 20:20:37" itemprop="dateCreated datePublished" datetime="2021-09-19T12:28:18+08:00">2021-09-19</time>
             </span>
 
           
@@ -226,8 +226,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="视频播放原理"><a href="#视频播放原理" class="headerlink" title="视频播放原理"></a>视频播放原理</h2><p><img src="" alt="视频播放原理"></p>
-<h3 id="播放器"><a href="#播放器" class="headerlink" title="播放器"></a>播放器</h3><p>视音频技术包括流媒体协议技术、封装技术、视音频压缩编码技术。</p>
+          <h1 id="1、视频播放原理"><a href="#1、视频播放原理" class="headerlink" title="1、视频播放原理"></a>1、视频播放原理</h1><p><img src="https://github.com/chaozhouzhang/chaozhouzhang.github.io/blob/master/images/player.jpeg?raw=true" alt="视频播放原理"></p>
+<h2 id="1-1、播放器"><a href="#1-1、播放器" class="headerlink" title="1.1、播放器"></a>1.1、播放器</h2><p>视音频技术包括流媒体协议技术、封装技术、视音频压缩编码技术。</p>
 <table>
 <thead>
 <tr>
@@ -247,88 +247,303 @@
 <td>XBMC</td>
 </tr>
 </tbody></table>
-<h3 id="流媒体协议"><a href="#流媒体协议" class="headerlink" title="流媒体协议"></a>流媒体协议</h3><p>视音频采用各种流媒体协议，在网络上传输视音频数据的同时，也会传输信令数据，包括对播放的控制或者对网络状态的描述等。</p>
+<h2 id="1-2、流媒体协议"><a href="#1-2、流媒体协议" class="headerlink" title="1.2、流媒体协议"></a>1.2、流媒体协议</h2><p>流媒体协议是服务器与客户端之间通信遵循的规定，视音频采用各种流媒体协议，在网络上传输视音频数据的同时，也会传输信令数据，包括对播放的控制或者对网络状态的描述等。</p>
 <table>
 <thead>
 <tr>
-<th>流媒体协议</th>
+<th>名称</th>
+<th>推出机构</th>
+<th>传输层协议</th>
+<th>客户端</th>
+<th>目前使用领域</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>HTTP</td>
+<td>RTSP+RTP</td>
+<td>IETF</td>
+<td>TCP+UDP</td>
+<td>VLC,WMP</td>
+<td>IPTV</td>
 </tr>
 <tr>
 <td>RTMP</td>
+<td>Adobe Inc.</td>
+<td>TCP</td>
+<td>Flash</td>
+<td>互联网直播</td>
+</tr>
+<tr>
+<td>RTMFP</td>
+<td>Adobe Inc.</td>
+<td>UDP</td>
+<td>Flash</td>
+<td>互联网直播</td>
 </tr>
 <tr>
 <td>MMS</td>
+<td>Microsoft Inc.</td>
+<td>TCP/UDP</td>
+<td>WMP</td>
+<td>互联网直播+点播</td>
+</tr>
+<tr>
+<td>HTTP</td>
+<td>WWW+IETF</td>
+<td>TCP</td>
+<td>Flash</td>
+<td>互联网点播</td>
 </tr>
 </tbody></table>
-<h2 id="解协议"><a href="#解协议" class="headerlink" title="解协议"></a>解协议</h2><p>将流媒体协议的数据，解析为标准的相应的封装格式数据。<br>解协议的过程中会去除掉信令数据而只保留视音频数据。<br>例如，采用RTMP协议传输的数据，经过解协议操作后，输出FLV格式的数据。</p>
-<h3 id="封装格式"><a href="#封装格式" class="headerlink" title="封装格式"></a>封装格式</h3><p>将已经压缩编码的视频数据和音频数据按照一定的格式放到一起。<br>有些封装格式支持的视音频编码标准十分广泛，算比较优秀的封装格式，比如MKV；<br>而有些封装格式支持的视音频编码标准很少，属于落后的封装格式，比如RMVB。</p>
 <table>
 <thead>
 <tr>
-<th>封装格式</th>
+<th>名称</th>
+<th>概览</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>MP4</td>
+<td>RTSP+RTP</td>
+<td>采用UDP传输视音频，支持组播，效率较高，常用于IPTV领域。</td>
 </tr>
 <tr>
-<td>RMVB</td>
+<td></td>
+<td>但其缺点是网络不好的情况下可能会丢包，影响视频观看质量，因而围绕IPTV视频质量的研究较多。</td>
 </tr>
 <tr>
+<td></td>
+<td>因为互联网网络环境的不稳定性，RTSP+RTP较少用于互联网视音频传输。</td>
+</tr>
+<tr>
+<td>RTMP，MMS，HTTP</td>
+<td>互联网视频服务通常采用TCP作其流媒体的传输层协议，因而RTMP，MMS，HTTP这类协议广泛用于互联网视音频服务之中。</td>
+</tr>
+<tr>
+<td></td>
+<td>这类协议不会发生丢包，因而保证了视频的质量，但是传输的效率会相对低一些。</td>
+</tr>
+<tr>
+<td>RTMFP</td>
+<td>较新的流媒体协议，特点是支持P2P。</td>
+</tr>
+</tbody></table>
+<h2 id="1-3、解协议"><a href="#1-3、解协议" class="headerlink" title="1.3、解协议"></a>1.3、解协议</h2><p>将流媒体协议的数据，解析为标准的相应的封装格式数据。<br>解协议的过程中会去除掉信令数据而只保留视音频数据。<br>例如，采用RTMP协议传输的数据，经过解协议操作后，输出FLV格式的数据。</p>
+<h2 id="1-4、封装格式"><a href="#1-4、封装格式" class="headerlink" title="1.4、封装格式"></a>1.4、封装格式</h2><p>将已经压缩编码的视频数据和音频数据按照一定的格式放到一起。<br>有些封装格式支持的视音频编码标准十分广泛，算比较优秀的封装格式，比如MKV；<br>而有些封装格式支持的视音频编码标准很少，属于落后的封装格式，比如RMVB。</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>推出机构</th>
+<th>流媒体</th>
+<th>支持的视频编码</th>
+<th>支持的音频编码</th>
+<th>目前的使用领域</th>
+</tr>
+</thead>
+<tbody><tr>
 <td>AVI</td>
+<td>Microsoft Inc.</td>
+<td>不支持</td>
+<td>几乎所有格式</td>
+<td>几乎所有格式</td>
+<td>BT下载影视</td>
 </tr>
 <tr>
-<td>FLV</td>
-</tr>
-<tr>
-<td>MKV</td>
-</tr>
-<tr>
-<td>MOV</td>
+<td>MP4</td>
+<td>MPEG</td>
+<td>支持</td>
+<td>MPEG-2, MPEG-4, H.264, H.263等</td>
+<td>AAC, MPEG-1 Layers I, II, III, AC-3等</td>
+<td>互联网视频网站</td>
 </tr>
 <tr>
 <td>TS</td>
+<td>MPEG</td>
+<td>支持</td>
+<td>MPEG-1, MPEG-2, MPEG-4, H.264</td>
+<td>MPEG-1 Layers I, II, III, AAC</td>
+<td>IPTV,数字电视</td>
+</tr>
+<tr>
+<td>FLV</td>
+<td>Adobe Inc.</td>
+<td>支持</td>
+<td>Sorenson, VP6, H.264</td>
+<td>MP3, ADPCM, Linear PCM, AAC等</td>
+<td>互联网视频网站</td>
+</tr>
+<tr>
+<td>MKV</td>
+<td>CoreCodec Inc.</td>
+<td>支持</td>
+<td>几乎所有格式</td>
+<td>几乎所有格式</td>
+<td>互联网视频网站</td>
+</tr>
+<tr>
+<td>RMVB</td>
+<td>Real Networks Inc.</td>
+<td>支持</td>
+<td>RealVideo 8, 9, 10</td>
+<td>AAC, Cook Codec, RealAudio Lossless</td>
+<td>BT下载影视</td>
 </tr>
 </tbody></table>
-<h3 id="解封装"><a href="#解封装" class="headerlink" title="解封装"></a>解封装</h3><p>将输入的封装格式数据，分离成音频流压缩编码数据和视频流压缩编码数据。<br>例如，FLV格式的数据，经过解封装操作后，输出H.264编码的视频码流和AAC编码的音频码流。</p>
-<h3 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h3><table>
+<table>
 <thead>
 <tr>
-<th>音频压缩编码标准</th>
+<th>其他封装格式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>MOV</td>
+</tr>
+<tr>
+<td>WMV</td>
+</tr>
+</tbody></table>
+<h2 id="1-5、解封装"><a href="#1-5、解封装" class="headerlink" title="1.5、解封装"></a>1.5、解封装</h2><p>将输入的封装格式数据，分离成音频流压缩编码数据和视频流压缩编码数据。<br>例如，FLV格式的数据，经过解封装操作后，输出H.264编码的视频码流和AAC编码的音频码流。</p>
+<h2 id="1-6、编码"><a href="#1-6、编码" class="headerlink" title="1.6、编码"></a>1.6、编码</h2><h3 id="1-6-1、视频压缩编码标准"><a href="#1-6-1、视频压缩编码标准" class="headerlink" title="1.6.1、视频压缩编码标准"></a>1.6.1、视频压缩编码标准</h3><p>视频编码的主要作用是将视频像素数据RGB，YUV等压缩成为视频码流，从而降低视频的数据量。<br>高效率的视频编码在同等的码率下，可以获得更高的视频质量。<br>当前使用最多的视频编码方案就是H.264。<br>在码率一定的情况下，编码标准的比较：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HEVC &gt; VP9 &gt; H.264&gt; VP8 &gt; MPEG4 &gt; H.263 &gt; MPEG2</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>推出机构</th>
+<th>推出时间</th>
+<th>目前使用领域</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>HEVC(H.265)</td>
+<td>MPEG/ITU-T</td>
+<td>2013</td>
+<td>研发中心</td>
+</tr>
+<tr>
+<td>H.264</td>
+<td>MPEG/ITU-T</td>
+<td>2003</td>
+<td>各个领域</td>
+</tr>
+<tr>
+<td>MPEG4</td>
+<td>MPEG</td>
+<td>2001</td>
+<td>不温不火</td>
+</tr>
+<tr>
+<td>MPEG2</td>
+<td>MPEG</td>
+<td>1994</td>
+<td>数字电视</td>
+</tr>
+<tr>
+<td>VP9</td>
+<td>Google</td>
+<td>2013</td>
+<td>研发中</td>
+</tr>
+<tr>
+<td>VP8</td>
+<td>Google</td>
+<td>2008</td>
+<td>不普及</td>
+</tr>
+<tr>
+<td>VC-1</td>
+<td>Microsoft Inc.</td>
+<td>2006</td>
+<td>微软平台</td>
+</tr>
+</tbody></table>
+<p>视频压缩编码器</p>
+<table>
+<thead>
+<tr>
+<th>编码器</th>
+<th>编码标准</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>JM</td>
+<td>H.264</td>
+</tr>
+<tr>
+<td>x264</td>
+<td>H.264</td>
+</tr>
+<tr>
+<td>HM</td>
+<td>H.265/HEVC</td>
+</tr>
+<tr>
+<td>x265</td>
+<td>H.265/HEVC</td>
+</tr>
+</tbody></table>
+<h3 id="1-6-2、音频压缩编码标准"><a href="#1-6-2、音频压缩编码标准" class="headerlink" title="1.6.2、音频压缩编码标准"></a>1.6.2、音频压缩编码标准</h3><p>音频编码的主要作用是将音频采样数据PCM等压缩成为音频码流，从而降低音频的数据量。<br>高效率的音频编码在同等的码率下，可以获得更高的音质。</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>推出机构</th>
+<th>推出时间</th>
+<th>目前使用领域</th>
 </tr>
 </thead>
 <tbody><tr>
 <td>AAC</td>
-</tr>
-<tr>
-<td>MP3</td>
+<td>MPEG</td>
+<td>1997</td>
+<td>各个领域</td>
 </tr>
 <tr>
 <td>AC-3</td>
+<td>Dolby Inc.</td>
+<td>1992</td>
+<td>电影</td>
+</tr>
+<tr>
+<td>MP3</td>
+<td>MPEG</td>
+<td>1993</td>
+<td>各个领域</td>
+</tr>
+<tr>
+<td>WMA</td>
+<td>Microsoft Inc.</td>
+<td>1999</td>
+<td>微软平台</td>
+</tr>
+</tbody></table>
+<h2 id="1-7、解码"><a href="#1-7、解码" class="headerlink" title="1.7、解码"></a>1.7、解码</h2><p>将视频/音频压缩编码数据，解码成为非压缩的视频/音频原始数据。<br>通过解码，压缩编码的视频数据输出成为非压缩的颜色数据，例如YUV420P、RGB等等；<br>压缩编码的音频数据输出成为非压缩的音频抽样数据，例如PCM数据。</p>
+<table>
+<thead>
+<tr>
+<th>视频原始数据</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>YUV</td>
+</tr>
+<tr>
+<td>RGB</td>
 </tr>
 </tbody></table>
 <table>
 <thead>
 <tr>
-<th>视频压缩编码标准</th>
+<th>音频原始数据</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>H.264</td>
-</tr>
-<tr>
-<td>MPEG2</td>
-</tr>
-<tr>
-<td>VC-1</td>
+<td>PCM</td>
 </tr>
 </tbody></table>
-<h3 id="解码"><a href="#解码" class="headerlink" title="解码"></a>解码</h3><p>将视频/音频压缩编码数据，解码成为非压缩的视频/音频原始数据。<br>通过解码，压缩编码的视频数据输出成为非压缩的颜色数据，例如YUV420P、RGB等等；<br>压缩编码的音频数据输出成为非压缩的音频抽样数据，例如PCM数据。</p>
-<h3 id="视音频同步"><a href="#视音频同步" class="headerlink" title="视音频同步"></a>视音频同步</h3><p>根据解封装模块处理过程中获取到的参数信息，同步解码出来的视频和音频数据，并将视频音频数据送至系统的显卡和声卡播放出来。</p>
+<h2 id="1-8、视音频同步"><a href="#1-8、视音频同步" class="headerlink" title="1.8、视音频同步"></a>1.8、视音频同步</h2><p>根据解封装模块处理过程中获取到的参数信息，同步解码出来的视频和音频数据，并将视频音频数据送至系统的显卡和声卡播放出来。</p>
+<h2 id="1-9、网络视音频"><a href="#1-9、网络视音频" class="headerlink" title="1.9、网络视音频"></a>1.9、网络视音频</h2><h3 id="1-9-1、直播"><a href="#1-9-1、直播" class="headerlink" title="1.9.1、直播"></a>1.9.1、直播</h3><p>直播服务普遍采用了RTMP作为流媒体协议，FLV作为封装格式，H.264作为视频编码格式，AAC作为音频编码格式。<br>FLV是RTMP使用的封装格式，H.264是当今实际应用中编码效率最高的视频编码标准，AAC则是当今实际应用中编码效率最高的音频编码标准。</p>
+<h3 id="1-9-2、点播"><a href="#1-9-2、点播" class="headerlink" title="1.9.2、点播"></a>1.9.2、点播</h3><p>点播服务普遍采用了HTTP作为流媒体协议，H.264作为视频编码格式，AAC作为音频编码格式。<br>采用HTTP作为点播协议有以下两点优势：<br>一方面，HTTP是基于TCP协议的应用层协议，媒体传输过程中不会出现丢包等现象，从而保证了视频的质量；另一方面，HTTP被绝大部分的Web服务器支持，因而流媒体服务机构不必投资购买额外的流媒体服务器，从而节约了开支。<br>点播服务采用的封装格式有多种：MP4，FLV，F4V等，它们之间的区别不是很大。视频编码标准和音频编码标准是H.264和AAC。这两种标准分别是当今实际应用中编码效率最高的视频标准和音频标准。</p>
 
       
     </div>
