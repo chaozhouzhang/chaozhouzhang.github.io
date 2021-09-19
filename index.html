@@ -212,7 +212,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-09-19 12:28:18 / Modified: 20:20:37" itemprop="dateCreated datePublished" datetime="2021-09-19T12:28:18+08:00">2021-09-19</time>
+              <time title="Created: 2021-09-19 12:28:18 / Modified: 20:42:07" itemprop="dateCreated datePublished" datetime="2021-09-19T12:28:18+08:00">2021-09-19</time>
             </span>
 
           
@@ -542,8 +542,39 @@
 </tr>
 </tbody></table>
 <h2 id="1-8、视音频同步"><a href="#1-8、视音频同步" class="headerlink" title="1.8、视音频同步"></a>1.8、视音频同步</h2><p>根据解封装模块处理过程中获取到的参数信息，同步解码出来的视频和音频数据，并将视频音频数据送至系统的显卡和声卡播放出来。</p>
-<h2 id="1-9、网络视音频"><a href="#1-9、网络视音频" class="headerlink" title="1.9、网络视音频"></a>1.9、网络视音频</h2><h3 id="1-9-1、直播"><a href="#1-9-1、直播" class="headerlink" title="1.9.1、直播"></a>1.9.1、直播</h3><p>直播服务普遍采用了RTMP作为流媒体协议，FLV作为封装格式，H.264作为视频编码格式，AAC作为音频编码格式。<br>FLV是RTMP使用的封装格式，H.264是当今实际应用中编码效率最高的视频编码标准，AAC则是当今实际应用中编码效率最高的音频编码标准。</p>
-<h3 id="1-9-2、点播"><a href="#1-9-2、点播" class="headerlink" title="1.9.2、点播"></a>1.9.2、点播</h3><p>点播服务普遍采用了HTTP作为流媒体协议，H.264作为视频编码格式，AAC作为音频编码格式。<br>采用HTTP作为点播协议有以下两点优势：<br>一方面，HTTP是基于TCP协议的应用层协议，媒体传输过程中不会出现丢包等现象，从而保证了视频的质量；另一方面，HTTP被绝大部分的Web服务器支持，因而流媒体服务机构不必投资购买额外的流媒体服务器，从而节约了开支。<br>点播服务采用的封装格式有多种：MP4，FLV，F4V等，它们之间的区别不是很大。视频编码标准和音频编码标准是H.264和AAC。这两种标准分别是当今实际应用中编码效率最高的视频标准和音频标准。</p>
+<h2 id="1-9、网络视音频"><a href="#1-9、网络视音频" class="headerlink" title="1.9、网络视音频"></a>1.9、网络视音频</h2><h3 id="1-9-1、直播"><a href="#1-9-1、直播" class="headerlink" title="1.9.1、直播"></a>1.9.1、直播</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">直播服务普遍采用了RTMP作为流媒体协议，FLV作为封装格式，H.264作为视频编码格式，AAC作为音频编码格式。</span><br></pre></td></tr></table></figure>
+<p>FLV是RTMP使用的封装格式，H.264是当今实际应用中编码效率最高的视频编码标准，AAC则是当今实际应用中编码效率最高的音频编码标准。</p>
+<h3 id="1-9-2、点播"><a href="#1-9-2、点播" class="headerlink" title="1.9.2、点播"></a>1.9.2、点播</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">点播服务普遍采用了HTTP作为流媒体协议，H.264作为视频编码格式，AAC作为音频编码格式。</span><br></pre></td></tr></table></figure>
+<p>采用HTTP作为点播协议有以下两点优势：<br>一方面，HTTP是基于TCP协议的应用层协议，媒体传输过程中不会出现丢包等现象，从而保证了视频的质量；另一方面，HTTP被绝大部分的Web服务器支持，因而流媒体服务机构不必投资购买额外的流媒体服务器，从而节约了开支。<br>点播服务采用的封装格式有多种：MP4，FLV，F4V等，它们之间的区别不是很大。视频编码标准和音频编码标准是H.264和AAC。这两种标准分别是当今实际应用中编码效率最高的视频标准和音频标准。</p>
+<h2 id="1-10、视频参数对比"><a href="#1-10、视频参数对比" class="headerlink" title="1.10、视频参数对比"></a>1.10、视频参数对比</h2><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>对比</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>流媒体系统</td>
+<td><a href="https://en.wikipedia.org/wiki/Comparison_of_streaming_media_software" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Comparison_of_streaming_media_software</a></td>
+</tr>
+<tr>
+<td>封装格式</td>
+<td><a href="https://en.wikipedia.org/wiki/Comparison_of_video_container_formats" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Comparison_of_video_container_formats</a></td>
+</tr>
+<tr>
+<td>视频编码器</td>
+<td><a href="https://en.wikipedia.org/wiki/Comparison_of_video_codecs" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Comparison_of_video_codecs</a></td>
+</tr>
+<tr>
+<td>音频编码器</td>
+<td><a href="https://en.wikipedia.org/wiki/Comparison_of_audio_coding_formats" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Comparison_of_audio_coding_formats</a></td>
+</tr>
+<tr>
+<td>视频播放器</td>
+<td><a href="https://en.wikipedia.org/wiki/Comparison_of_video_player_software" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Comparison_of_video_player_software</a></td>
+</tr>
+</tbody></table>
+<h1 id="2、视音频数据处理"><a href="#2、视音频数据处理" class="headerlink" title="2、视音频数据处理"></a>2、视音频数据处理</h1><h2 id="2-1、RGB、YUV视频像素数据处理"><a href="#2-1、RGB、YUV视频像素数据处理" class="headerlink" title="2.1、RGB、YUV视频像素数据处理"></a>2.1、RGB、YUV视频像素数据处理</h2><p>RGB/YUV视频像素数据在视频播放器的解码流程中的位置：<br><img src="" alt="视频像素数据"></p>
 
       
     </div>
