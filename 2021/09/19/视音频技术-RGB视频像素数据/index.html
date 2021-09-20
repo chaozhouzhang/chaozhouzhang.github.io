@@ -57,8 +57,13 @@
 <meta property="og:site_name" content="Android技术堆栈">
 <meta property="og:description" content="1、RGB视频像素数据RGB色彩模式，是通过对红绿蓝三个颜色通道的变化，以及相互之间的叠加得到各种颜色。每种颜色值范围为0-255，所以每个颜色值使用1个字节byte也就是8个比特bit表示。 1.1、色深色深即色彩深度，色彩深度是计算机图形学领域表示在位图或者视频帧缓冲区中储存1像素的颜色所用的位数，它也称为位&#x2F;像素（bpp）。色彩深度越高，可用的颜色就越多。 1.2、RGB格式1.2.1、索引">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2021-09-20T02:25:23.587Z">
+<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;chaozhouzhang&#x2F;chaozhouzhang.github.io&#x2F;blob&#x2F;master&#x2F;images&#x2F;RGB565.png?raw=true">
+<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;chaozhouzhang&#x2F;chaozhouzhang.github.io&#x2F;blob&#x2F;master&#x2F;images&#x2F;RGB55.png?raw=true">
+<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;chaozhouzhang&#x2F;chaozhouzhang.github.io&#x2F;blob&#x2F;master&#x2F;images&#x2F;RGB24.png?raw=true">
+<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;chaozhouzhang&#x2F;chaozhouzhang.github.io&#x2F;blob&#x2F;master&#x2F;images&#x2F;RGB32.png?raw=true">
+<meta property="og:updated_time" content="2021-09-20T02:27:42.407Z">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;github.com&#x2F;chaozhouzhang&#x2F;chaozhouzhang.github.io&#x2F;blob&#x2F;master&#x2F;images&#x2F;RGB565.png?raw=true">
 
 <link rel="canonical" href="https://chaozhouzhang.github.io/2021/09/19/%E8%A7%86%E9%9F%B3%E9%A2%91%E6%8A%80%E6%9C%AF-RGB%E8%A7%86%E9%A2%91%E5%83%8F%E7%B4%A0%E6%95%B0%E6%8D%AE/">
 
@@ -220,7 +225,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-09-20 10:25:23" itemprop="dateModified" datetime="2021-09-20T10:25:23+08:00">2021-09-20</time>
+                <time title="Modified: 2021-09-20 10:27:42" itemprop="dateModified" datetime="2021-09-20T10:27:42+08:00">2021-09-20</time>
               </span>
 
           
@@ -282,25 +287,26 @@
 <td>RGB分别使用8个比特表示，剩余8位低字节不用，共32个比特</td>
 </tr>
 </tbody></table>
-<p>假设计算机中存储某一个像素点的变量为color，数据类型为short。<br>RGB565：<br><img src="" alt="RGB565"></p>
+<p>假设计算机中存储某一个像素点的变量为color，数据类型为short。<br>RGB565：<br><img src="https://github.com/chaozhouzhang/chaozhouzhang.github.io/blob/master/images/RGB565.png?raw=true" alt="RGB565"></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">R = color &amp; 0xF800, (获取高字节的 5 个 bit)</span><br><span class="line">G = color &amp; 0x07E0, (获取中间 6 个 bit)</span><br><span class="line">B = color &amp; 0x001F, (获取低字节 5 个 bit)</span><br></pre></td></tr></table></figure>
-<p>RGB55：<br><img src="" alt="RGB55"></p>
+<p>RGB55：<br><img src="https://github.com/chaozhouzhang/chaozhouzhang.github.io/blob/master/images/RGB55.png?raw=true" alt="RGB55"></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">R = color &amp; 0x7C00, (获取高字节的 5 个 bit)</span><br><span class="line">G = color &amp; 0x03E0, (获取中间 5 个 bit)</span><br><span class="line">B = color &amp; 0x001F, (获取低字节 5 个 bit)</span><br></pre></td></tr></table></figure>
-<p>RGB24：<br><img src="" alt="RGB24"></p>
+<p>RGB24：<br><img src="https://github.com/chaozhouzhang/chaozhouzhang.github.io/blob/master/images/RGB24.png?raw=true" alt="RGB24"></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">R = color &amp; 0x000000FF, </span><br><span class="line">G = color &amp; 0x0000FF00,</span><br><span class="line">B = color &amp; 0x00FF0000,</span><br></pre></td></tr></table></figure>
-<p>RGB32：<br><img src="" alt="RGB32"></p>
+<p>RGB32：<br><img src="https://github.com/chaozhouzhang/chaozhouzhang.github.io/blob/master/images/RGB32.png?raw=true" alt="RGB32"></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">R = color &amp; 0x0000FF00</span><br><span class="line">G = color &amp; 0x00FF0000,</span><br><span class="line">B = color &amp; 0xFF000000,</span><br></pre></td></tr></table></figure>
 <h3 id="1-2-3、RGB格式转换"><a href="#1-2-3、RGB格式转换" class="headerlink" title="1.2.3、RGB格式转换"></a>1.2.3、RGB格式转换</h3><p>RGB格式转换，由于精度不同，需要量化补偿和量化压缩。</p>
 <h3 id="1-2-3-1、量化补偿："><a href="#1-2-3-1、量化补偿：" class="headerlink" title="1.2.3.1、量化补偿："></a>1.2.3.1、量化补偿：</h3><ol>
 <li>将原数据填充至高位</li>
 <li>对于低位，用原始数据的低位进行补偿</li>
-<li>如果仍然有未填充的位，继续使用原始数据的低位进行循环补偿<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">例子： 16 bit RGB565 -&gt; 24 bit RGB888 的转换</span><br><span class="line">16 bit RGB656： R4 R3 R2 R1 R0 G5 G4 G3 G2 G1 G0 B4 B3 B2 B1 B0</span><br><span class="line">24 bit RGB888： R4 R3 R2 R1 R0 0 0 0 G5 G4 G3 G2 G1 G0 0 0 B4 B3 B2 B1 B0 0 0 0</span><br><span class="line">24 bit RGB888： R4 R3 R2 R1 R0 R2 R1 R0 G5 G4 G3 G2 G1 G0 G1 G0 B4 B3 B2 B1 B0 B2 B1 B0</span><br></pre></td></tr></table></figure>
+<li>如果仍然有未填充的位，继续使用原始数据的低位进行循环补偿</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">例子： 16 bit RGB565 -&gt; 24 bit RGB888 的转换</span><br><span class="line">16 bit RGB656： R4 R3 R2 R1 R0 G5 G4 G3 G2 G1 G0 B4 B3 B2 B1 B0</span><br><span class="line">24 bit RGB888： R4 R3 R2 R1 R0 0 0 0 G5 G4 G3 G2 G1 G0 0 0 B4 B3 B2 B1 B0 0 0 0</span><br><span class="line">24 bit RGB888： R4 R3 R2 R1 R0 R2 R1 R0 G5 G4 G3 G2 G1 G0 G1 G0 B4 B3 B2 B1 B0 B2 B1 B0</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">void rgb565_to_rgb888(unsigned char *image, unsigned char *image888) </span><br><span class="line">&#123;</span><br><span class="line">    unsigned char R, G, B;</span><br><span class="line"></span><br><span class="line">    R = *(image + 1) &amp; 0xF8; // 补齐成：RRRRR000</span><br><span class="line">    G = (*(image + 1) &lt;&lt; 5) | (*image &amp; 0xe0 &gt;&gt; 3); // 补齐成：GGGGGG00</span><br><span class="line">    B = *image &lt;&lt; 3 ; // 补齐成: BBBBB000</span><br><span class="line"></span><br><span class="line">    // 补偿</span><br><span class="line">    *(image888) = B | ((B &amp; 0x38) &gt;&gt; 3); </span><br><span class="line">    *(image888 + 1) = G | ((G &amp; 0x0c) &gt;&gt; 2); </span><br><span class="line">    *(image888 + 2) = R | ((R &amp; 0x38) &gt;&gt; 3); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="1-2-3-2、量化压缩："><a href="#1-2-3-2、量化压缩：" class="headerlink" title="1.2.3.2、量化压缩："></a>1.2.3.2、量化压缩：</h3>三个字取高位<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">例子： 24 bit RGB888 -&gt; 16 bit RGB565 的转换</span><br><span class="line">24 bit RGB888：R7 R6 R5 R4 R3 R2 R1 R0 G7 G6 G5 G4 G3 G2 G1 G0 B7 B6 B5 B4 B3 B2 B1 B0</span><br><span class="line">16 bit RGB656： R7 R6 R5 R4 R3 G7 G6 G5 G4 G3 G2 B7 B6 B5 B4 B3</span><br></pre></td></tr></table></figure>
+<h3 id="1-2-3-2、量化压缩："><a href="#1-2-3-2、量化压缩：" class="headerlink" title="1.2.3.2、量化压缩："></a>1.2.3.2、量化压缩：</h3><p>三个字取高位</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">例子： 24 bit RGB888 -&gt; 16 bit RGB565 的转换</span><br><span class="line">24 bit RGB888：R7 R6 R5 R4 R3 R2 R1 R0 G7 G6 G5 G4 G3 G2 G1 G0 B7 B6 B5 B4 B3 B2 B1 B0</span><br><span class="line">16 bit RGB656： R7 R6 R5 R4 R3 G7 G6 G5 G4 G3 G2 B7 B6 B5 B4 B3</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">unsigned short rgb_24_to_565(unsigned short r, unsigned short g, unsigned short b)</span><br><span class="line">&#123;</span><br><span class="line">    return ((r &lt;&lt; 8) &amp; 0xF800) | ((g &lt;&lt; 3) &amp; 0x07E0) | ((b &gt;&gt; 3) &amp; 0x001f);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-</li>
-</ol>
 
     </div>
 
