@@ -187,6 +187,170 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2021/09/20/%E8%A7%86%E9%9F%B3%E9%A2%91%E6%8A%80%E6%9C%AF-YUV%E8%A7%86%E9%A2%91%E5%83%8F%E7%B4%A0%E6%95%B0%E6%8D%AE-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/header.jpeg">
+      <meta itemprop="name" content="张潮州">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Android技术堆栈">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/20/%E8%A7%86%E9%9F%B3%E9%A2%91%E6%8A%80%E6%9C%AF-YUV%E8%A7%86%E9%A2%91%E5%83%8F%E7%B4%A0%E6%95%B0%E6%8D%AE-1/" class="post-title-link" itemprop="url">视音频技术-YUV视频像素数据</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-09-20 12:22:04" itemprop="dateCreated datePublished" datetime="2021-09-20T12:22:04+08:00">2021-09-20</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2021/09/20/%E8%A7%86%E9%9F%B3%E9%A2%91%E6%8A%80%E6%9C%AF-YUV%E8%A7%86%E9%A2%91%E5%83%8F%E7%B4%A0%E6%95%B0%E6%8D%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/header.jpeg">
+      <meta itemprop="name" content="张潮州">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Android技术堆栈">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/20/%E8%A7%86%E9%9F%B3%E9%A2%91%E6%8A%80%E6%9C%AF-YUV%E8%A7%86%E9%A2%91%E5%83%8F%E7%B4%A0%E6%95%B0%E6%8D%AE/" class="post-title-link" itemprop="url">视音频技术-YUV视频像素数据</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-09-20 11:07:17 / Modified: 12:15:54" itemprop="dateCreated datePublished" datetime="2021-09-20T11:07:17+08:00">2021-09-20</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="1、YUV视频像素数据"><a href="#1、YUV视频像素数据" class="headerlink" title="1、YUV视频像素数据"></a>1、YUV视频像素数据</h1><p>YUV 是一种彩色编码系统，主要用在视频、图形处理流水线中。相对于 RGB 颜色空间，设计 YUV 的目的就是为了编码、传输的方便，减少带宽占用和信息出错。</p>
+<p>Y’UV、YUV、YCbCr、YPbPr 几个概念其实是一回事儿。由于历史关系，Y’UV、YUV 主要是用在彩色电视中，用于模拟信号表示。YCbCr 是用在数字视频、图像的压缩和传输，如 MPEG、JPEG。通常所讲的 YUV 其实就是指 YCbCr，其中Y 表示亮度（luma），CbCr 表示色度（chroma）。</p>
+<p>Y’UV 设计的初衷是为了使彩色电视能够兼容黑白电视。对于黑白电视信号，没有色度信息也就是(UV)，那么在彩色电视显示的时候指显示亮度信息。Y’UV 不是 Absolute Color Space，只是一种 RGB 的信息编码，实际的显示还是通过 RGB 来显示。Y’，U，V 叫做不同的 component 。</p>
+<p>人眼的视觉特点是对亮度更敏感，对位置、色彩相对来说不敏感。在视频编码系统中为了降低带宽，可以保存更多的亮度信息(luma)，保存较少的色差信息(chroma)。这叫做 chrominance subsamping, 色度二次采样。原则：在数字图像中，(1) 每一个图形像素都要包含 luma（亮度）值；（2）几个图形像素共用一个 Cb + Cr 值，一般是 2、4、8 个像素。</p>
+<p>图形像素：<br>对于一个 w 宽、h 高的像素图，在水平方向，一行有 w 个像素；在垂直方向，一列有 h 个像素，整个图形有 w * h 个像素。</p>
+<p>如果用 YCbCr 像素格式来表示像素图，需搞清楚亮度和图形像素的关系，色度和图形像素的关系。</p>
+<table>
+<thead>
+<tr>
+<th>YUV</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Y</td>
+<td>明亮度</td>
+</tr>
+<tr>
+<td>U</td>
+<td>色度</td>
+</tr>
+<tr>
+<td>V</td>
+<td>浓度</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>YUV格式</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>紧缩格式packed</td>
+<td>将Y、U、V分量值存储成宏像素数组，和RGB的存放方式类似。</td>
+</tr>
+<tr>
+<td>平面格式planar</td>
+<td>将Y、U、V分量值分别存放在不同矩阵中。</td>
+</tr>
+</tbody></table>
+<p> yuv 各种格式后面数字的含义：</p>
+<p> <img src="" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">左侧一列，每一个小矩形是图形像素表示，黑框矩形是色度像素表示，小黑点是表示色度像素值(Cb+Cr)，表示图形像素和色度像素在水平和垂直方向的比例关系。</span><br><span class="line">4：4：0 水平方向是1/1，垂直方向是1/2，表示一个色度像素对应了两个图形像素。</span><br><span class="line">4：2：2 水平方向是1/2，垂直方向是1/1，表示一个色度像素对应了两个图形像素。</span><br><span class="line">4：2：0 水平方向是1/2，垂直方向是1/2，表示一个色度像素对应了四个图形像素。</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">右侧一列是二次采样模式记号表示，是 J：a：b 模式，实心黑色圆圈表示包含色度像素(Cb+Cr），空心圆圈表示不包含色度像素。对于 J:a:b 模式，主要是围绕参考块的概念定义的，这个参考块是一个 J x 2 的矩形，J 通常是 4。这样，此参考块就是宽度有 4 个像素、高度有 2 个像素的矩形。a 表示参考块的第一行包含的色度像素样本数，b 表示在参考块的第二行包含的色度像素样本数。</span><br><span class="line">4：4：0 参考块第一行包含四个色度样本，第二行没有包含色度样本。</span><br><span class="line">4：2：2 参考块第一行包含两个色度样本，第二行也包含两个色度样本，他们是交替出现。</span><br><span class="line">4：2：0 参考块第一行包含两个色度样本，第二行没有包含色度样本。</span><br></pre></td></tr></table></figure>
+
+<p>yuv444，yuv422，yuv420 yuv 等像素格式的本质是：每个图形像素都会包含亮度值，但是某几个图形像素会共用一个色度值，这个比例关系就是通过 4 x 2 的矩形参考块来定的。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
     <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2021/09/19/%E8%A7%86%E9%9F%B3%E9%A2%91%E6%8A%80%E6%9C%AF-RGB%E8%A7%86%E9%A2%91%E5%83%8F%E7%B4%A0%E6%95%B0%E6%8D%AE/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -218,7 +382,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-09-20 10:27:42" itemprop="dateModified" datetime="2021-09-20T10:27:42+08:00">2021-09-20</time>
+                <time title="Modified: 2021-09-20 11:27:08" itemprop="dateModified" datetime="2021-09-20T11:27:08+08:00">2021-09-20</time>
               </span>
 
           
@@ -234,7 +398,7 @@
       
           <h1 id="1、RGB视频像素数据"><a href="#1、RGB视频像素数据" class="headerlink" title="1、RGB视频像素数据"></a>1、RGB视频像素数据</h1><p>RGB色彩模式，是通过对红绿蓝三个颜色通道的变化，以及相互之间的叠加得到各种颜色。<br>每种颜色值范围为0-255，所以每个颜色值使用1个字节byte也就是8个比特bit表示。</p>
 <h2 id="1-1、色深"><a href="#1-1、色深" class="headerlink" title="1.1、色深"></a>1.1、色深</h2><p>色深即色彩深度，色彩深度是计算机图形学领域表示在位图或者视频帧缓冲区中储存1像素的颜色所用的位数，它也称为位/像素（bpp）。色彩深度越高，可用的颜色就越多。</p>
-<h2 id="1-2、RGB格式"><a href="#1-2、RGB格式" class="headerlink" title="1.2、RGB格式"></a>1.2、RGB格式</h2><h3 id="1-2-1、索引形式"><a href="#1-2-1、索引形式" class="headerlink" title="1.2.1、索引形式"></a>1.2.1、索引形式</h3><p>索引形式表示每个像素使用1、4、8个比特bit表示，存储的是对应像素在调色板的索引，而非像素的RGB值，调色板是通过编号映射到颜色的一张二维表。</p>
+<h2 id="1-2、RGB格式"><a href="#1-2、RGB格式" class="headerlink" title="1.2、RGB格式"></a>1.2、RGB格式</h2><h3 id="1-2-1、索引形式"><a href="#1-2-1、索引形式" class="headerlink" title="1.2.1、索引形式"></a>1.2.1、索引形式</h3><p>索引形式表示每个像素使用1、4、8个比特bit表示，存储的是对应像素在调色板的索引，而非像素的RGB分量值，调色板是通过编号映射到颜色的一张二维表。</p>
 <table>
 <thead>
 <tr>
@@ -1189,180 +1353,6 @@
   
   
 
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2020/12/07/SVN/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/header.jpeg">
-      <meta itemprop="name" content="张潮州">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Android技术堆栈">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/12/07/SVN/" class="post-title-link" itemprop="url">SVN</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2020-12-07 16:24:20 / Modified: 16:24:25" itemprop="dateCreated datePublished" datetime="2020-12-07T16:24:20+08:00">2020-12-07</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>SVN使用</p>
-<p>大版本发布后打个tag保存代码，没大的bug一般这部分代码就不再动了，万一以后线上出问题可以快速回溯</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2020/12/03/21%E5%A4%A9%E5%AD%A6%E9%80%9AC++%E7%AC%AC1%E5%A4%A9/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/header.jpeg">
-      <meta itemprop="name" content="张潮州">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Android技术堆栈">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/12/03/21%E5%A4%A9%E5%AD%A6%E9%80%9AC++%E7%AC%AC1%E5%A4%A9/" class="post-title-link" itemprop="url">21天学通C++第1天</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-12-03 23:18:04" itemprop="dateCreated datePublished" datetime="2020-12-03T23:18:04+08:00">2020-12-03</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-12-05 11:58:56" itemprop="dateModified" datetime="2020-12-05T11:58:56+08:00">2020-12-05</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/" itemprop="url" rel="index">
-                    <span itemprop="name">C++</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="第一章-绪论"><a href="#第一章-绪论" class="headerlink" title="第一章 绪论"></a>第一章 绪论</h1><p>1、C++与C语言的关系</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">C++是一种面向对象的语言，实现了继承、抽象、多态和封装等概念。</span><br><span class="line">C++支持类，而类包含成员数据以及操作成员数据的成员方法。</span><br><span class="line">很多C++编译器都支持C语言。</span><br><span class="line">学习C++等面向对象编程语言，并不需要先学习C语言等过程性语言，不要求具备C语言编程方面的知识和经验。</span><br></pre></td></tr></table></figure>
-<p>2、C++的优点</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C++是一种中级编程语言，既可以高级编程方式编写应用程序，又可以低级编程方式编写与硬件紧密协作的库，控制应用程序的资源使用和性能。</span><br></pre></td></tr></table></figure>
-<p>3、C++标准</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">C++98</span><br><span class="line">C++03</span><br><span class="line">C++11</span><br><span class="line">C++14</span><br><span class="line">C++17</span><br><span class="line">C++20</span><br></pre></td></tr></table></figure>
-<p>4、C++编译器</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ICC</span><br><span class="line">GCC/g++ </span><br><span class="line">Clang</span><br><span class="line">MSVC</span><br><span class="line">VC++</span><br></pre></td></tr></table></figure>
-<p>5、C++标准库</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">标准函数库：由通用的、独立的、不属于任何类的函数组成，继承自 C 语言。</span><br><span class="line">面向对象类库：是类及其相关函数的集合。</span><br></pre></td></tr></table></figure>
-<p>标准函数库</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">输入/输出 I/O</span><br><span class="line">字符串和字符处理</span><br><span class="line">数学</span><br><span class="line">时间、日期和本地化</span><br><span class="line">动态分配</span><br><span class="line">其他</span><br><span class="line">宽字符函数</span><br></pre></td></tr></table></figure>
-<p>面向对象类库</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">标准的 C++ I/O 类</span><br><span class="line">String 类</span><br><span class="line">数值类</span><br><span class="line">STL 容器类</span><br><span class="line">STL 算法</span><br><span class="line">STL 函数对象</span><br><span class="line">STL 迭代器</span><br><span class="line">STL 分配器</span><br><span class="line">本地化库</span><br><span class="line">异常处理类</span><br><span class="line">杂项支持库</span><br></pre></td></tr></table></figure>
-<p>C++ Standard Library headers</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://en.cppreference.com/w/cpp/header</span><br></pre></td></tr></table></figure>
-<p>6、C++标准模板库STL</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C++标准模板库STL是一套功能强大的 C++ 模板类，提供了通用的模板类和函数，这些模板类和函数可以实现多种流行和常用的算法和数据结构，如向量、链表、队列、栈。</span><br></pre></td></tr></table></figure>
-<p>6、编译器对C++标准的支持<br>C++11</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://www.klayge.org/wiki/index.php/%E5%A4%9A%E7%A7%8D%E7%BC%96%E8%AF%91%E5%99%A8%E5%AF%B9C%2B%2B11%E7%9A%84%E6%94%AF%E6%8C%81</span><br></pre></td></tr></table></figure>
-<p>C++14</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://www.klayge.org/wiki/index.php/%E5%A4%9A%E7%A7%8D%E7%BC%96%E8%AF%91%E5%99%A8%E5%AF%B9C%2B%2B14%E7%9A%84%E6%94%AF%E6%8C%81</span><br></pre></td></tr></table></figure>
-
-<p>7、链接器</p>
-<p>8、C/C++ 程序编译过程<br>源代码（source coprede）→预处理器（processor）→编译器（compiler）→汇编程序（assembler）→目标程序（object code）→链接器（Linker）→可执行程序（executables）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://www.sunistudio.com/cppfaq/</span><br></pre></td></tr></table></figure>
-
-<h1 id="第二章"><a href="#第二章" class="headerlink" title="第二章"></a>第二章</h1><p>C++程序被组织成类，而类由成员函数和成员变量组成。 </p>
-<p>以#打头的预处理器编译指令以及以 int main( )打头的程序 主体。 </p>
-<p>预处理器是一个在编译前运行的工具。预处理器编译指令是向预处理器发出的命令， 总是以字符#打头。 </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;filename&gt;让预处理器获取指定文件的内容，并将它们放在编译指令所处的位置。</span><br></pre></td></tr></table></figure>
-<p>std<br>standard</p>
-<p>cout是在名称空间std中定义的一个控制台流，使用流插入运算符&lt;&lt;将文本放入这个流中，std::endl是将回车插入这个流中，cout将会把内容显示到控制台中。<br>类似的，fstream是在名称空间std中定义个一个文件流，使用流插入运算符&lt;&lt;可将文本插入流中，fstream将会把内容存储到磁盘的文件中。</p>
-<p>这个整数值被返回给操作系统，根据应用程序的性质，这可能很有用，因为大多数操作系 统都提供了查询功能，让您能够获悉正常终止的应用程序的返回值。在很多情况下，一个应用程序被 另一个应用程序启动，而父应用程序(启动者)想知道子应用程序(被启动者)是否成功地完成了其 任务。程序员可使用 main( )的返回值向父应用程序传递成功或错误状态。 </p>
-<p>根据约定，程序员在程序运行成功时返回 0，并在出现错误时返回−1。然而，返回值为 整数，程序员可利用整个整数范围，指出众多不同的成功或失败状态。 </p>
-<p>使用命名空间，严谨版本，没有包含整个名称空间，而只包含要使用的元素。 </p>
-<p>务必添加注释，对程序中复杂算法和复杂部分 的工作原理进行解释。<br>务必以其他程序员能够理解的方式编写注释。<br>不要使用注释来解释显而易见的代码。<br>别忘了，不要因为可以添加注释，就编写晦涩 难懂的代码。<br>别忘了，修改代码时，可能需要相应地更新 注释。 </p>
-<p>变量让程序员能够将数据临时存储一段时间，而常量让程序员能够定义不允许修改的东西。 </p>
-<p>所有计算机、智能手机及其他可编程设备都包含微处理器和一定数量的临时存储空间，这种临时 存储器被称为随机存取存储器(RAM)。另外，很多设备还让您能够将数据永久性地存储到硬盘等存 储设备中。微处理器负责执行应用程序，在此过程中，它从 RAM 中获取要执行的应用程序二进制码 以及相关联的数据，这包括显示到屏幕上的数据以及用户输入的数据。 </p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1413,7 +1403,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-count">15</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
