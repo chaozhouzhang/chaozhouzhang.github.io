@@ -187,6 +187,68 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2021/02/04/%E4%BD%BF%E7%94%A8%C2%A0APP_ABI%C2%A0%E8%AE%BE%E7%BD%AE%E4%B8%BA%E7%89%B9%E5%AE%9A%20ABI%20%E7%94%9F%E6%88%90%E4%BB%A3%E7%A0%81%EF%BC%9A/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/header.jpeg">
+      <meta itemprop="name" content="张潮州">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Android技术堆栈">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/02/04/%E4%BD%BF%E7%94%A8%C2%A0APP_ABI%C2%A0%E8%AE%BE%E7%BD%AE%E4%B8%BA%E7%89%B9%E5%AE%9A%20ABI%20%E7%94%9F%E6%88%90%E4%BB%A3%E7%A0%81%EF%BC%9A/" class="post-title-link" itemprop="url">使用 APP_ABI 设置为特定 ABI 生成代码：</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-02-04 00:32:07" itemprop="dateCreated datePublished" datetime="2021-02-04T00:32:07+08:00">2021-02-04</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>使用 APP_ABI 设置为特定 ABI 生成代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">APP_STL += gnustl_static</span><br><span class="line">APP_ABI := armeabi-v7a arm64-v8a</span><br><span class="line">APP_PLATFORM := android-16</span><br></pre></td></tr></table></figure>
+
+<p>用于此应用的 C++ 标准库。<br>默认情况下使用 system STL。其他选项包括 c++_shared、c++_static 和 none</p>
+<p>栈：在函数内部声明的所有变量都将占用栈内存。<br>堆：这是程序中未使用的内存，在程序运行时可用于动态分配内存。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
     <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2020/12/07/SVN/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -639,7 +701,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

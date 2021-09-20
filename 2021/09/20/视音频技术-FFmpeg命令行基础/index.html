@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.4.2',
+    exturl: false,
+    sidebar: {"position":"left","display":"always","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="1、FFmpeg命令行基础FFmpeg官网： 1http:&#x2F;&#x2F;ffmpeg.org&#x2F; FFmpeg程序下载：包括Windows、MacOS、Linux等操作系统，包括FFmpeg、FFprobe、FFplay、FFserver等程序。 1http:&#x2F;&#x2F;ffmpeg.org&#x2F;download.html FFmpeg命令行文档： 1http:&#x2F;&#x2F;ffmpeg.org&#x2F;ffmpeg.html  FFpl">
+<meta property="og:type" content="article">
+<meta property="og:title" content="视音频技术-FFmpeg命令行基础">
+<meta property="og:url" content="https:&#x2F;&#x2F;chaozhouzhang.github.io&#x2F;2021&#x2F;09&#x2F;20&#x2F;%E8%A7%86%E9%9F%B3%E9%A2%91%E6%8A%80%E6%9C%AF-FFmpeg%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%9F%BA%E7%A1%80&#x2F;index.html">
+<meta property="og:site_name" content="Android技术堆栈">
+<meta property="og:description" content="1、FFmpeg命令行基础FFmpeg官网： 1http:&#x2F;&#x2F;ffmpeg.org&#x2F; FFmpeg程序下载：包括Windows、MacOS、Linux等操作系统，包括FFmpeg、FFprobe、FFplay、FFserver等程序。 1http:&#x2F;&#x2F;ffmpeg.org&#x2F;download.html FFmpeg命令行文档： 1http:&#x2F;&#x2F;ffmpeg.org&#x2F;ffmpeg.html  FFpl">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2021-09-20T16:04:53.409Z">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://chaozhouzhang.github.io/2021/09/20/%E8%A7%86%E9%9F%B3%E9%A2%91%E6%8A%80%E6%9C%AF-FFmpeg%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%9F%BA%E7%A1%80/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>视音频技术-FFmpeg命令行基础 | Android技术堆栈</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Android技术堆栈</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://chaozhouzhang.github.io/2021/09/20/%E8%A7%86%E9%9F%B3%E9%A2%91%E6%8A%80%E6%9C%AF-FFmpeg%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%9F%BA%E7%A1%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/header.jpeg">
+      <meta itemprop="name" content="张潮州">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Android技术堆栈">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          视音频技术-FFmpeg命令行基础
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-09-20 16:42:42" itemprop="dateCreated datePublished" datetime="2021-09-20T16:42:42+08:00">2021-09-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-09-21 00:04:53" itemprop="dateModified" datetime="2021-09-21T00:04:53+08:00">2021-09-21</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="1、FFmpeg命令行基础"><a href="#1、FFmpeg命令行基础" class="headerlink" title="1、FFmpeg命令行基础"></a>1、FFmpeg命令行基础</h1><p>FFmpeg官网：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://ffmpeg.org/</span><br></pre></td></tr></table></figure>
+<p>FFmpeg程序下载：包括Windows、MacOS、Linux等操作系统，包括FFmpeg、FFprobe、FFplay、FFserver等程序。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://ffmpeg.org/download.html</span><br></pre></td></tr></table></figure>
+<p>FFmpeg命令行文档：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://ffmpeg.org/ffmpeg.html</span><br></pre></td></tr></table></figure>
+
+<p>FFplay命令行文档：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://ffmpeg.org/ffplay.html</span><br></pre></td></tr></table></figure>
+<h2 id="2、配置FFmpeg环境变量"><a href="#2、配置FFmpeg环境变量" class="headerlink" title="2、配置FFmpeg环境变量"></a>2、配置FFmpeg环境变量</h2><p>MacOS上配置FFmpeg环境变量：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi ~/.bash_profile</span><br></pre></td></tr></table></figure>
+<p>按I键编辑文本：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export PATH=$&#123;PATH&#125;:/Users/zhangchaozhou/Documents/Software/ffmpeg-4.4</span><br></pre></td></tr></table></figure>
+<p>按ESC停止编辑，并按:wq键保存退出编辑。<br>更新配置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source ~/.bash_profile</span><br></pre></td></tr></table></figure>
+<p>如果环境变量PATH被修改，需在命令行执行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export PATH=/bin:/usr/bin:$PATH</span><br></pre></td></tr></table></figure>
+<p>执行FFmpeg：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br></pre></td><td class="code"><pre><span class="line">TeochewZhang:video zhangchaozhou$ ffmpeg -hide_banner -help</span><br><span class="line">Hyper fast Audio and Video encoder</span><br><span class="line">usage: ffmpeg [options] [[infile options] -i infile]... &#123;[outfile options] outfile&#125;...</span><br><span class="line"></span><br><span class="line">Getting help:</span><br><span class="line">    -h      -- print basic options</span><br><span class="line">    -h long -- print more options</span><br><span class="line">    -h full -- print all options (including all format and codec specific options, very long)</span><br><span class="line">    -h type=name -- print all options for the named decoder/encoder/demuxer/muxer/filter/bsf/protocol</span><br><span class="line">    See man ffmpeg for detailed description of the options.</span><br><span class="line"></span><br><span class="line">Print help / information / capabilities:</span><br><span class="line">-L                  show license</span><br><span class="line">-h topic            show help</span><br><span class="line">-? topic            show help</span><br><span class="line">-help topic         show help</span><br><span class="line">--help topic        show help</span><br><span class="line">-version            show version</span><br><span class="line">-buildconf          show build configuration</span><br><span class="line">-formats            show available formats</span><br><span class="line">-muxers             show available muxers</span><br><span class="line">-demuxers           show available demuxers</span><br><span class="line">-devices            show available devices</span><br><span class="line">-codecs             show available codecs</span><br><span class="line">-decoders           show available decoders</span><br><span class="line">-encoders           show available encoders</span><br><span class="line">-bsfs               show available bit stream filters</span><br><span class="line">-protocols          show available protocols</span><br><span class="line">-filters            show available filters</span><br><span class="line">-pix_fmts           show available pixel formats</span><br><span class="line">-layouts            show standard channel layouts</span><br><span class="line">-sample_fmts        show available audio sample formats</span><br><span class="line">-colors             show available color names</span><br><span class="line">-sources device     list sources of the input device</span><br><span class="line">-sinks device       list sinks of the output device</span><br><span class="line">-hwaccels           show available HW acceleration methods</span><br><span class="line"></span><br><span class="line">Global options (affect whole program instead of just one file):</span><br><span class="line">-loglevel loglevel  set logging level</span><br><span class="line">-v loglevel         set logging level</span><br><span class="line">-report             generate a report</span><br><span class="line">-max_alloc bytes    set maximum size of a single allocated block</span><br><span class="line">-y                  overwrite output files</span><br><span class="line">-n                  never overwrite output files</span><br><span class="line">-ignore_unknown     Ignore unknown stream types</span><br><span class="line">-filter_threads     number of non-complex filter threads</span><br><span class="line">-filter_complex_threads  number of threads for -filter_complex</span><br><span class="line">-stats              print progress report during encoding</span><br><span class="line">-max_error_rate maximum error rate  ratio of decoding errors (0.0: no errors, 1.0: 100% errors) above which ffmpeg returns an error instead of success.</span><br><span class="line">-bits_per_raw_sample number  set the number of bits per raw sample</span><br><span class="line">-vol volume         change audio volume (256=normal)</span><br><span class="line"></span><br><span class="line">Per-file main options:</span><br><span class="line">-f fmt              force format</span><br><span class="line">-c codec            codec name</span><br><span class="line">-codec codec        codec name</span><br><span class="line">-pre preset         preset name</span><br><span class="line">-map_metadata outfile[,metadata]:infile[,metadata]  set metadata information of outfile from infile</span><br><span class="line">-t duration         record or transcode &quot;duration&quot; seconds of audio/video</span><br><span class="line">-to time_stop       record or transcode stop time</span><br><span class="line">-fs limit_size      set the limit file size in bytes</span><br><span class="line">-ss time_off        set the start time offset</span><br><span class="line">-sseof time_off     set the start time offset relative to EOF</span><br><span class="line">-seek_timestamp     enable/disable seeking by timestamp with -ss</span><br><span class="line">-timestamp time     set the recording timestamp (&apos;now&apos; to set the current time)</span><br><span class="line">-metadata string=string  add metadata</span><br><span class="line">-program title=string:st=number...  add program with specified streams</span><br><span class="line">-target type        specify target file type (&quot;vcd&quot;, &quot;svcd&quot;, &quot;dvd&quot;, &quot;dv&quot; or &quot;dv50&quot; with optional prefixes &quot;pal-&quot;, &quot;ntsc-&quot; or &quot;film-&quot;)</span><br><span class="line">-apad               audio pad</span><br><span class="line">-frames number      set the number of frames to output</span><br><span class="line">-filter filter_graph  set stream filtergraph</span><br><span class="line">-filter_script filename  read stream filtergraph description from a file</span><br><span class="line">-reinit_filter      reinit filtergraph on input parameter changes</span><br><span class="line">-discard            discard</span><br><span class="line">-disposition        disposition</span><br><span class="line"></span><br><span class="line">Video options:</span><br><span class="line">-vframes number     set the number of video frames to output</span><br><span class="line">-r rate             set frame rate (Hz value, fraction or abbreviation)</span><br><span class="line">-fpsmax rate        set max frame rate (Hz value, fraction or abbreviation)</span><br><span class="line">-s size             set frame size (WxH or abbreviation)</span><br><span class="line">-aspect aspect      set aspect ratio (4:3, 16:9 or 1.3333, 1.7777)</span><br><span class="line">-bits_per_raw_sample number  set the number of bits per raw sample</span><br><span class="line">-vn                 disable video</span><br><span class="line">-vcodec codec       force video codec (&apos;copy&apos; to copy stream)</span><br><span class="line">-timecode hh:mm:ss[:;.]ff  set initial TimeCode value.</span><br><span class="line">-pass n             select the pass number (1 to 3)</span><br><span class="line">-vf filter_graph    set video filters</span><br><span class="line">-ab bitrate         audio bitrate (please use -b:a)</span><br><span class="line">-b bitrate          video bitrate (please use -b:v)</span><br><span class="line">-dn                 disable data</span><br><span class="line"></span><br><span class="line">Audio options:</span><br><span class="line">-aframes number     set the number of audio frames to output</span><br><span class="line">-aq quality         set audio quality (codec-specific)</span><br><span class="line">-ar rate            set audio sampling rate (in Hz)</span><br><span class="line">-ac channels        set number of audio channels</span><br><span class="line">-an                 disable audio</span><br><span class="line">-acodec codec       force audio codec (&apos;copy&apos; to copy stream)</span><br><span class="line">-vol volume         change audio volume (256=normal)</span><br><span class="line">-af filter_graph    set audio filters</span><br><span class="line"></span><br><span class="line">Subtitle options:</span><br><span class="line">-s size             set frame size (WxH or abbreviation)</span><br><span class="line">-sn                 disable subtitle</span><br><span class="line">-scodec codec       force subtitle codec (&apos;copy&apos; to copy stream)</span><br><span class="line">-stag fourcc/tag    force subtitle tag/fourcc</span><br><span class="line">-fix_sub_duration   fix subtitles duration</span><br><span class="line">-canvas_size size   set canvas size (WxH or abbreviation)</span><br><span class="line">-spre preset        set the subtitle options to the indicated preset</span><br></pre></td></tr></table></figure>
+
+<h2 id="3、常用命令"><a href="#3、常用命令" class="headerlink" title="3、常用命令"></a>3、常用命令</h2><h3 id="3-1、获取文件信息"><a href="#3-1、获取文件信息" class="headerlink" title="3.1、获取文件信息"></a>3.1、获取文件信息</h3><p>使用-i参数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ffmpeg -i input.mp4</span><br></pre></td></tr></table></figure>
+<p>加上-hide_banner参数，可以只显示元信息，去除冗余信息。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ffmpeg -i input.mp4 -hide_banner</span><br></pre></td></tr></table></figure>
+<p>示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">TeochewZhang:video zhangchaozhou$ ffmpeg -i 那些年，我们一起追的女孩.mp4 -hide_banner</span><br><span class="line">Input #0, mov,mp4,m4a,3gp,3g2,mj2, from &apos;那些年，我们一起追的女孩.mp4&apos;:</span><br><span class="line">  Metadata:</span><br><span class="line">    major_brand     : isom</span><br><span class="line">    minor_version   : 512</span><br><span class="line">    compatible_brands: isomiso2avc1mp41</span><br><span class="line">    encoder         : Lavf56.19.100</span><br><span class="line">  Duration: 00:00:30.32, start: 0.000000, bitrate: 397 kb/s</span><br><span class="line">  Stream #0:0(und): Video: h264 (High) (avc1 / 0x31637661), yuv420p, 480x208 [SAR 16:15 DAR 32:13], 261 kb/s, 25 fps, 25 tbr, 12800 tbn, 50 tbc (default)</span><br><span class="line">    Metadata:</span><br><span class="line">      handler_name    : VideoHandler</span><br><span class="line">      vendor_id       : [0][0][0][0]</span><br><span class="line">  Stream #0:1(und): Audio: aac (LC) (mp4a / 0x6134706D), 44100 Hz, stereo, fltp, 128 kb/s (default)</span><br><span class="line">    Metadata:</span><br><span class="line">      handler_name    : SoundHandler</span><br><span class="line">      vendor_id       : [0][0][0][0]</span><br></pre></td></tr></table></figure>
+<h3 id="3-2、转换编码格式-transcoding"><a href="#3-2、转换编码格式-transcoding" class="headerlink" title="3.2、转换编码格式/transcoding"></a>3.2、转换编码格式/transcoding</h3><p>将视频文件从一种编码转成另一种编码。比如转成 H.264 编码，一般使用编码器libx264，所以只需指定输出文件的视频编码器即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ffmpeg -i [input.file] -c:v libx264 output.mp4</span><br></pre></td></tr></table></figure>
+<p>示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">TeochewZhang:video zhangchaozhou$ ffmpeg -i Forrest_Gump_IMAX.mp4 -c:v libx264 output.mp4 -hide_banner</span><br><span class="line">Input #0, mov,mp4,m4a,3gp,3g2,mj2, from &apos;Forrest_Gump_IMAX.mp4&apos;:</span><br><span class="line">  Metadata:</span><br><span class="line">    major_brand     : isom</span><br><span class="line">    minor_version   : 512</span><br><span class="line">    compatible_brands: isomiso2avc1mp41</span><br><span class="line">    encoder         : Lavf56.19.100</span><br><span class="line">  Duration: 00:00:31.21, start: 0.000000, bitrate: 878 kb/s</span><br><span class="line">  Stream #0:0(und): Video: h264 (High) (avc1 / 0x31637661), yuv420p, 640x352, 748 kb/s, 23.98 fps, 23.98 tbr, 24k tbn, 47.95 tbc (default)</span><br><span class="line">    Metadata:</span><br><span class="line">      handler_name    : VideoHandler</span><br><span class="line">      vendor_id       : [0][0][0][0]</span><br><span class="line">  Stream #0:1(und): Audio: aac (LC) (mp4a / 0x6134706D), 44100 Hz, stereo, fltp, 128 kb/s (default)</span><br><span class="line">    Metadata:</span><br><span class="line">      handler_name    : SoundHandler</span><br><span class="line">      vendor_id       : [0][0][0][0]</span><br><span class="line">Stream mapping:</span><br><span class="line">  Stream #0:0 -&gt; #0:0 (h264 (native) -&gt; h264 (libx264))</span><br><span class="line">  Stream #0:1 -&gt; #0:1 (aac (native) -&gt; aac (native))</span><br><span class="line">Press [q] to stop, [?] for help</span><br><span class="line">[libx264 @ 0x7fcc4e803e00] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2</span><br><span class="line">[libx264 @ 0x7fcc4e803e00] profile High, level 3.0, 4:2:0, 8-bit</span><br><span class="line">[libx264 @ 0x7fcc4e803e00] 264 - core 161 r3048 b86ae3c - H.264/MPEG-4 AVC codec - Copyleft 2003-2021 - http://www.videolan.org/x264.html - options: cabac=1 ref=3 deblock=1:0:0 analyse=0x3:0x113 me=hex subme=7 psy=1 psy_rd=1.00:0.00 mixed_ref=1 me_range=16 chroma_me=1 trellis=1 8x8dct=1 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=-2 threads=11 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=3 b_pyramid=2 b_adapt=1 b_bias=0 direct=1 weightb=1 open_gop=0 weightp=2 keyint=250 keyint_min=23 scenecut=40 intra_refresh=0 rc_lookahead=40 rc=crf mbtree=1 crf=23.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 ip_ratio=1.40 aq=1:1.00</span><br><span class="line">Output #0, mp4, to &apos;output.mp4&apos;:</span><br><span class="line">  Metadata:</span><br><span class="line">    major_brand     : isom</span><br><span class="line">    minor_version   : 512</span><br><span class="line">    compatible_brands: isomiso2avc1mp41</span><br><span class="line">    encoder         : Lavf58.76.100</span><br><span class="line">  Stream #0:0(und): Video: h264 (avc1 / 0x31637661), yuv420p(progressive), 640x352, q=2-31, 23.98 fps, 24k tbn (default)</span><br><span class="line">    Metadata:</span><br><span class="line">      handler_name    : VideoHandler</span><br><span class="line">      vendor_id       : [0][0][0][0]</span><br><span class="line">      encoder         : Lavc58.134.100 libx264</span><br><span class="line">    Side data:</span><br><span class="line">      cpb: bitrate max/min/avg: 0/0/0 buffer size: 0 vbv_delay: N/A</span><br><span class="line">  Stream #0:1(und): Audio: aac (LC) (mp4a / 0x6134706D), 44100 Hz, stereo, fltp, 128 kb/s (default)</span><br><span class="line">    Metadata:</span><br><span class="line">      handler_name    : SoundHandler</span><br><span class="line">      vendor_id       : [0][0][0][0]</span><br><span class="line">      encoder         : Lavc58.134.100 aac</span><br><span class="line">frame=  744 fps=297 q=-1.0 Lsize=    3080kB time=00:00:31.18 bitrate= 809.1kbits/s speed=12.4x    </span><br><span class="line">video:2595kB audio:460kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 0.800888%</span><br><span class="line">[libx264 @ 0x7fcc4e803e00] frame I:20    Avg QP:17.34  size: 24048</span><br><span class="line">[libx264 @ 0x7fcc4e803e00] frame P:245   Avg QP:22.46  size:  6089</span><br><span class="line">[libx264 @ 0x7fcc4e803e00] frame B:479   Avg QP:24.79  size:  1428</span><br><span class="line">[libx264 @ 0x7fcc4e803e00] consecutive B-frames:  7.0% 18.8%  8.1% 66.1%</span><br><span class="line">[libx264 @ 0x7fcc4e803e00] mb I  I16..4: 34.0% 22.0% 44.0%</span><br><span class="line">[libx264 @ 0x7fcc4e803e00] mb P  I16..4:  5.4%  8.7%  3.1%  P16..4: 30.5% 12.4%  7.2%  0.0%  0.0%    skip:32.7%</span><br><span class="line">[libx264 @ 0x7fcc4e803e00] mb B  I16..4:  0.7%  0.6%  0.4%  B16..8: 30.4%  4.7%  1.6%  direct: 2.1%  skip:59.5%  L0:45.2% L1:43.1% BI:11.7%</span><br><span class="line">[libx264 @ 0x7fcc4e803e00] 8x8 transform intra:40.6% inter:46.7%</span><br><span class="line">[libx264 @ 0x7fcc4e803e00] coded y,uvDC,uvAC intra: 45.5% 49.2% 16.2% inter: 12.0% 10.6% 0.5%</span><br><span class="line">[libx264 @ 0x7fcc4e803e00] i16 v,h,dc,p: 39% 35% 13% 13%</span><br><span class="line">[libx264 @ 0x7fcc4e803e00] i8 v,h,dc,ddl,ddr,vr,hd,vl,hu: 15% 34% 20%  3%  5%  5%  6%  4%  6%</span><br><span class="line">[libx264 @ 0x7fcc4e803e00] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 15% 30% 13%  5%  7%  7%  8%  6%  8%</span><br><span class="line">[libx264 @ 0x7fcc4e803e00] i8c dc,h,v,p: 53% 31% 11%  5%</span><br><span class="line">[libx264 @ 0x7fcc4e803e00] Weighted P-Frames: Y:24.9% UV:20.4%</span><br><span class="line">[libx264 @ 0x7fcc4e803e00] ref P L0: 62.2% 20.9% 13.6%  3.0%  0.3%</span><br><span class="line">[libx264 @ 0x7fcc4e803e00] ref B L0: 89.2%  9.0%  1.7%</span><br><span class="line">[libx264 @ 0x7fcc4e803e00] ref B L1: 98.3%  1.7%</span><br><span class="line">[libx264 @ 0x7fcc4e803e00] kb/s:684.96</span><br><span class="line">[aac @ 0x7fcc4e805600] Qavg: 4577.948</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="3-3、转换容器格式-transmuxing"><a href="#3-3、转换容器格式-transmuxing" class="headerlink" title="3.3、转换容器格式/transmuxing"></a>3.3、转换容器格式/transmuxing</h3><p>将视频文件从一种容器转到另一种容器。<br>内部的编码格式不变，使用-c copy指定直接拷贝，不经过转码。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ffmpeg -i input.mp4 -c copy output.webm</span><br></pre></td></tr></table></figure>
+
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2021/09/20/%E8%A7%86%E9%9F%B3%E9%A2%91%E6%8A%80%E6%9C%AF-YUV%E8%A7%86%E9%A2%91%E5%83%8F%E7%B4%A0%E6%95%B0%E6%8D%AE/" rel="next" title="视音频技术-YUV视频像素数据">
+                  <i class="fa fa-chevron-left"></i> 视音频技术-YUV视频像素数据
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2021/09/20/%E8%A7%86%E9%9F%B3%E9%A2%91%E6%8A%80%E6%9C%AF-PCM%E9%9F%B3%E9%A2%91%E9%87%87%E6%A0%B7%E6%95%B0%E6%8D%AE/" rel="prev" title="视音频技术-PCM音频采样数据">
+                  视音频技术-PCM音频采样数据 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1、FFmpeg命令行基础"><span class="nav-number">1.</span> <span class="nav-text">1、FFmpeg命令行基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2、配置FFmpeg环境变量"><span class="nav-number">1.1.</span> <span class="nav-text">2、配置FFmpeg环境变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、常用命令"><span class="nav-number">1.2.</span> <span class="nav-text">3、常用命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1、获取文件信息"><span class="nav-number">1.2.1.</span> <span class="nav-text">3.1、获取文件信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2、转换编码格式-transcoding"><span class="nav-number">1.2.2.</span> <span class="nav-text">3.2、转换编码格式/transcoding</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3、转换容器格式-transmuxing"><span class="nav-number">1.2.3.</span> <span class="nav-text">3.3、转换容器格式/transmuxing</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="张潮州"
+    src="/images/header.jpeg">
+  <p class="site-author-name" itemprop="name">张潮州</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">张潮州</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.0.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.4.2
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
