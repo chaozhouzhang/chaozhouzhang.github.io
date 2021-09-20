@@ -59,7 +59,7 @@
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;chaozhouzhang&#x2F;chaozhouzhang.github.io&#x2F;blob&#x2F;master&#x2F;images&#x2F;player.jpeg?raw=true">
 <meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;chaozhouzhang&#x2F;chaozhouzhang.github.io&#x2F;blob&#x2F;master&#x2F;images&#x2F;rgb-yuv.png?raw=true">
-<meta property="og:updated_time" content="2021-09-19T13:13:10.880Z">
+<meta property="og:updated_time" content="2021-09-20T02:17:58.269Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https:&#x2F;&#x2F;github.com&#x2F;chaozhouzhang&#x2F;chaozhouzhang.github.io&#x2F;blob&#x2F;master&#x2F;images&#x2F;player.jpeg?raw=true">
 
@@ -215,10 +215,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2021-09-19 12:28:18 / Modified: 21:13:10" itemprop="dateCreated datePublished" datetime="2021-09-19T12:28:18+08:00">2021-09-19</time>
+              <time title="Created: 2021-09-19 12:28:18" itemprop="dateCreated datePublished" datetime="2021-09-19T12:28:18+08:00">2021-09-19</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-09-20 10:17:58" itemprop="dateModified" datetime="2021-09-20T10:17:58+08:00">2021-09-20</time>
+              </span>
 
           
 
@@ -407,7 +413,7 @@
 </tr>
 </tbody></table>
 <h2 id="1-5、解封装"><a href="#1-5、解封装" class="headerlink" title="1.5、解封装"></a>1.5、解封装</h2><p>将输入的封装格式数据，分离成音频流压缩编码数据和视频流压缩编码数据。<br>例如，FLV格式的数据，经过解封装操作后，输出H.264编码的视频码流和AAC编码的音频码流。</p>
-<h2 id="1-6、编码"><a href="#1-6、编码" class="headerlink" title="1.6、编码"></a>1.6、编码</h2><h3 id="1-6-1、视频压缩编码标准"><a href="#1-6-1、视频压缩编码标准" class="headerlink" title="1.6.1、视频压缩编码标准"></a>1.6.1、视频压缩编码标准</h3><p>视频编码的主要作用是将视频像素数据RGB，YUV等压缩成为视频码流，从而降低视频的数据量。<br>高效率的视频编码在同等的码率下，可以获得更高的视频质量。<br>当前使用最多的视频编码方案就是H.264。<br>在码率一定的情况下，编码标准的比较：</p>
+<h2 id="1-6、编码"><a href="#1-6、编码" class="headerlink" title="1.6、编码"></a>1.6、编码</h2><h3 id="1-6-1、视频压缩编码标准"><a href="#1-6-1、视频压缩编码标准" class="headerlink" title="1.6.1、视频压缩编码标准"></a>1.6.1、视频压缩编码标准</h3><p>视频编码的主要作用是将视频像素数据RGB，YUV等压缩成为【视频码流】，从而降低视频的数据量。<br>高效率的视频编码在同等的码率下，可以获得更高的视频质量。<br>当前使用最多的视频编码方案就是H.264。<br>在码率一定的情况下，编码标准的比较：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HEVC &gt; VP9 &gt; H.264&gt; VP8 &gt; MPEG4 &gt; H.263 &gt; MPEG2</span><br></pre></td></tr></table></figure>
 
 <table>
@@ -487,7 +493,7 @@
 <td>H.265/HEVC</td>
 </tr>
 </tbody></table>
-<h3 id="1-6-2、音频压缩编码标准"><a href="#1-6-2、音频压缩编码标准" class="headerlink" title="1.6.2、音频压缩编码标准"></a>1.6.2、音频压缩编码标准</h3><p>音频编码的主要作用是将音频采样数据PCM等压缩成为音频码流，从而降低音频的数据量。<br>高效率的音频编码在同等的码率下，可以获得更高的音质。</p>
+<h3 id="1-6-2、音频压缩编码标准"><a href="#1-6-2、音频压缩编码标准" class="headerlink" title="1.6.2、音频压缩编码标准"></a>1.6.2、音频压缩编码标准</h3><p>音频编码的主要作用是将音频采样数据PCM等压缩成为【音频码流】，从而降低音频的数据量。<br>高效率的音频编码在同等的码率下，可以获得更高的音质。</p>
 <table>
 <thead>
 <tr>
@@ -602,6 +608,9 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
+                <a href="/2021/09/19/%E8%A7%86%E9%9F%B3%E9%A2%91%E6%8A%80%E6%9C%AF-RGB%E8%A7%86%E9%A2%91%E5%83%8F%E7%B4%A0%E6%95%B0%E6%8D%AE/" rel="prev" title="视音频技术-RGB视频像素数据">
+                  视音频技术-RGB视频像素数据 <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
       </footer>
@@ -656,7 +665,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-count">13</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
